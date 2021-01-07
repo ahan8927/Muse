@@ -27,7 +27,8 @@ const useStyles = makeStyles((theme) => ({
     gridAutoFlow: 'column',
     gridTemplateAreas: '\'left middle right\'',
     justifyContent: 'space-between',
-    padding: '0.5rem'
+    padding: '0.5rem',
+    zIndex: '1000',
   },
   navBar_left: {
     display: 'flex',
@@ -92,7 +93,7 @@ const Header = () => {
 
   const [user, setUser] = useState()
   const [whichDialog, setWhichDialog] = useState('');
-  const [params, setParams] = useState(getParams());
+
 
   useEffect(() => {
     (JSON.stringify(loadedUser) === '{}') ? setUser(null) : setUser(loadedUser)
@@ -121,7 +122,6 @@ const Header = () => {
 
   const handleNavClick = (path) => {
     history.push(path)
-    setParams(getParams())
   }
 
   const handleMenuClick = (path) => {

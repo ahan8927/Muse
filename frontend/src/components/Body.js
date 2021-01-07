@@ -24,9 +24,12 @@ const ProtectedRoute = ({ component: Component, user, ...rest }) => {
 
 const useStyles = makeStyles(() => ({
   paper: {
-    backgroundColor: '#ccc5b9',
+    backgroundColor: '#fffffc',
     padding: '1rem',
   },
+  section: {
+
+  }
 }))
 
 const Body = (props) => {
