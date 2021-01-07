@@ -7,7 +7,9 @@ class Beat(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), nullable=False)
-    beat_data = db.Column(db.ARRAY(db.Integer))
+    # beat_data = db.Column(db.ARRAY(db.Integer))
+    beat_col = db.Column(db.ARRAY(db.Integer))
+    beat_row = db.Column(db.ARRAY(db.Integer))
     date_created = db.Column(db.Date, default=datetime.datetime.today())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 

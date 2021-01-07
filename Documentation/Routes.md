@@ -4,8 +4,6 @@ These are routes I think I will need for my application. (For documentation purp
 
 * /api/users/:id 'GET
   * returns specific user
-* /api/users/:id/:id 'GET
-  * retrieve specific beat
 * /api/users/count 'GET'
 * /api/users/
   * returns list of 10 users (sorted by)
@@ -13,6 +11,9 @@ These are routes I think I will need for my application. (For documentation purp
 * /api/auth/
   * returns all current user related data
     * all beats
+
+* /api/beats/:id 'GET'
+  * return specific beat
 
 * /api/auth/login 'POST'
 * /api/auth/signup 'POST'
