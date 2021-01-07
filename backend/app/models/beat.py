@@ -1,15 +1,18 @@
 from .db import db
+import datetime
 
 
-class Likes(db.Model):
-    __tablename__ = 'likes'
+class Beat(db.Model):
+    __tablename__ = 'beats'
 
     id = db.Column(db.Integer, primary_key=True)
-    beat_id = db.Column(db.Boolean, db.ForeignKey('users.id'), default=False)
+    name = db.Column(db.String(40), nullable=False)
+    beat_data = db.Column(db.ARRAY(db.Integer))
+    date_created = db.Column(db.Date, default=datetime.datetime.today())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-    user = db.relationship('User', back_populates='routes',
-                           primaryjoin='User.id==Route.user_creator')
+    user = db.relationship('User', back_populates='beats')
+    # likes = db.relationship('Likes', back_populates='beat')
 
     def to_dict(self):
         return {
