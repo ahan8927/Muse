@@ -3,7 +3,7 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 
 //Components
 import Splash from './Body/Splash';
-import MusicLab from './Body/MusicLab';
+import MusicLab from './Body/MuseLab/MusicLab';
 
 //MUI
 import Paper from '@material-ui/core/Paper';

@@ -14,6 +14,7 @@
 * Animations to page
 * Custom Loading
 * 404 error page
+* Custom sounds
   
 * lava splash on box click
 * Waveform

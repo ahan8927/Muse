@@ -103,10 +103,10 @@ const Header = () => {
 
   const navs = [
     {
-      title: 'Dashboard',
-      redirect: false,
-      path: 'dashboard',
-      icon: <DashboardIcon color='primary' />
+      title: 'Create',
+      redirect: true,
+      path: 'muse-lab',
+      icon: <Typography>Create</Typography>
     },
     {
       title: 'Help',
@@ -166,7 +166,7 @@ const Header = () => {
                 className={classes.iconButton}
                 key={navItem.title}
                 title={navItem.title}
-                onClick={() => handleMenuClick(navItem.path)}
+                onClick={() => navItem.redirect ? handleNavClick(navItem.path) : handleMenuClick(navItem.path)}
               >
                 {navItem.icon}
               </IconButton>
