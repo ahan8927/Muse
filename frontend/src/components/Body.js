@@ -8,6 +8,7 @@ import MusicLab from './Body/MuseLab/MusicLab';
 //MUI
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core';
+import Sequencer from './Body/MuseLab/Sequencer';
 
 const ProtectedRoute = ({ component: Component, user, ...rest }) => {
   return (
@@ -48,8 +49,7 @@ const Body = (props) => {
       <Paper className={classes.paper} elevation={0}>
         <Switch>
           <Route exact path='/' render={props => <Splash {...props} />} />
-          {/* <Route exact path='/login' render={props => <LoginForm {...props} />} /> */}
-          {/* <Route exact path='/signup' render={props => <SignUpForm {...props} />} /> */}
+          <Route exact path='/sequencer' render={props => <Sequencer {...props} />} />
           <Route exact path='/muse-board' render={props => <MusicLab {...props} />} />
           <Route path='*' render={props => <MusicLab {...props} />} />
           {/* <ProtectedRoute exact user={user} path="/search" component={SavedMaps} /> */}
