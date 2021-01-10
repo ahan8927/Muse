@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import * as Tone from 'tone';
 
 //MUI
 import { makeStyles, Typography } from '@material-ui/core';
@@ -11,74 +12,139 @@ const useStyles = makeStyles(() => ({
   row: {
 
   }
-}))
+}));
+
+const initializeState = (row, col) => {
+  let arr = []
+  for (let i = 0; i < row; i++) {
+    arr.push({})
+    for (let j = 0; j < col; j++) {
+      arr[i][`row-${i}-checkbox-${j}`] = false
+    }
+  }
+  return arr
+}
 
 const DynamicCheckboxes = ({ rows, cols }) => {
   const classes = useStyles()
 
-  const [checked, setChecked] = useState({})
+  const [checked, setChecked] = useState(initializeState(rows, cols))
+  const [sequenceData, setSequenceData] = useState(createBoxes(rows, cols))
   const [isLoaded, setIsLoaded] = useState(false)
+  const gain = new Tone.Gain(0.6);
 
-  //temp initializer
-  let state = {};
+  const synths = [
+    new Tone.Player('sounds/Hats32.wav'),
+    new Tone.Player('sounds/CYCdh_K5-Rim03.wav'),
+    new Tone.Player('sounds/kick.wav'),
+  ]
+
+  // const synths = [
+  //   new Tone.Synth(),
+  //   new Tone.Synth(),
+  //   new Tone.Synth()
+  // ]
+
+  // synths[0].oscillator.type = 'triangle';
+  // synths[1].oscillator.type = 'sine';
+  // synths[2].oscillator.type = 'sawtooth';
+
+  gain.toDestination();
+  synths.forEach(synth => synth.connect(gain));
+
+  let index = 0;
+  const notes = ['G5', 'E4', 'C3',]
 
   //configures state based on unique checkbox name.
   const handleChange = (e) => {
-    const value = {
-      ...checked,
-      [e.target.id]: e.target.checked,
-    }
-    setChecked(value)
+    const rowNum = e.target.id.split('-')[1]
+
+    checked[rowNum][e.target.id] = e.target.checked
+    setChecked(checked, console.log('Current state: ', checked))
   };
 
-
-  const createBoxes = (row, col) => {
+  function createBoxes(row, col) {
     let rowArr = [];
 
     for (let i = 0; i < row; i++) {
       let checkboxArr = []
 
       for (let j = 0; j < col; j++) {
+        // console.log(Object.values(checked[i])[j])
         checkboxArr.push(
           <Checkbox
             key={`row-${i}-checkbox-${j}`}
             id={`row-${i}-checkbox-${j}`} //unique identifier in the state.
-            className={`sequencer_row-${i}`}
-            checked={checked[`row-${i}-checkbox-${j}`]}
+            className={`sequencer_row-${i}_checkbox`}
+            checked={Object.values(checked[i])[j]}
             onChange={(e) => handleChange(e)}
           />
         )
-
-        //store temp state so that react useState is given a list of initialized 'controlled' states.
-        state[`row-${i}-checkbox-${j}`] = false;
       }
 
       rowArr.push(
-        <div key={`row-${i}`} className={classes.row}>
+        <div key={`row-${i}`} className={[classes.row, 'sequencer_row']}>
           <Typography>{`Sound ${i}`}</Typography>
-
-          {/* JSX array */}
           {checkboxArr}
         </div>
       )
     }
-
     // JSX array
     return rowArr
   }
 
-  //output as a jsx array of 'x row divs' contiaining 'y checkboxes'
-  const sequenceData = createBoxes(rows, cols)
+  const repeater = (time) => {
+    let step = index % cols;
 
-  //upon 
+    console.log('Step: ', step)
+    for (let i = 0; i < rows; i++) {
+      const currentRowCheck = Object.values(checked[i])[step]
+      const sound = synths[i]
+
+      if (currentRowCheck) sound.start();
+      // if (currentRowCheck) synths[0].triggerAttackRelease('16n', time);
+    }
+    index++;
+  }
+
+  Tone.Transport.scheduleRepeat(repeater, '8n');
+  Tone.Transport.start()
+
+
   useEffect(() => {
-    setChecked(state)
     setIsLoaded(true)
-  }, [])
+  }, [checked])
+
+  // useEffect(() => {
+  //   Tone.Transport.start()
+  // }, [])
+
+  console.log('Reloaded: ', checked, '\nIsLoaded: ', isLoaded)
 
   return isLoaded && (
     <>
-      {sequenceData}
+      {checked.map((row, i) => {
+        row = Object.values(row)
+
+        let checkboxArr = []
+        row.map((col, j) => {
+          checkboxArr.push(
+            <Checkbox
+              key={`row-${i}-checkbox-${j}`}
+              id={`row-${i}-checkbox-${j}`} //unique identifier in the state.
+              className={`sequencer_row-${i}_checkbox`}
+              onChange={(e) => handleChange(e)}
+            />
+          )
+        })
+
+        return (
+          <div key={`row-${i}`} className={[classes.row, 'sequencer_row']}>
+            <Typography>{`Sound ${i}`}</Typography>
+            {checkboxArr}
+          </div>
+        )
+      })}
     </>
   );
 }

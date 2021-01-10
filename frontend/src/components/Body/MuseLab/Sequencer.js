@@ -24,7 +24,7 @@ const Sequencer = () => {
 
   return (
     <>
-      <DynamicCheckboxes rows={8} cols={8} />
+      <DynamicCheckboxes rows={3} cols={8} />
     </>
   );
 }
