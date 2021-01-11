@@ -85,7 +85,7 @@ const App = (props) => {
 
 const AppContainer = (props) => {
   const dispatch = useDispatch();
-  const classes = useStyles();
+  // const classes = useStyles();
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [authDialog, setAuthDialog] = useState(false);

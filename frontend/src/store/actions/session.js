@@ -1,9 +1,12 @@
 //Store Action Types
-export const SET_USER = 'Catch_Me_If_You_Can/session/SET_USER';
-export const REMOVE_USER = 'Catch_Me_If_You_Can/session/REMOVE_USER';
+export const SET_USER = 'Muse/session/SET_USER';
+export const REMOVE_USER = 'Muse/session/REMOVE_USER';
 
 //Store Actions
-const setUser = (user) => ({ type: SET_USER, payload: user });
+const setUser = (user) => {
+  console.log(user)
+  return { type: SET_USER, payload: user }
+}
 const removeUser = (user) => ({ type: REMOVE_USER });
 
 //Login Thunk
@@ -64,7 +67,7 @@ export const signupUser = (user) => async (dispatch) => {
 
 export const restoreUser = () => async dispatch => {
   try {
-    const res = await fetch('/api/users/restore', {
+    const res = await fetch('/api/auth/restore', {
       headers: {
         'Content-Type': 'application/json'
       }

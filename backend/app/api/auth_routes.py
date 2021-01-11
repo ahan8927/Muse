@@ -18,12 +18,14 @@ def validation_errors_to_error_messages(validation_errors):
     return errorMessages
 
 
-@auth_routes.route('/')
+@auth_routes.route('/restore')
 def authenticate():
     """
     Authenticates a user.
     """
     if current_user.is_authenticated:
+        # print('\nAAAAAAAAAAAAAAA: User is Authenticated!\n',
+        #       current_user.to_dict())
         return current_user.to_dict()
     return {'errors': ['Unauthorized']}, 401
 

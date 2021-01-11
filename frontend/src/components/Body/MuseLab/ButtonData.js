@@ -31,6 +31,8 @@ const ButtonData = (num) => {
         return '#bdb2ff'
       case 7:
         return '#ffc6ff'
+      default:
+        return;
     }
   }
 
@@ -39,7 +41,6 @@ const ButtonData = (num) => {
     case 1:
     case 2:
     case 3:
-      console.log(rand1)
       return {
         id: `Beat_Button_${num}`,
         class: 'Beat_Button_Tophat',

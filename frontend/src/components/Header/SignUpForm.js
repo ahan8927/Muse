@@ -50,6 +50,8 @@ const SignupForm = (props) => {
       case 'confirmPassword':
         setConfirmPassword(e.target.value);
         break;
+      default:
+        return;
     }
   }
 

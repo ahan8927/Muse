@@ -1,26 +1,17 @@
-import { Button, Typography } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import * as Tone from 'tone';
 
 //Components
 import BeatButton from './BeatButton';
-import { AudioContext } from '../../../context/context'
+import { AudioContext, DialogContext } from '../../../context/context'
 // import { colorPicker, randInt } from './ButtonData';
 
 //MUI
+import { Button, Typography, Dialog } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-
-const synth = new Tone.PolySynth(Tone.Synth).toDestination();
-const now = Tone.now()
-
-// const colors = {
-//   color1: colorPicker(randInt),
-//   color2: colorPicker(randInt),
-//   color3: colorPicker(randInt),
-//   color4: colorPicker(randInt),
-// }
+import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,24 +21,95 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '10rem',
-    height: '10rem',
+    maxWidth: '10rem',
+    maxHeight: '10rem',
     color: theme.palette.text.secondary,
   },
   grid: {
     width: '43rem',
     height: '43rem',
-  }
+  },
+  createButton: {
+    width: '10rem',
+    height: '10rem',
+    backgroundColor: 'white',
+  },
 }));
 
 const MusicLab = () => {
   const classes = useStyles();
+  const { dialogContext, setDialogContext } = useContext(DialogContext);
+
   const [isRecording, setIsRecording] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
-  // let isRecording = false;
+  const [whichDialog, setWhichDialog] = useState('');
+  const [beatPads, setBeatPads] = useState(1);
+  // Tone.Transport.start()
 
+
+
+
+
+
+
+  //DIALOG Functions
+  const handleClose = () => {
+    setDialogContext(false);
+  }
+
+  const handleMenuClick = (path) => {
+    setWhichDialog(path)
+    setDialogContext(true)
+  }
+
+  const renderDialog = (dialog) => {
+    switch (dialog) {
+      case 'login':
+
+      default:
+        return;
+    }
+  }
+
+
+
+
+
+  //AUDIO Functions
+  // const startRecord = () => {
+  //   setIsRecording(true)
+  //   synth.triggerAttack('C4', synth.context.currentTime)
+  // }
+  // const stopRecord = () => {
+  //   setIsRecording(false)
+  //   synth.triggerRelease('C4');
+  // }
+  // const startPlay = () => {
+  //   setIsPlaying(true)
+  // }
+  // const stopPlay = () => {
+  //   setIsPlaying(false)
+  // }
+
+
+
+  const CreateBeatButton = () => {
+
+    const handleClick = (e) => {
+      console.log('create sequence')
+    }
+    return (
+      <Grid item>
+        <Button className={classes.button} onClick={() => handleClick()}>
+          <AddIcon />
+        </Button>
+      </Grid>
+    )
+  }
+
+  //Grid Creation
   const loop = []
-  for (let i = 0; i < 16; i++) {
+  for (let i = 0; i < beatPads; i++) {
     loop.push(
       <Grid item key={i}>
         <BeatButton index={i} />
@@ -55,29 +117,9 @@ const MusicLab = () => {
     )
   }
 
-
-  const startRecord = () => {
-    setIsRecording(true)
-    synth.triggerAttack('C4', synth.context.currentTime)
-  }
-
-  const stopRecord = () => {
-    setIsRecording(false)
-    synth.triggerRelease('C4');
-  }
-
-  const startPlay = () => {
-    setIsPlaying(true)
-  }
-
-  const stopPlay = () => {
-    setIsPlaying(false)
-  }
-
   return (
-    // <AudioContext.provider>
     <>
-      <div>
+      {/* <div>
         {
           isRecording
             ? <Button onClick={() => stopRecord()}><Typography>Stop</Typography></Button>
@@ -88,9 +130,8 @@ const MusicLab = () => {
             ? <Button onClick={() => stopPlay()}><Typography>Pause</Typography></Button>
             : <Button onClick={() => startPlay()}><Typography>Play</Typography></Button>
         }
+      </div> */}
 
-
-      </div>
       <Grid
         container
         // direction="row"
@@ -100,9 +141,12 @@ const MusicLab = () => {
         className={classes.grid}
       >
         {loop}
+        {<CreateBeatButton />}
       </Grid>
+      <Dialog open={dialogContext} onClose={handleClose} className={classes.dialog} aria-labelledby="form-dialog-title">
+        {renderDialog(whichDialog)}
+      </Dialog>
     </>
-    // </AudioContext.provider>
   );
 }
 

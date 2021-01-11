@@ -15,9 +15,9 @@ import { makeStyles, Typography, IconButton, Button } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 
 //Icons
-import PersonIcon from '@material-ui/icons/Person';
+// import PersonIcon from '@material-ui/icons/Person';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
-import DashboardIcon from '@material-ui/icons/Dashboard';
+// import DashboardIcon from '@material-ui/icons/Dashboard';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 const useStyles = makeStyles((theme) => ({
@@ -81,9 +81,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const getParams = () => {
-  return window.location.pathname.slice(1)
-}
+// const getParams = () => {
+//   return window.location.pathname.slice(1)
+// }
 
 const Header = () => {
   const classes = useStyles();
@@ -120,13 +120,13 @@ const Header = () => {
     setAuthDialog(false);
   }
 
-  const handleNavClick = (path) => {
-    history.push(path)
-  }
-
   const handleMenuClick = (path) => {
     setWhichDialog(path)
     setAuthDialog(true)
+  }
+
+  const handleNavClick = (path) => {
+    history.push(path)
   }
 
   const renderDialog = (dialog) => {

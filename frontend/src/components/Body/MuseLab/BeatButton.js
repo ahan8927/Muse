@@ -10,7 +10,8 @@ import { Button, makeStyles, Typography } from '@material-ui/core';
 
 const BeatButton = (props) => {
   const [selected, setSelected] = useState(false);
-  const buttondata = ButtonData(props.index)
+  const [hasState, setHasState] = useState([])
+  const [buttondata, setButtonData] = useState(ButtonData(props.index))
 
   const useStyles = makeStyles(() => ({
     button: {
@@ -22,7 +23,7 @@ const BeatButton = (props) => {
   const classes = useStyles();
 
   const handleClick = () => {
-    buttondata.sound.start()
+    // buttondata.sound.start()
   }
 
   return (
@@ -33,3 +34,19 @@ const BeatButton = (props) => {
 }
 
 export default BeatButton;
+
+/*
+
+const sequenceData = {
+  sequenceTitle: 'Sequence1',
+  beats: [ //length determines # of rows.
+    {
+      soundName: 'tophat',
+      soundFile: 'path',
+      beat: [true, false, true, false, true, false, true] //length determines # of cols
+    }
+  ],
+  stepSpeed: '8n',
+  color: '#293847',
+}
+*/
