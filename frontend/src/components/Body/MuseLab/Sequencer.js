@@ -34,9 +34,25 @@ const Sequencer = () => {
     setSequenceName(e.target.value)
   }
 
+  const handleSubmit = (e) => {
+    const sequenceData = {
+      sequenceTitle: 'Sequence1',
+      beats: [ //length determines # of rows.
+        {
+          soundName: 'tophat',
+          soundFile: 'path',
+          beat: [true, false, true, false, true, false, true, false] //length determines # of cols
+        }
+      ],
+      stepSpeed: '8n',
+      color: '#293847',
+    }
+    console.log(sequenceData)
+  }
+
   return (
     <>
-      <form className={classes.root} noValidate autoComplete="off">
+      <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
         <TextField align='center' id="standard-basic" label="Sequence Name" value={sequenceName} onChange={handleChange} />
         <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">

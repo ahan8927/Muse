@@ -44,9 +44,6 @@ const MusicLab = () => {
   const [isPlaying, setIsPlaying] = useState(false)
   const [whichDialog, setWhichDialog] = useState('');
   const [beatPads, setBeatPads] = useState(1);
-  // Tone.Transport.start()
-
-
 
 
 

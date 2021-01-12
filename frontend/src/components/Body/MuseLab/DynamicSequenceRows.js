@@ -74,17 +74,17 @@ const DynamicCheckboxes = ({ rows, cols }) => {
     index++;
   }
 
-  Tone.Transport.scheduleRepeat(repeater, '8n');
 
 
 
+  //sdfsd
+  //sdf
   useEffect(() => {
     setIsLoaded(true)
-  }, [checked])
-
-  // useEffect(() => {
-  // Tone.Transport.start()
-  // }, [])
+    Tone.Transport.scheduleRepeat(repeater, '8n');
+    Tone.Transport.start()
+    console.log('UseEffect running')
+  }, [])
 
   return isLoaded && (
     <>
@@ -105,9 +105,7 @@ const DynamicCheckboxes = ({ rows, cols }) => {
 
         return (
           <div key={`row-${i}`} className={classes.row}>
-            {/* <div className={classes.soundName_container}> */}
             <Typography align='center' className={classes.soundName}>{`Sound ${i}`}</Typography>
-            {/* </div> */}
             {checkboxArr}
           </div>
         )
