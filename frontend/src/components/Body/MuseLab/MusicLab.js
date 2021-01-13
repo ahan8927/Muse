@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState } from 'react';
 
 //Components
 import BeatButton from './BeatButton';
@@ -36,24 +36,6 @@ const MusicLab = () => {
   const classes = useStyles();
   const [beatPads, setBeatPads] = useState(1);
 
-  //AUDIO Functions
-  // const startRecord = () => {
-  //   setIsRecording(true)
-  //   synth.triggerAttack('C4', synth.context.currentTime)
-  // }
-  // const stopRecord = () => {
-  //   setIsRecording(false)
-  //   synth.triggerRelease('C4');
-  // }
-  // const startPlay = () => {
-  //   setIsPlaying(true)
-  // }
-  // const stopPlay = () => {
-  //   setIsPlaying(false)
-  // }
-
-
-
   const CreateBeatButton = () => {
     const handleClick = (e) => {
       console.log('create sequence')
@@ -79,19 +61,6 @@ const MusicLab = () => {
 
   return (
     <>
-      {/* <div>
-        {
-          isRecording
-            ? <Button onClick={() => stopRecord()}><Typography>Stop</Typography></Button>
-            : <Button onClick={() => startRecord()}><Typography>Record</Typography></Button>
-        }
-        {
-          isPlaying
-            ? <Button onClick={() => stopPlay()}><Typography>Pause</Typography></Button>
-            : <Button onClick={() => startPlay()}><Typography>Play</Typography></Button>
-        }
-      </div> */}
-
       <Grid
         container
         // direction="row"

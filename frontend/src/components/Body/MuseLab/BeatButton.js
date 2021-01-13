@@ -2,48 +2,28 @@ import React, { useState, useContext, useEffect } from 'react';
 import * as Tone from 'tone';
 
 //Components
-import ButtonData from './ButtonData';
 import { DialogContext } from '../../../context/context';
+import * as soundTools from './SoundTools';
 import Sequencer from './Sequencer';
 
 //MUI
 import { Button, makeStyles, Typography, Dialog } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
 
-const colorPicker = (num) => {
-  switch (num) {
-    case 0:
-      return '#ffadad'
-    case 1:
-      return '#ffd6a5'
-    case 2:
-      return '#fdffb6'
-    case 3:
-      return '#caffbf'
-    case 4:
-      return '#9bf6ff'
-    case 5:
-      return '#a0c4ff'
-    case 6:
-      return '#bdb2ff'
-    case 7:
-      return '#ffc6ff'
-    default:
-      return;
-  }
-}
+
 
 const BeatButton = ({ index }) => {
   const { dialogContext, setDialogContext } = useContext(DialogContext);
   const [whichDialog, setWhichDialog] = useState('');
-  const [hasState, setHasState] = useState([])
-  const [buttondata, setButtonData] = useState(ButtonData(index))
+  const [sequenceState, setSequenceState] = useState();
+  const [sounds, setSounds] = useState(sequenceState ? soundTools.createSoundArr(sequenceState.library) : [])
   const [play, setPlay] = useState(false)
 
   const useStyles = makeStyles(() => ({
     button: {
       width: '10rem',
       height: '10rem',
-      backgroundColor: `${buttondata.color}`
+      // backgroundColor: `${buttondata.color}`
     }
   }));
   const classes = useStyles();
@@ -55,46 +35,68 @@ const BeatButton = ({ index }) => {
   }
 
   const handleClick = () => {
-    // (hasState) ? setPlay(true) : setDialogContext(true)
-    console.log(`hasState: ${(hasState.length < 1) ? false : true}, `, hasState)
-    if (hasState.length < 1) {
-      setDialogContext(true)
+    if (sequenceState) {
+      console.log('has sequenceState')
+      setPlay(!play)
     } else {
-      setPlay(true)
+      setDialogContext(true)
     }
   }
 
+  let step = 0;
+  const repeater = (time) => {
+    const rows = sequenceState.beats.length
+    const cols = sequenceState.beats[0].beat.length
+    let index = step % cols;
+
+    for (let i = 0; i < rows; i++) {
+      const currentRowCheck = sequenceState.beats[i].beat[index]
+      const currentSound = sounds[i]
+      currentSound.connect(soundTools.gain)
+
+      if (currentRowCheck) {
+        currentSound.start();
+      }
+    }
+    step++;
+  }
+
   useEffect(() => {
-    console.log(play)
-    play ? Tone.Transport.start() : Tone.Transport.stop()
+    if (sequenceState && sounds) {
+      setSounds(soundTools.createSoundArr(sequenceState.library))
+    }
+  }, [sequenceState])
+
+  useEffect(() => {
+    if (play && sequenceState) {
+      Tone.Transport.start()
+    } else {
+      Tone.Transport.stop()
+      Tone.Transport.clear()
+    }
   }, [play])
 
   return (
     <>
       <Button className={classes.button} onClick={() => handleClick()}>
-        <Typography>{buttondata.name} {index}</Typography>
+        {
+          sequenceState
+            ? <Typography>{sequenceState.sequenceTitle}</Typography>
+            : <AddIcon />
+        }
+
       </Button>
-      <Dialog open={dialogContext} onClose={handleClose} className={classes.dialog} aria-labelledby="form-dialog-title">
-        <Sequencer setPlay={setPlay} />
+      <Dialog open={dialogContext} className={classes.dialog} aria-labelledby="form-dialog-title">
+        <Sequencer
+          setPlay={setPlay}
+          index={index}
+          setSequenceState={setSequenceState}
+          sequenceState={sequenceState}
+          handleClose={handleClose}
+        />
       </Dialog>
     </>
   );
 }
 
 export default BeatButton;
-
-/*
-
-const sequenceData = {
-  sequenceTitle: 'Sequence1',
-  beats: [ //length determines # of rows.
-    {
-      soundName: 'tophat',
-      soundFile: 'path',
-      beat: [true, false, true, false, true, false, true] //length determines # of cols
-    }
-  ],
-  stepSpeed: '8n',
-  color: '#293847',
-}
-*/

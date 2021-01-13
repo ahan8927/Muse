@@ -4,6 +4,7 @@ import * as Tone from 'tone';
 //Components
 import DynamicCheckboxes from './DynamicSequenceRows';
 import soundLibrary from './SoundLibrary';
+import * as soundTools from './SoundTools';
 
 //MUI
 import { Button, makeStyles, Typography } from '@material-ui/core';
@@ -28,9 +29,10 @@ const useStyles = makeStyles(() => ({
 }));
 
 const setInitializeState = (initialArr, row, col) => {
+  console.log('Creating checkboxes with: ', row, col)
   let arr = []
   for (let i = 0; i < row; i++) {
-    arr.push({})
+    arr.push([])
     for (let j = 0; j < col; j++) {
       arr[i][j] = false
     }
@@ -39,13 +41,7 @@ const setInitializeState = (initialArr, row, col) => {
   return arr
 }
 
-const setSoundArr = (library) => {
-  const soundArr = []
-  for (let i = 0; i < soundLibrary[`${library}`].length; i++) {
-    soundArr.push(new Tone.Player(soundLibrary[`${library}`][i].file))
-  }
-  return soundArr
-}
+
 
 const Sequencer = (props) => {
   const classes = useStyles();
@@ -54,27 +50,21 @@ const Sequencer = (props) => {
   const [tempo, setTempo] = useState(8)
   const [sequenceName, setSequenceName] = useState('');
   const [library, setLibrary] = useState('drum_set');
-  const [sounds, setSounds] = useState(setSoundArr(library))
+  const [sounds, setSounds] = useState(soundTools.createSoundArr(library))
   const [rows, setRows] = useState((props.initialState ? props.initialState.length : 3));
   const [cols, setCols] = useState((props.initialState ? props.initialState[0].length : 8));
-  const [checked, setChecked] = useState((props.initialState ? props.initialState : setInitializeState(rows, cols)))
+  const [checked, setChecked] = useState((props.initialState ? props.initialState : setInitializeState(props.initialState, rows, cols)))
   let index = 0;
 
   const createRows = (num) => {
     const rowArr = [];
     for (let i = 0; i < num; i++) {
       rowArr.push(
-        <DynamicCheckboxes key={`Sequence-1_row-${i}`} cols={cols} setChecked={setChecked} checked={checked} currentRow={i} />
+        <DynamicCheckboxes key={`Sequence-${props.index}_row-${i}`} cols={cols} setChecked={setChecked} checked={checked} currentRow={i} />
       )
     }
     return rowArr
   }
-
-
-  const gain = new Tone.Gain(0.6);
-
-  gain.toDestination();
-  // synths.forEach(synth => synth.connect(gain));
 
   const repeater = (time) => {
     let step = index % cols;
@@ -83,9 +73,9 @@ const Sequencer = (props) => {
     for (let i = 0; i < rows; i++) {
       const currentRowCheck = checked[i][step]
       const currentSound = sounds[i]
+      currentSound.connect(soundTools.gain)
 
       if (currentRowCheck) {
-        console.log(currentSound)
         currentSound.start();
       }
     }
@@ -101,20 +91,25 @@ const Sequencer = (props) => {
   }
 
   const handleSubmit = (e) => {
-    props.setPlay(false)
+    if (!sequenceName) return;
+    const beats = []
+    soundLibrary[library].map((sound, index) => {
+      beats.push(
+        {
+          soundName: sound.name,
+          soundFile: sound.file,
+          beat: checked[index],
+        }
+      )
+    })
     const sequenceData = {
       sequenceTitle: sequenceName,
-      beats: [ //length determines # of rows.
-        {
-          soundName: 'tophat',
-          soundFile: 'path',
-          beat: [false, true, false, false, true, false, false, true] //length determines # of cols
-        }
-      ],
-      stepSpeed: '8n',
+      library: library,
+      beats: beats,
+      stepSpeed: tempo,
       color: '#293847',
     }
-    console.log(sequenceData)
+    props.setSequenceState(sequenceData, props.handleClose())
   }
 
   useEffect(() => {
@@ -123,14 +118,14 @@ const Sequencer = (props) => {
   }, [])
 
   useEffect(() => {
-    setSounds(setSoundArr(library))
+    setSounds(soundTools.createSoundArr(library))
   }, [library])
 
   return (
     <>
-      <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
-        <TextField align='center' id="standard-basic" label="Sequence Name" value={sequenceName} onChange={handleChange} />
+      <form className={classes.root} noValidate autoComplete="off">
         <FormControl className={classes.formControl}>
+          <TextField required align='center' id="standard-basic" label="Sequence Name" value={sequenceName} onChange={handleChange} />
           <InputLabel shrink id="select_library">
             Library
         </InputLabel>
@@ -142,7 +137,7 @@ const Sequencer = (props) => {
           >
             {Object.keys(soundLibrary).map((libraryy) => {
               return (
-                <MenuItem value={libraryy}><Typography>{libraryy}</Typography></MenuItem>
+                <MenuItem key={libraryy} value={libraryy}><Typography>{libraryy}</Typography></MenuItem>
               )
             })}
           </Select>
@@ -154,7 +149,10 @@ const Sequencer = (props) => {
             </TableBody>
           </Table>
         </TableContainer>
-        <Button type='submit'><Typography>Submit</Typography></Button>
+        <Button
+          // type='submit'
+          onClick={handleSubmit}
+        ><Typography>Submit</Typography></Button>
       </form>
     </>
   );

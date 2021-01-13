@@ -2,15 +2,15 @@ const soundLibrary = {
   drum_set: [
     {
       name: 'tophat',
-      file: 'sounds/Tophat1.wav',
+      file: 'sounds/drum_set/Tophat1.wav',
     },
     {
       name: 'snare',
-      file: 'sounds/Snare1.wav',
+      file: 'sounds/drum_set/Snare1.wav',
     },
     {
       name: 'kick',
-      file: 'sounds/Kick1.wav',
+      file: 'sounds/drum_set/Kick1.wav',
     },
   ],
   synth_set: [
