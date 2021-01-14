@@ -115,6 +115,7 @@ const Sequencer = (props) => {
     })
     const sequenceData = {
       sequenceTitle: sequenceName,
+      beatPad: index,
       library: library,
       beats: beats,
       stepSpeed: tempo,

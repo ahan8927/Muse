@@ -35,8 +35,8 @@ const BeatButton = ({ index }) => {
   }
 
   const handleClick = () => {
+    console.log('BUTTON CLICKED')
     if (sequenceState) {
-      console.log('has sequenceState')
       setPlay(!play)
     } else {
       setDialogContext(true)

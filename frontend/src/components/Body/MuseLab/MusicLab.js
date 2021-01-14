@@ -34,29 +34,25 @@ const useStyles = makeStyles((theme) => ({
 
 const MusicLab = () => {
   const classes = useStyles();
-  const [beatPads, setBeatPads] = useState(1);
-
-  const CreateBeatButton = () => {
-    const handleClick = (e) => {
-      console.log('create sequence')
-    }
-    return (
-      <Grid item>
-        <Button onClick={() => handleClick()}>
-          <AddIcon />
-        </Button>
-      </Grid>
-    )
-  }
+  const [beatPads, setBeatPads] = useState(16);
 
   //Grid Creation
-  const loop = []
-  for (let i = 0; i < beatPads; i++) {
+  const createBeatPad = () => {
+    const loop = []
     loop.push(
-      <Grid item key={i}>
-        <BeatButton index={i} />
+      <Grid item key={0}>
+        <BeatButton index={0} />
       </Grid>
     )
+    for (let i = 1; i < beatPads; i++) {
+      loop.push(
+        <Grid item key={i}>
+          <BeatButton index={i} />
+        </Grid>
+      )
+    }
+    console.log(loop)
+    return loop
   }
 
   return (
@@ -69,8 +65,7 @@ const MusicLab = () => {
         spacing={1}
         className={classes.grid}
       >
-        {loop}
-        {<CreateBeatButton />}
+        {createBeatPad()}
       </Grid>
     </>
   );
