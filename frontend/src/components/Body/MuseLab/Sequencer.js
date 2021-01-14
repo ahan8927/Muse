@@ -18,6 +18,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Slider from '@material-ui/core/Slider';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -82,12 +83,22 @@ const Sequencer = (props) => {
     index++;
   }
 
-  const handleChange = (e) => {
-    setSequenceName(e.target.value)
+  const handleChange = (e, location) => {
+    switch (location) {
+      case 'name':
+        setSequenceName(e.target.value)
+        return;
+      case 'library':
+        setLibrary(e.target.value)
+        return;
+      case 'tempo':
+        console.log('changing tempo: ', e.target.value)
+        setTempo(e.target.value)
+        return;
+    }
   }
 
   const handleLibraryChange = (e) => {
-    setLibrary(e.target.value)
   }
 
   const handleSubmit = (e) => {
@@ -112,6 +123,10 @@ const Sequencer = (props) => {
     props.setSequenceState(sequenceData, props.handleClose())
   }
 
+  function valuetext(value) {
+    return `${value} notes`;
+  }
+
   useEffect(() => {
     Tone.Transport.scheduleRepeat(repeater, `${tempo}n`);
     props.setPlay(true)
@@ -125,7 +140,7 @@ const Sequencer = (props) => {
     <>
       <form className={classes.root} noValidate autoComplete="off">
         <FormControl className={classes.formControl}>
-          <TextField required align='center' id="standard-basic" label="Sequence Name" value={sequenceName} onChange={handleChange} />
+          <TextField required align='center' id="standard-basic" label="Sequence Name" value={sequenceName} onChange={(e) => handleChange(e, 'name')} />
           <InputLabel shrink id="select_library">
             Library
         </InputLabel>
@@ -133,7 +148,7 @@ const Sequencer = (props) => {
             labelId="select_library"
             id="demo-simple-select-placeholder-label"
             value={library}
-            onChange={handleLibraryChange}
+            onChange={e => handleChange(e, 'library')}
           >
             {Object.keys(soundLibrary).map((libraryy) => {
               return (
@@ -141,6 +156,21 @@ const Sequencer = (props) => {
               )
             })}
           </Select>
+          <Typography id="discrete-slider" gutterBottom>
+            Tempo
+      </Typography>
+          <Slider
+            defaultValue={tempo}
+            onChange={e => handleChange(e, 'tempo')}
+            getAriaValueText={valuetext}
+            aria-labelledby="discrete-slider"
+            valueLabelDisplay="auto"
+            step={2}
+            marks
+            min={2}
+            max={16}
+          />
+
         </FormControl>
         <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">
