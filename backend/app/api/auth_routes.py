@@ -1,8 +1,9 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, db
+from app.models import User, Beat, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
+from sqlalchemy import desc
 
 auth_routes = Blueprint('auth', __name__)
 
@@ -18,15 +19,15 @@ def validation_errors_to_error_messages(validation_errors):
     return errorMessages
 
 
+# Authenticates a User (check if cookie session exists)
 @auth_routes.route('/restore')
 def authenticate():
-    """
-    Authenticates a user.
-    """
     if current_user.is_authenticated:
-        # print('\nAAAAAAAAAAAAAAA: User is Authenticated!\n',
-        #       current_user.to_dict())
-        return current_user.to_dict()
+        user = current_user.to_dict()
+        beats = Beat.query.filter_by(
+            user_id=user.id).order_by(desc(Beat.date_created))
+        beats = [beat.to_dict() for beat in beats]
+        return {'user': user, 'beats': beats}
     return {'errors': ['Unauthorized']}, 401
 
 
@@ -44,15 +45,16 @@ def login():
         # Add the user to the session, we are logged in!
         user = User.query.filter(User.email == form.data['email']).first()
         login_user(user)
-        return user.to_dict()
+        user = user.to_dict()
+        beats = Beat.query.filter_by(
+            user_id=user.id).order_by(desc(Beat.date_created))
+        beats = [beat.to_dict() for beat in beats]
+        return {'user': user, 'beats': beats}
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
 @auth_routes.route('/logout')
 def logout():
-    """
-    Logs a user out
-    """
     logout_user()
     return {'message': 'User logged out'}
 

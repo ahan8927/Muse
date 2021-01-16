@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 
 //Components
 import BeatButton from './BeatButton';
+import Sequencer from './Sequencer';
 
 //MUI
-import { Button } from '@material-ui/core';
+import { Dialog } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,27 +31,52 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'white',
   },
 }));
+const setInitialState = () => {
+  const initialState = []
+  for (let i = 0; i < 16; i++) {
+    initialState.push(
+      {
+        sequenceTitle: '',
+        beatPad: i,
+        library: null,
+        beats: null,
+        stepSpeed: 8,
+        color: '#293847',
+      }
+    )
+  }
+  return initialState
+}
 
-const MusicLab = () => {
+const MusicLab = (props) => {
   const classes = useStyles();
-  const [beatPads, setBeatPads] = useState(16);
+
+  const [beatPads] = useState(16);
+  const [sequenceState, setSequenceState] = useState(props.beats ? props.beats : setInitialState());
+  const [openDialog, setOpenDialog] = useState(null)
+
+  //DIALOG Functions
+  const handleClose = () => {
+    setOpenDialog(null);
+  }
 
   //Grid Creation
   const createBeatPad = () => {
     const loop = []
-    loop.push(
-      <Grid item key={0}>
-        <BeatButton index={0} />
-      </Grid>
-    )
-    for (let i = 1; i < beatPads; i++) {
+    const buttonSettings = {
+      openDialog,
+      setOpenDialog,
+      setSequenceState
+    }
+    for (let i = 0; i < beatPads; i++) {
+      buttonSettings['index'] = i
+      buttonSettings['sequenceState'] = sequenceState[i]
       loop.push(
         <Grid item key={i}>
-          <BeatButton index={i} />
+          <BeatButton {...buttonSettings} />
         </Grid>
       )
     }
-    console.log(loop)
     return loop
   }
 
@@ -59,7 +84,6 @@ const MusicLab = () => {
     <>
       <Grid
         container
-        // direction="row"
         justify="center"
         alignItems="center"
         spacing={1}
@@ -67,6 +91,14 @@ const MusicLab = () => {
       >
         {createBeatPad()}
       </Grid>
+      <Dialog open={openDialog ? true : false} className={classes.dialog} aria-labelledby="form-dialog-title">
+        {openDialog && <Sequencer
+          index={openDialog}
+          setSequenceState={setSequenceState}
+          sequenceState={sequenceState}
+          handleClose={handleClose}
+        />}
+      </Dialog>
     </>
   );
 }

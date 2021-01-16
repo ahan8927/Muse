@@ -29,33 +29,36 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const setInitializeState = (initialArr, row, col) => {
-  console.log('Creating checkboxes with: ', row, col)
-  let arr = []
-  for (let i = 0; i < row; i++) {
-    arr.push([])
-    for (let j = 0; j < col; j++) {
-      arr[i][j] = false
-    }
-  }
-
-  return arr
-}
-
-
-
 const Sequencer = (props) => {
+  const currentSequenceState = props.sequenceState[props.index]
   const classes = useStyles();
 
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [tempo, setTempo] = useState(8)
-  const [sequenceName, setSequenceName] = useState('');
   const [library, setLibrary] = useState('drum_set');
+  const [sequenceName, setSequenceName] = useState('');
+  const [tempo, setTempo] = useState(8);
+  // const [play, setPlay] = useState(false)
+
   const [sounds, setSounds] = useState(soundTools.createSoundArr(library))
-  const [rows, setRows] = useState((props.initialState ? props.initialState.length : 3));
-  const [cols, setCols] = useState((props.initialState ? props.initialState[0].length : 8));
-  const [checked, setChecked] = useState((props.initialState ? props.initialState : setInitializeState(props.initialState, rows, cols)))
+  const [rows, setRows] = useState((currentSequenceState.beats ? currentSequenceState.beats.length : 3));
+  const [cols, setCols] = useState((currentSequenceState.beats ? currentSequenceState.beats[0].beat.length : 8));
+  const [checked, setChecked] = useState(setInitializeState(rows, cols))
   let index = 0;
+
+  function setInitializeState(row, col) {
+    console.log('Creating checkboxes with: ', row, col)
+    let arr = []
+    for (let i = 0; i < row; i++) {
+      arr.push([])
+      for (let j = 0; j < col; j++) {
+        if (currentSequenceState.beats) {
+          arr[i][j] = currentSequenceState.beats[i].beat[j]
+        } else {
+          arr[i][j] = false
+        }
+      }
+    }
+    return arr
+  }
 
   const createRows = (num) => {
     const rowArr = [];
@@ -99,9 +102,11 @@ const Sequencer = (props) => {
   }
 
   const handleLibraryChange = (e) => {
+    setLibrary(e.target.value)
   }
 
   const handleSubmit = (e) => {
+    // setPlay(false)
     if (!sequenceName) return;
     const beats = []
     soundLibrary[library].map((sound, index) => {
@@ -115,27 +120,45 @@ const Sequencer = (props) => {
     })
     const sequenceData = {
       sequenceTitle: sequenceName,
-      beatPad: index,
+      beatPad: props.index,
       library: library,
       beats: beats,
       stepSpeed: tempo,
       color: '#293847',
     }
-    props.setSequenceState(sequenceData, props.handleClose())
+    props.sequenceState[props.index] = sequenceData;
+    props.setSequenceState(props.sequenceState, props.handleClose())
   }
 
-  function valuetext(value) {
-    return `${value} notes`;
-  }
 
-  useEffect(() => {
-    Tone.Transport.scheduleRepeat(repeater, `${tempo}n`);
-    props.setPlay(true)
-  }, [])
+
+
+
+
+  // useEffect(() => {
+  //   Tone.Transport.scheduleRepeat(repeater, `${tempo}n`);
+  //   setPlay(true)
+  // }, [])
 
   useEffect(() => {
     setSounds(soundTools.createSoundArr(library))
   }, [library])
+
+  // useEffect(() => {
+  //   if (play && currentSequenceState.beats) {
+  //     Tone.Transport.start()
+  //   } else {
+  //     Tone.Transport.stop()
+  //     Tone.Transport.clear()
+  //   }
+  // }, [play])
+
+
+
+
+
+
+
 
   return (
     <>
@@ -163,7 +186,7 @@ const Sequencer = (props) => {
           <Slider
             defaultValue={tempo}
             onChange={e => handleChange(e, 'tempo')}
-            getAriaValueText={valuetext}
+            getAriaValueText={value => `${value} notes`}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="auto"
             step={2}
@@ -181,7 +204,6 @@ const Sequencer = (props) => {
           </Table>
         </TableContainer>
         <Button
-          // type='submit'
           onClick={handleSubmit}
         ><Typography>Submit</Typography></Button>
       </form>

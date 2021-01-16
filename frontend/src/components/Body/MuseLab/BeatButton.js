@@ -1,100 +1,79 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as Tone from 'tone';
 
 //Components
-import { DialogContext } from '../../../context/context';
 import * as soundTools from './SoundTools';
-import Sequencer from './Sequencer';
-
 //MUI
-import { Button, makeStyles, Typography, Dialog } from '@material-ui/core';
+import { Button, makeStyles, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
-
-
-const BeatButton = ({ index }) => {
-  const { dialogContext, setDialogContext } = useContext(DialogContext);
-  const [whichDialog, setWhichDialog] = useState('');
-  const [sequenceState, setSequenceState] = useState();
-  const [sounds, setSounds] = useState(sequenceState ? soundTools.createSoundArr(sequenceState.library) : [])
-  const [play, setPlay] = useState(false)
+const BeatButton = (props) => {
+  const [library] = useState(props.sequenceState.library ? props.sequenceState.library : 'drum_set')
+  const [sounds] = useState(library ? soundTools.createSoundArr(library) : null);
+  const [color] = useState(props.sequenceState.color ? props.sequenceState.color : '#293847');
+  const [play, setPlay] = useState(true);
+  let step = 0;
 
   const useStyles = makeStyles(() => ({
     button: {
       width: '10rem',
       height: '10rem',
-      // backgroundColor: `${buttondata.color}`
+      backgroundColor: `${color}`
     }
   }));
   const classes = useStyles();
 
-  //DIALOG Functions
-  const handleClose = () => {
-    setDialogContext(false);
-    setPlay(false)
-  }
-
   const handleClick = () => {
-    console.log('BUTTON CLICKED')
-    if (sequenceState) {
-      setPlay(!play)
+    if (props.sequenceState.beats) {
+      const sequence = Tone.Transport.scheduleRepeat(repeater, `${props.sequenceState.stepSpeed}n`);
+      // sequence()
+      if (play) {
+        // Tone.start()
+        Tone.Transport.start()
+        setPlay(!play)
+      } else {
+        Tone.Transport.stop()
+        // Tone.Transport.clear(sequence)
+        // step = 0
+        setPlay(!play)
+      }
     } else {
-      setDialogContext(true)
+      props.setOpenDialog(props.index)
     }
   }
 
-  let step = 0;
+  //Music Sequence Player
   const repeater = (time) => {
-    const rows = sequenceState.beats.length
-    const cols = sequenceState.beats[0].beat.length
-    let index = step % cols;
+    // const sounds = soundTools.createSoundArr(props.sequenceState[i].library)
+    const rows = props.sequenceState.beats.length
+    const cols = props.sequenceState.beats[0].beat.length
+    let index = step % cols
 
-    for (let i = 0; i < rows; i++) {
-      const currentRowCheck = sequenceState.beats[i].beat[index]
-      const currentSound = sounds[i]
+    for (let j = 0; j < rows; j++) {
+      const currentRowCheck = props.sequenceState.beats[j].beat[index]
+      const currentSound = sounds[j]
       currentSound.connect(soundTools.gain)
 
       if (currentRowCheck) {
-        currentSound.start();
+        currentSound.start(0);
       }
     }
+    console.log('step: ', step)
     step++;
   }
 
-  useEffect(() => {
-    if (sequenceState && sounds) {
-      setSounds(soundTools.createSoundArr(sequenceState.library))
-    }
-  }, [sequenceState])
-
-  useEffect(() => {
-    if (play && sequenceState) {
-      Tone.Transport.start()
-    } else {
-      Tone.Transport.stop()
-      Tone.Transport.clear()
-    }
-  }, [play])
 
   return (
     <>
       <Button className={classes.button} onClick={() => handleClick()}>
         {
-          sequenceState
-            ? <Typography>{sequenceState.sequenceTitle}</Typography>
+          props.sequenceState.beats
+            ? <Typography>{props.sequenceState.sequenceTitle}</Typography>
             : <AddIcon />
         }
 
       </Button>
-      <Dialog open={dialogContext} className={classes.dialog} aria-labelledby="form-dialog-title">
-        <Sequencer
-          setPlay={setPlay}
-          index={index}
-          setSequenceState={setSequenceState}
-          sequenceState={sequenceState}
-          handleClose={handleClose}
-        />
-      </Dialog>
+
     </>
   );
 }

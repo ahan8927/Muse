@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 //Components
 import Splash from './Body/Splash';
@@ -35,7 +36,8 @@ const useStyles = makeStyles(() => ({
 }))
 
 const Body = (props) => {
-  const classes = useStyles()
+  const classes = useStyles();
+  const beats = useSelector(state => state.session.beats)
 
   const [isLoaded, setIsLoaded] = useState(false)
   const [dialogContext, setDialogContext] = useState(false)
@@ -53,7 +55,7 @@ const Body = (props) => {
           <Switch>
             <Route exact path='/' render={props => <Splash {...props} />} />
             <Route exact path='/sequencer' render={props => <Sequencer {...props} />} />
-            <Route exact path='/muse-board' render={props => <MusicLab {...props} />} />
+            <Route exact path='/muse-board' render={props => <MusicLab {...props} beats={beats} />} />
             <Route path='*' render={props => <MusicLab {...props} />} />
             {/* <ProtectedRoute exact user={user} path="/search" component={SavedMaps} /> */}
           </Switch>
