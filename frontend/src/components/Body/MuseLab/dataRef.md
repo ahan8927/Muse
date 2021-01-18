@@ -6,12 +6,17 @@ const sequenceState = [
     sequenceTitle: 'Sequence 1',
     beatPad: 0,
     library: null,
-    beats: [
+    track: [
       {
         soundName: 'sound1',
         soundFile: 'somepath',
-        beat: [false, true, true, false, false, true, true, false],
+        beats: [false, true, true, false, false, true, true, false],
       },
+
+
+
+
+
       {
         soundName: 'sound2',
         soundFile: 'somepath',
@@ -21,6 +26,12 @@ const sequenceState = [
     stepSpeed: 8,
     color: '#293847',
   },
+
+
+
+
+
+
   { //Button 2
     sequenceTitle: 'Sequence 1',
     beatPad: 0,

@@ -35,3 +35,8 @@
 * Prime-react
 * Animate.css
 * Loading.io
+
+## Inspiration
+
+This project was inspired by beatBucket.io
+Please check out their project as well.

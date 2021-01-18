@@ -33,6 +33,19 @@ const LoginForm = (props) => {
     props.setWhichDialog('signup')
   }
 
+  const handleChange = (e) => {
+    switch (e.target.id) {
+      case 'email':
+        setCredential(e.target.value)
+        return;
+      case 'password':
+        setPassword(e.target.value)
+        return;
+      default:
+        return;
+    }
+  }
+
   return (
     <>
       <DialogTitle id="form-dialog-title">Log In</DialogTitle>
@@ -47,11 +60,11 @@ const LoginForm = (props) => {
           <TextField
             autoFocus
             margin="dense"
-            id="name"
+            id="email"
             label="Email Address"
             type='text'
             value={credential}
-            onChange={setCredential}
+            onChange={e => handleChange(e)}
             required
             fullWidth
           // color={'red'}
@@ -62,7 +75,7 @@ const LoginForm = (props) => {
             label="Password"
             type="password"
             value={password}
-            onChange={setPassword}
+            onChange={e => handleChange(e)}
             required
             fullWidth
           />
