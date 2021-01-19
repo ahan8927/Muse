@@ -46,16 +46,27 @@ const Board = () => {
 
   return (
     {sequenceState.map((track, index) => (
-      <Track key={index} bpm={bpm} master={master} track={sequenceState[index]}/>
+      <Track key={index} bpm={bpm} master={master} buttonTrack={sequenceState[index]}/>
     ))}
   )
 }
 
-//Button Component
-const Track = ({bpm, track}) => {
-  const currentTrack = SequenceState
+const initializeBlockSequence = (track) => {
+  const blockSequence = []
+  for(let i = 0; i < track.length; i++){
+    blockSequence.push([])
+    for(let j = 0l j < track[i].length; j++){
+      blockSequence[i].push(buffer[library][track[i].name])
+    }
+  }
+  return blockSequence;
+}
 
-  const [play, setPlay] = useState(false);
+//Button Component
+const Track = ({bpm, buttonTrack}) => {
+  const currentTrack = buttonTrack.track;
+
+  const [play, setPlay] = useRef(false);
 
   const [beat, setBeat] = useRef(0)
   const [beatSpeed, setBeatSpeed] = useState(60000 / bpm)
@@ -63,22 +74,31 @@ const Track = ({bpm, track}) => {
   const [step, setStep] = useState(1/2)
   const [stepSpeed, setStepSpeed] = useState(beatSpeed * step);
 
-  const [note, setNote] = useRef(0)
-  const [blockSequence, setBlockSequence] = useState([note1, note2, note3, note4])
-  const [subNoteSpeed, setSubNoteSpeed] = (noteSpeed / blockSequence.length);
+  const blockSequence = useState(initializeBlockSequence(currentTrack))
 
-  const trackSequencer = setInterval(checkBlock(beat), stepSpeed);
+  const trackSequencer = setInterval(checkBlock(currentTrack[beat]), stepSpeed);
   
 
-  const checkBlock = (beat) => {
-    const currentBlock = 
-    const blockSequencer = setInterval(playNote(), subNoteSpeed);
+  const checkBlock = (currentBlock) => {
+    const subNoteSpeed = (stepSpeed / currentBlock.length);
     let subNote = 0
     const playNote = () => {
-
+      if(subNote === currentBlock.length){
+        clearInterval(blockSequencer);
+      } else {
+        const currentNote = currentBlock[subNote]
+        currentNote.start()
+        subNote++;
+      }
     }
+    const blockSequencer = setInterval(playNote(), subNoteSpeed);
     setBeat(beat++)
   }
+
+  useEffect(() => {
+    if (play) playSequence();
+    else stopSequence();
+  }, [play])
 
   useEffect(() => {
     setBeatSpeed((60000 / bpm), setStepSpeed(beatSpeed * step))

@@ -25,9 +25,9 @@ const BeatButton = (props) => {
 
   const handleClick = () => {
     if (props.sequenceState.beats) {
-      const sequence = Tone.Transport.scheduleRepeat(repeater, `${props.sequenceState.stepSpeed}n`);
       // sequence()
       if (play) {
+        const sequence = Tone.Transport.scheduleRepeat(repeater, `${props.sequenceState.stepSpeed}n`);
         // Tone.start()
         Tone.Transport.start()
         setPlay(!play)
@@ -43,7 +43,7 @@ const BeatButton = (props) => {
   }
 
   //Music Sequence Player
-  const repeater = (time) => {
+  function repeater(time) {
     // const sounds = soundTools.createSoundArr(props.sequenceState[i].library)
     const rows = props.sequenceState.beats.length
     const cols = props.sequenceState.beats[0].beat.length
