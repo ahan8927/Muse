@@ -2,7 +2,7 @@ const multiplier = 2
 const bpm = Math.floor(60000 / 60)
 
 const playTrack = (track) => {
-  console.log(track)
+  // console.log(track)
   let currentBlock = 0
 
   const blockStepSpeed = (bpm * multiplier)
@@ -10,14 +10,14 @@ const playTrack = (track) => {
 
   function playBlock() {
     let currentNote = 0
+    const noteSpeed = Math.floor(blockStepSpeed / track[currentBlock].length);
     if (currentBlock < track.length - 1) {
-      const noteSpeed = (blockStepSpeed / track[currentBlock].length);
-      console.log(`\nCurrentBlock: ${currentBlock}, currentBlockSpeed: ${blockStepSpeed}, currentNoteSpeed: ${noteSpeed}`)
+      // console.log(`\nCurrentBlock: ${currentBlock}, currentBlockSpeed: ${blockStepSpeed}, currentNoteSpeed: ${noteSpeed}`)
       let blockSequencer = setInterval(playNote, noteSpeed);
 
       function playNote() {
         if (currentNote <= track[currentBlock].length - 1) {
-          console.log('currentNote: ', currentNote)
+          console.log(`currentBlock: ${currentBlock} currentNote: `, currentNote)
           currentNote += 1;
         } else {
           currentNote = 0;
@@ -79,7 +79,7 @@ function getAllNestedElements(arr) {
   return result;
 }
 
-getAllNestedElements(array)
+// getAllNestedElements(trackData)
 
 playTrack(trackData)
 // loopTester(trackData)

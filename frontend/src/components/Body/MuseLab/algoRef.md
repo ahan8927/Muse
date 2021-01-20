@@ -36,6 +36,29 @@ const startSequencer = () => {
 
 ```
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Second attempt at refactor
 
 ```js
