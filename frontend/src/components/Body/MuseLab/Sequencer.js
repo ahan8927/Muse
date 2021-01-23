@@ -38,7 +38,8 @@ const Sequencer = (props) => {
   const [tempo, setTempo] = useState(8);
   // const [play, setPlay] = useState(false)
 
-  const [sounds, setSounds] = useState(soundTools.createSoundArr(library))
+  // const [sounds, setSounds] = useState(soundTools.createSoundArr(library))
+  const sound = true
   const [rows, setRows] = useState((currentSequenceState.beats ? currentSequenceState.beats.length : 3));
   const [cols, setCols] = useState((currentSequenceState.beats ? currentSequenceState.beats[0].beat.length : 8));
   const [checked, setChecked] = useState(setInitializeState(rows, cols))
@@ -140,9 +141,9 @@ const Sequencer = (props) => {
   //   setPlay(true)
   // }, [])
 
-  useEffect(() => {
-    setSounds(soundTools.createSoundArr(library))
-  }, [library])
+  // useEffect(() => {
+  //   setSounds(soundTools.createSoundArr(library))
+  // }, [library])
 
   // useEffect(() => {
   //   if (play && currentSequenceState.beats) {

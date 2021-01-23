@@ -39,7 +39,7 @@ export const loginUser = (user) => async (dispatch) => {
 }
 
 export const signupUser = (user) => async (dispatch) => {
-  const { firstname, lastname, gender, email, height, weight, password } = user;
+  const { username, email, password } = user;
   try {
     const res = await fetch("/api/auth/signup", {
       method: "POST",

@@ -17,41 +17,23 @@ const trackData = [
   [
     'block-3_note-0',
   ],
+  [
+  ],
 ]
 
-// const playTrack = (track, actualbpm = 60, multiplier = 1) => {
-
-//   const bpm = (60000 / actualbpm);
-//   const blockStepSpeed = bpm * multiplier;
-
-//   let currentBlock = 0;
-
-//   (function playNote(currentNote) {
-//     const noteSpeed = Math.floor(blockStepSpeed / track[currentBlock].length);
-
-//     console.log('currentBlock: ', currentBlock, 'currentNote: ', currentNote);
-
-//     setTimeout(function () {
-//       if (++currentNote < track[currentBlock].length) {
-//         playNote(currentNote)
-//       }
-//     }, noteSpeed)
-//   })(0)
-
-// }
-
-// playTrack(trackData, 60, 1)
-
 const bpm = 60000 / 60;
-const multiplier = 2
+const multiplier = 1
 
 function playTrack(track) {
-  console.log('Start!!, track length: ', track.length)
+  console.log('Start!!, track length: ', track.length, '\n')
   let currentBlock = 0;
 
   (function playBlock() {
+    console.log('\ncurrentBlock: ', currentBlock)
+    // play note
+
     let currentNote = 0
-    const noteSpeed = ((bpm * multiplier) / track[currentBlock].length)
+    const noteSpeed = track[currentBlock].length ? ((bpm * multiplier) / track[currentBlock].length) : (bpm * multiplier)
     if (currentBlock <= track.length - 1) {
       playNote()
     } else {
@@ -60,16 +42,19 @@ function playTrack(track) {
     }
 
     function playNote() {
-      console.log('currentBlock: ', currentBlock, ' currentNote: ', currentNote, ' currentSpeed: ', noteSpeed)
-      if (currentNote++ < track[currentBlock].length - 1) {
+      // console.log('currentBlock: ', currentBlock, ' currentNote: ', currentNote, ' currentSpeed: ', noteSpeed)
+      // play note
+
+      currentNote++
+      if (currentNote < track[currentBlock].length) {
         setTimeout(playNote, noteSpeed);
       } else {
-        if (currentBlock++ < track.length - 1) {
-          console.log(currentBlock, '+= 1');
+        currentBlock++
+        if (currentBlock < track.length) {
+          // console.log(currentBlock, '+= 1\n');
           setTimeout(playBlock, noteSpeed);
         } else {
-          currentBlock = 0;
-          setTimeout(playBlock, noteSpeed);
+          setTimeout(() => playTrack(track), noteSpeed);
         }
       }
     }

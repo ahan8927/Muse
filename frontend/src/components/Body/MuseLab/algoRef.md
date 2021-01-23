@@ -69,7 +69,7 @@ const Board = () => {
 
   return (
     {sequenceState.map((track, index) => (
-      <Track key={index} bpm={bpm} master={master} buttonTrack={sequenceState[index]}/>
+      <Button key={index} bpm={bpm} master={master} buttonTrack={sequenceState[index]}/>
     ))}
   )
 }
@@ -86,65 +86,52 @@ const initializeBlockSequence = (track) => {
 }
 
 //Button Component
-const Track = ({bpm, buttonTrack}) => {
+const Button = ({bpm, buttonTrack}) => {
   const currentTrack = buttonTrack.track;
 
   const [play, setPlay] = useRef(false);
+  let delay;
 
-  const [beat, setBeat] = useRef(0)
-  const [beatSpeed, setBeatSpeed] = useState(60000 / bpm)
+  function playTrack(track) {
+    console.log('Start!!, track length: ', track.length, '\n')
+    let currentBlock = 0;
 
-  const [step, setStep] = useState(1/2)
-  const [stepSpeed, setStepSpeed] = useState(beatSpeed * step);
+    (function playBlock() {
+      // console.log('currentBlock: ', currentBlock)
+      // play note
 
-  const blockSequence = useState(initializeBlockSequence(currentTrack))
-
-  const trackSequencer = setInterval(checkBlock(currentTrack[beat]), stepSpeed);
-  
-
-  const checkBlock = (currentBlock) => {
-    const subNoteSpeed = (stepSpeed / currentBlock.length);
-    let subNote = 0
-    const playNote = () => {
-      if(subNote === currentBlock.length){
-        clearInterval(blockSequencer);
+      let currentNote = 0
+      const noteSpeed = ((bpm * multiplier) / track[currentBlock].length)
+      if (currentBlock <= track.length - 1) {
+        playNote()
       } else {
-        const currentNote = currentBlock[subNote]
-        currentNote.start()
-        subNote++;
+        console.log('loop done');
+        return;
       }
-    }
-    const blockSequencer = setInterval(playNote(), subNoteSpeed);
-    setBeat(beat++)
+
+      function playNote() {
+        // console.log('currentBlock: ', currentBlock, ' currentNote: ', currentNote, ' currentSpeed: ', noteSpeed)
+        // play note
+
+        currentNote++
+        if (currentNote < track[currentBlock].length) {
+          setTimeout(playNote, noteSpeed);
+        } else {
+          currentBlock++
+          if (currentBlock < track.length) {
+            setTimeout(playBlock, noteSpeed);
+          } else {
+            setTimeout(() => playTrack(track), noteSpeed);
+          }
+        }
+      }
+    })()
   }
 
   useEffect(() => {
     if (play) playSequence();
-    else stopSequence();
+    else clearTimeout(delay)
   }, [play])
-
-  useEffect(() => {
-    setBeatSpeed((60000 / bpm), setStepSpeed(beatSpeed * step))
-  }, [bpm])
-
-  useEffect(() => {
-    setStepSpeed(beatSpeed * step)
-  }, [step])
-
-  useEffect(() => {
-    setSubNoteSpeed(beatSpeed / blockSequence.length)
-  }, [blockSequence])
-
-  return (
-    <Block noteSpeed={noteSpeed}/>
-  )
-}
-
-const Block = ({noteSpeed}) => {
-
-  
-
-
 }
 
 ```

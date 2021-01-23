@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 
 //Components
 import BeatButton from './BeatButton';
-import Sequencer from './Sequencer';
+// import Sequencer from './Sequencer';
+import { createTempSequence } from './SoundLibrary';
 
 //MUI
 import { Dialog } from '@material-ui/core';
@@ -51,8 +52,9 @@ const setInitialState = () => {
 const MusicLab = (props) => {
   const classes = useStyles();
 
-  const [beatPads] = useState(16);
-  const [sequenceState, setSequenceState] = useState(props.beats ? props.beats : setInitialState());
+  const [beatPads] = useState(1);
+  // const [sequenceState, setSequenceState] = useState(props.beats ? props.beats : setInitialState());
+  const [sequenceState, setSequenceState] = useState(createTempSequence());
   const [openDialog, setOpenDialog] = useState(null)
 
   //DIALOG Functions
@@ -70,7 +72,7 @@ const MusicLab = (props) => {
     }
     for (let i = 0; i < beatPads; i++) {
       buttonSettings['index'] = i
-      buttonSettings['sequenceState'] = sequenceState[i]
+      buttonSettings['currentTrack'] = sequenceState[i]
       loop.push(
         <Grid item key={i}>
           <BeatButton {...buttonSettings} />
@@ -91,14 +93,14 @@ const MusicLab = (props) => {
       >
         {createBeatPad()}
       </Grid>
-      <Dialog open={openDialog ? true : false} className={classes.dialog} aria-labelledby="form-dialog-title">
+      {/* <Dialog open={openDialog ? true : false} className={classes.dialog} aria-labelledby="form-dialog-title">
         {openDialog && <Sequencer
           index={openDialog}
           setSequenceState={setSequenceState}
           sequenceState={sequenceState}
           handleClose={handleClose}
         />}
-      </Dialog>
+      </Dialog> */}
     </>
   );
 }
