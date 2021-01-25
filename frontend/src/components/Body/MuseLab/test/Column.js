@@ -11,24 +11,23 @@ const Container = styled.div`
 
   margin: 1rem;
   border-radius: .5rem;
-  min-height: 10rem;
-  width: 10rem;
+  min-height: 8rem;
+  width: 15rem;
 
-  background: #212121;
-  box-shadow: inset 9px 9px 18px #131313, inset -9px -9px 18px #2f2f2f;
+  backgroundColor: '#212121',
 `;
 
 const Title = styled.h3`
-  padding: 8px;
   min-height: 1rem;
-  color: #f0efeb;
 `;
 
 const TaskList = styled.div`
-  min-height: 10rem;
-  
-  padding: 1rem;
-  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  min-height: 15rem;
+  min-width: 9rem;
 `;
 
 const Column = (props) => {
