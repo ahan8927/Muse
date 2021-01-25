@@ -1,4 +1,4 @@
-const soundLibrary = {
+export const soundLibrary = {
   'keys': {
     'Keys_1': 'sounds/keys-guitars/keys/keys1.wav',
     'Keys_2': 'sounds/keys-guitars/keys/keys2.wav',
@@ -47,6 +47,50 @@ const soundLibrary = {
 export const createTempSequence = () => {
   return [
     { //Button 1
+      sequenceTitle: 'Drum Sequence',
+      track: [
+        [ //Block
+          { //Keys
+            library: '808',
+            name: 'Kick',
+          },
+          {
+            library: 'percussions',
+            name: 'Hat',
+          },
+          {
+            library: 'snares',
+            name: 'Snare',
+          },
+          {
+            library: '808',
+            name: 'Kick',
+          },
+        ],
+        [ //Block2
+          {
+            library: 'percussions',
+            name: 'Hat',
+          },
+          {
+            library: '808',
+            name: 'Kick',
+          },
+          {
+            library: 'snares',
+            name: 'Snare',
+          },
+          {
+            library: 'percussions',
+            name: 'Hat',
+          },
+        ],
+      ],
+      bpm: 60000 / 60,
+      multiplier: 1,
+      color: '#293847',
+    },
+    { //Button 2
       sequenceTitle: 'Drum Sequence',
       track: [
         [ //Block

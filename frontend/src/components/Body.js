@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 //Components
 import Splash from './Body/Splash';
 import MusicLab from './Body/MuseLab/MusicLab';
+import Sequencer from './Body/MuseLab/Sequencer'
 import { DialogContext } from '../context/context'
 
 //MUI
@@ -53,6 +54,7 @@ const Body = (props) => {
         <Paper className={classes.paper} elevation={0}>
           <Switch>
             <Route exact path='/' render={props => <Splash {...props} />} />
+            <Route exact path='/sequencer' render={props => <Sequencer />} />
             <Route exact path='/muse-board' render={props => <MusicLab {...props} beats={beats} />} />
             <Route path='*' render={props => <MusicLab {...props} />} />
             {/* <ProtectedRoute exact user={user} path="/search" component={SavedMaps} /> */}

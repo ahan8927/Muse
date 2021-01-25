@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 
 //Components
 import BeatButton from './BeatButton';
-// import Sequencer from './Sequencer';
-import { createTempSequence } from './SoundLibrary';
+import Sequencer from './Sequencer'
 
 //MUI
 import { Dialog } from '@material-ui/core';
@@ -31,20 +30,21 @@ const useStyles = makeStyles((theme) => ({
     height: '10rem',
     backgroundColor: 'white',
   },
+  dialog: {
+    minWidth: '5rem',
+    minHeight: '5rem',
+  }
 }));
 const setInitialState = () => {
   const initialState = []
   for (let i = 0; i < 16; i++) {
-    initialState.push(
-      {
-        sequenceTitle: '',
-        beatPad: i,
-        library: null,
-        beats: null,
-        stepSpeed: 8,
-        color: '#293847',
-      }
-    )
+    initialState.push({
+      sequenceTitle: '',
+      track: null,
+      bpm: 60,
+      multiplier: 1,
+      color: '#293847',
+    })
   }
   return initialState
 }
@@ -52,9 +52,9 @@ const setInitialState = () => {
 const MusicLab = (props) => {
   const classes = useStyles();
 
-  const [beatPads] = useState(1);
-  // const [sequenceState, setSequenceState] = useState(props.beats ? props.beats : setInitialState());
-  const [sequenceState, setSequenceState] = useState(createTempSequence());
+  const [beatPads] = useState(16);
+  const [sequenceState, setSequenceState] = useState(props.beats ? props.beats : setInitialState());
+  // const [sequenceState, setSequenceState] = useState(createTempSequence());
   const [openDialog, setOpenDialog] = useState(null)
 
   //DIALOG Functions
@@ -82,6 +82,7 @@ const MusicLab = (props) => {
     return loop
   }
 
+  console.log('Dialog open? : ', openDialog)
   return (
     <>
       <Grid
@@ -93,14 +94,17 @@ const MusicLab = (props) => {
       >
         {createBeatPad()}
       </Grid>
-      {/* <Dialog open={openDialog ? true : false} className={classes.dialog} aria-labelledby="form-dialog-title">
-        {openDialog && <Sequencer
+      <Dialog
+        open={openDialog ? true : false}
+        className={classes.dialog}
+      >
+        <Sequencer
           index={openDialog}
           setSequenceState={setSequenceState}
           sequenceState={sequenceState}
           handleClose={handleClose}
-        />}
-      </Dialog> */}
+        />
+      </Dialog>
     </>
   );
 }

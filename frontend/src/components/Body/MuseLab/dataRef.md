@@ -35,5 +35,6 @@ const sequenceState = [
         ],
     ],
     bpm: 60,
+    multiplier: 1,
     color: '#293847',
   },

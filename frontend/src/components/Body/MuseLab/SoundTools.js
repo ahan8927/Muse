@@ -32,11 +32,6 @@ export function createSoundNode(library, name) {
   return sound
 }
 
-export function createBuffer() {
-  const buffer = new Tone.Buffer('sounds/808-snares/clap.wav', () => console.log('Tone loaded'))
-  return buffer
-}
-
 // export function createSoundArr(library) {
 //   const soundArr = []
 //   for (let i = 0; i < soundLibrary[`${library}`].length; i++) {

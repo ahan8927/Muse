@@ -4,6 +4,6 @@
 
 * Save state / Load State
 * Recording / Playing
-* Bucket features (copy, paste, delete, clear)
-* Library
+* Block features (copy, paste, delete, clear)
+* Library page
 * Search other user's libraries.

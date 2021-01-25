@@ -31,10 +31,13 @@
 * Docker
 * JS
 * Python
+* react-dnd
 
 * Prime-react
+  * mainly for the carousel
 * Animate.css
 * Loading.io
+* Neumorphism-ui
 
 ## Inspiration
 
