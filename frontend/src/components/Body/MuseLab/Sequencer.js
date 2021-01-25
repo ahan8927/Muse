@@ -1,78 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import * as Tone from 'tone';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import styled from 'styled-components';
 
 //Components
-import soundLibrary, { createTempSequence } from './SoundLibrary';
+import soundLibrary from './SoundLibrary';
 import * as soundTools from './SoundTools';
-import Block from './Block';
-import NoteCard from './Note';
+import initialData from './test/test';
+import Column from './test/Column';
 
 //MUI
-import { Button, makeStyles, Typography } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 
-const useStyles = makeStyles(() => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+const Container = styled.div`
+ display: flex;
+`
 
-    margin: '1rem',
-
-    minHeight: '10rem',
-    minWidth: '10rem',
-  },
-  blockList: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-
-    margin: '0',
-    padding: '0',
-
-    listStyle: 'none',
-    border: 'solid',
-  },
-  blockItem: {
-    // display: 'flex',
-    // flexDirection: 'column',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-  },
-  noteList: {
-    margin: '1rem',
-    padding: '0',
-
-    listStyle: 'none',
-    border: 'solid red',
-  },
-  noteItem: {
-    display: 'flex',
-    justifyContent: 'center',
-
-    minWidth: '5rem',
-
-    backgroundColor: '#C6E0FF',
-    margin: '0.5rem',
-  },
-}));
-
-const initializeSequence = () => {
-  const trackArr = []
-  for (let i = 0; i > 4; i++) {
-    trackArr.append([])
-  }
-  return trackArr;
-}
+const Root = styled.div`
+background: #212121;
+`
 
 const Sequencer = (props) => {
-  const classes = useStyles();
 
   const [sequenceName, setSequenceName] = useState('');
-  const [sequenceData, setSequenceData] = useState(createTempSequence()[0])
-  // const [trackSequence, setTrackSequence] = useState(initializeSequence())
+  const [sequenceData, setSequenceData] = useState(initialData)
+
   const [isLoaded, setIsLoaded] = useState(false)
 
   const handleChange = (e, location) => {
@@ -88,77 +40,115 @@ const Sequencer = (props) => {
     props.handleClose()
   }
 
-  const handleDragEnd = (result) => {
-    console.log(result)
+  const handleOnDragEnd = (result) => {
+    const { destination, source, draggableId, type } = result;
+    if (!destination) return;
+
+    //will do nothing if you try to move into same columm
+    if (
+      destination.draggableId === source.droppableId &&
+      destination.index === source.index
+    ) return;
+
+    if (type === 'column') {
+      const newColumnOrder = Array.from(sequenceData.columnOrder);
+      newColumnOrder.splice(source.index, 1)
+      newColumnOrder.splice(destination.index, 0, draggableId)
+
+      const newState = {
+        ...sequenceData,
+        columnOrder: newColumnOrder,
+      }
+
+      setSequenceData(newState);
+      return;
+    }
+
+    const start = sequenceData.columns[source.droppableId];
+    const finish = sequenceData.columns[destination.droppableId];
+
+    if (start === finish) {
+      const newTaskIds = Array.from(start.taskIds)
+      newTaskIds.splice(source.index, 1);
+      newTaskIds.splice(destination.index, 0, draggableId);
+
+      const newColumn = {
+        ...start,
+        taskIds: newTaskIds,
+      }
+
+      const newState = {
+        ...sequenceData,
+        columns: {
+          ...sequenceData.columns,
+          [newColumn.id]: newColumn,
+        },
+      }
+      console.log(newState)
+
+      setSequenceData(newState);
+      return;
+    }
+
+    const startTaskIds = Array.from(start.taskIds);
+    startTaskIds.splice(source.index, 1);
+    const newStart = {
+      ...start,
+      taskIds: startTaskIds,
+    };
+
+    const finishTaskIds = Array.from(finish.taskIds);
+    finishTaskIds.splice(destination.index, 0, draggableId);
+    const newFinish = {
+      ...finish,
+      taskIds: finishTaskIds,
+    };
+
+    const newState = {
+      ...sequenceData,
+      columns: {
+        ...sequenceData.columns,
+        [newStart.id]: newStart,
+        [newFinish.id]: newFinish,
+      },
+    }
+    setSequenceData(newState);
+    return;
   }
 
-  useEffect(() => {
-    setIsLoaded(true)
-  }, [])
+  return (
+    <Root>
+      <TextField onChange={handleChange('name')} />
+      <DragDropContext
+        onDragEnd={handleOnDragEnd}
+      >
+        <Droppable
+          droppableId='track'
+          direction='horizontal'
+          type='column'
+        >
+          {(provided) => (
+            <Container
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {sequenceData.columnOrder.map((columnId, index) => {
+                const column = sequenceData.columns[columnId];
+                const tasks = column.taskIds.map(taskId => sequenceData.tasks[taskId])
 
-  return isLoaded && (
-    <div className={classes.root}>
-      <form noValidate autoComplete="off">
-        <TextField required align='center' id="standard-basic" label="Sequence Name" value={sequenceName} onChange={(e) => handleChange(e, 'name')} />
-
-        <ul className={classes.blockList}> {/* Track */}
-          <DragDropContext onDragEnd={handleDragEnd}>
-            <li className={classes.blockItem}> {/* block */}
-
-              <Droppable droppableId='notes'>
-                {(provided) => (
-                  <ul
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                    className={classes.noteList}
-                  >
-                    {sequenceData.track[0].map((note, index) => {
-                      return (
-                        <Draggable key={index} draggableId={`${note.library}-${note.name}-${index}`} indx={index}>
-                          {(provided) => (
-                            <li
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              ref={provided.innerRef}
-                              className={classes.noteItem}
-                            >
-                              <Typography>{note.name}</Typography>
-                            </li>
-                          )}
-                        </Draggable>
-                      )
-                    })}
-                    {provided.placeholder}
-                  </ul>
-                )}
-              </Droppable>
-            </li>
-          </DragDropContext>
-        </ul>
-
-        {/* <Block id='block-1'>
-                  <NoteCard id='card-1'>
-                    <Typography>Sound 1</Typography>
-                  </NoteCard>
-                  <NoteCard id='card-2'>
-                    <Typography>Sound 2</Typography>
-                  </NoteCard>
-                </Block>
-
-                <Block id='block-2'>
-                  <NoteCard id='card-3'>
-                    <Typography>Sound 3</Typography>
-                  </NoteCard>
-                  <NoteCard id='card-4'>
-                    <Typography>Sound 4</Typography>
-                  </NoteCard>
-                </Block> */}
-
-        <Button
-          onClick={handleSubmit}
-        ><Typography>Submit</Typography></Button>
-      </form>
-    </div>
+                return <Column
+                  key={column.id}
+                  column={column}
+                  tasks={tasks}
+                  index={index}
+                />;
+              })}
+              {provided.placeholder}
+            </Container>
+          )}
+        </Droppable>
+      </DragDropContext>
+    </Root>
   );
 }
 
