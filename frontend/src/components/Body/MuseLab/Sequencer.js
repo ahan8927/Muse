@@ -89,7 +89,6 @@ const Sequencer = (props) => {
 
   const [sequenceName, setSequenceName] = useState('');
   const [sequenceData, setSequenceData] = useState(initialData);
-  const [trackData, setTrackData] = useState(converter(sequenceData))
 
   const [play, setPlay] = useState(false)
   const [bpm] = useState(1000);
@@ -99,17 +98,18 @@ const Sequencer = (props) => {
 
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const initializeBuffer = (track) => {
+  const initializeBuffer = () => {
     const placeHolder = {}
-    if (track) {
-      track.forEach((currentBlock) => {
-        currentBlock.forEach((note) => {
-          Object.assign(placeHolder, { [note.name]: soundLibrary[note.library][note.name] })
+    if (sequenceData) {
+      Object.values(sequenceData.columns).forEach(blockData => {
+        blockData.taskIds.forEach(noteId => {
+          const { name, library } = sequenceData.tasks[noteId]
+          placeHolder[name] = soundLibrary[library][name] //file path
         })
       })
     }
+
     const bufferDict = new Tone.Buffers(placeHolder, () => setBuffer(bufferDict))
-    setIsLoaded(true)
   }
 
   const handleChange = (e, location) => {
@@ -152,7 +152,7 @@ const Sequencer = (props) => {
         newId
       ]
     }
-    setSequenceData(newState, setTrackData(converter(sequenceData)));
+    setSequenceData(newState);
   }
 
   const handleBlockDelete = () => {
@@ -161,7 +161,7 @@ const Sequencer = (props) => {
     newState.columnOrder.pop()
     delete newState.columns[idToDelete]
 
-    setSequenceData(newState, setTrackData(converter(sequenceData)));
+    setSequenceData(newState);
   }
 
   const handleSubmit = () => {
@@ -189,7 +189,7 @@ const Sequencer = (props) => {
         columnOrder: newColumnOrder,
       }
 
-      setSequenceData(newState, setTrackData(converter(sequenceData)));
+      setSequenceData(newState);
       return;
     }
 
@@ -214,7 +214,7 @@ const Sequencer = (props) => {
         },
       }
 
-      setSequenceData(newState, setTrackData(converter(sequenceData)));
+      setSequenceData(newState);
       return;
     }
 
@@ -240,66 +240,46 @@ const Sequencer = (props) => {
         [newFinish.id]: newFinish,
       },
     }
-    setSequenceData(newState, setTrackData(converter(sequenceData)));
+    setSequenceData(newState);
     return;
   }
 
-  function converter(sequence) {
-    console.log(sequence)
-    const { tasks, columns, columnOrder } = sequence;
-    const track = []
-
-    columnOrder.map((block, i) => {
-      const currentBlock = columns[block];
-      const tempBlock = [];
-      console.log(currentBlock);
-
-      (currentBlock.taskIds.length > 0) && currentBlock.taskIds.map((note, j) => {
-        const currentNote = tasks[note]
-        const tempObj = {}
-
-        tempObj['library'] = currentNote.library;
-        tempObj['name'] = currentNote.name;
-
-        tempBlock.push(tempObj);
-      });
-
-
-      track.push(tempBlock)
-    });
-    console.log(track)
-    return track
-  }
-
-  function playTrack(track) {
+  function playTrack() {
     let currentBlock = 0;
 
     (function playBlock() {
-
       let currentNote = 0
-      const noteSpeed = track[currentBlock].length ? ((bpm * multiplier) / track[currentBlock].length) : (bpm * multiplier)
-      if (currentBlock <= track.length - 1) {
+      const currentBlockData = sequenceData.columns[sequenceData.columnOrder[currentBlock]]
+
+      let noteSpeed = 0
+      if (currentBlockData.taskIds.length > 0) {
+        noteSpeed = (bpm * multiplier) / currentBlockData.taskIds.length
         playNote()
       } else {
-        return;
+        noteSpeed = bpm * multiplier
+        currentBlock++
+        if (currentBlock < sequenceData.columnOrder.length) {
+          setDelay(setTimeout(playBlock, noteSpeed))
+        } else {
+          setDelay(setTimeout(() => playTrack(), noteSpeed))
+        }
       }
 
       function playNote() {
-        const { library, name } = track[currentBlock][currentNote]
-        console.log('currentBlock: ', currentBlock, ' currentNote: ', currentNote, ' currentSpeed: ', noteSpeed)
+        const { name } = sequenceData.tasks[currentBlockData.taskIds[currentNote]]
 
         const currentSound = new Tone.Player(buffer.get(name).get()).toDestination()
         currentSound.start()
 
         currentNote++;
-        if (currentNote < track[currentBlock].length) {
+        if (currentNote < currentBlockData.taskIds.length) {
           setDelay(setTimeout(playNote, noteSpeed));
         } else {
           currentBlock++
-          if (currentBlock < track.length) {
+          if (currentBlock < sequenceData.columnOrder.length) {
             setDelay(setTimeout(playBlock, noteSpeed))
           } else {
-            setDelay(setTimeout(() => playTrack(track), noteSpeed))
+            setDelay(setTimeout(() => playTrack(), noteSpeed))
           }
         }
       }
@@ -319,18 +299,23 @@ const Sequencer = (props) => {
 
 
   useEffect(() => {
-    initializeBuffer(trackData)
+    initializeBuffer()
+    setIsLoaded(true)
   }, [])
 
   useEffect(() => {
-    if (trackData) {
+    if (sequenceData) {
       if (play) {
-        playTrack(trackData)
+        playTrack()
       } else {
         clearTimeout(delay);
       }
     }
   }, [play])
+
+  useEffect(() => {
+    console.log('SequenceData: ', sequenceData)
+  }, [sequenceData])
 
   return isLoaded && (
     <Root>
@@ -357,7 +342,7 @@ const Sequencer = (props) => {
       </Header>
 
       <ButtonContainer style={{ justifyContent: 'center' }}>
-        <IconButton onClick={() => trackData && setPlay(!play)}>
+        <IconButton onClick={() => sequenceData && setPlay(!play)}>
           {(play)
             ? <PauseRoundedIcon />
             : <PlayArrowRoundedIcon />}
