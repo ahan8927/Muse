@@ -1,5 +1,5 @@
 export const soundLibrary = {
-  'keys': {
+  'Keys': {
     'Keys_1': 'sounds/keys-guitars/keys/keys1.wav',
     'Keys_2': 'sounds/keys-guitars/keys/keys2.wav',
     'Keys_3': 'sounds/keys-guitars/keys/keys3.wav',
@@ -8,14 +8,14 @@ export const soundLibrary = {
     'Keys_6': 'sounds/keys-guitars/keys/keys6.wav',
     'Keys_7': 'sounds/keys-guitars/keys/keys7.wav',
   },
-  'guitars': {
+  'Guitars': {
     'Guitar_1': 'sounds/keys-guitars/guitar/guitar_palm-1',
     'Guitar_2': 'sounds/keys-guitars/guitar/guitar_palm-2',
     'Guitar_3': 'sounds/keys-guitars/guitar/guitar_palm-3',
     'Guitar_4': 'sounds/keys-guitars/guitar/guitar_palm-4',
     'Guitar_5': 'sounds/keys-guitars/guitar/guitar_palm-5',
   },
-  'percussions': {
+  'Percussions': {
     'Hat': 'sounds/percussions/hat.mp3',
     'Claves': 'sounds/percussions/claves.mp3',
     'Triangle': 'sounds/percussions/triangle.mp3',
@@ -26,7 +26,7 @@ export const soundLibrary = {
     'Tom': 'sounds/percussions/tom.mp3',
     'Tom_2': 'sounds/percussions/tom2.mp3',
   },
-  'snares': {
+  'Snares': {
     'Snare': 'sounds/808-snares/snare.wav',
     'Snare_2': 'sounds/808-snares/snare2.wav',
     'Rim': 'sounds/808-snares/rim.wav',

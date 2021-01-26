@@ -6,24 +6,61 @@ import styled from 'styled-components';
 //Components
 import soundLibrary from './SoundLibrary';
 import * as soundTools from './SoundTools';
-import initialData from './test/test';
+import { initialData } from './test/test';
 import Column from './test/Column';
+import Library from './test/Library';
 
 //MUI
+import { makeStyles } from '@material-ui/core'
+import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+const Root = styled.div`
+  background: #212121;
+  padding: 4rem;
+  width: fit-content;
+`
 
 const Container = styled.div`
  display: flex;
+ width: fit-content;
+//  border: solid red;
 `
 
-const Root = styled.div`
-background: #212121;
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
+
+const InputContainer = styled.div`
+  padding: 0 1rem;
+`
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: 'space-betwee',
+`
+
+const useStyles = makeStyles(() => ({
+  expandIcon: {
+    colorPrimary: 'white',
+  },
+  accordion: {
+    backgroundColor: '#212121'
+  }
+}))
 
 const Sequencer = (props) => {
+  const classes = useStyles()
 
   const [sequenceName, setSequenceName] = useState('');
   const [sequenceData, setSequenceData] = useState(initialData)
+  const [multipler, setMultiplier] = useState(1)
 
   const [isLoaded, setIsLoaded] = useState(false)
 
@@ -31,6 +68,9 @@ const Sequencer = (props) => {
     switch (location) {
       case 'name':
         setSequenceName(e.target.value)
+        return;
+      case 'multiplier':
+        setMultiplier(e)
         return;
     }
   }
@@ -116,9 +156,34 @@ const Sequencer = (props) => {
     return;
   }
 
-  return (
+  useEffect(() => {
+    setIsLoaded(true, console.log(sequenceData))
+  }, [])
+
+  return isLoaded && (
     <Root>
-      <TextField onChange={handleChange('name')} />
+      <Header>
+        <TextField
+          InputProps={{
+            style: {
+              width: '10rem',
+              textAlign: 'center',
+              color: 'white',
+            }
+          }}
+          label="Sequence Name"
+          value={sequenceName}
+          onChange={(e) => handleChange(e, 'name')}
+        />
+        <ButtonContainer>
+          <Button onClick={() => handleChange(2, 'multiplier')} >2</Button>
+          <Button onClick={() => handleChange(1, 'multiplier')} >1</Button>
+          <Button onClick={() => handleChange(1 / 2, 'multiplier')} >1/2</Button>
+          <Button onClick={() => handleChange(1 / 4, 'multiplier')} >1/4</Button>
+          <Button onClick={() => handleChange(1 / 8, 'multiplier')} >1/8</Button>
+        </ButtonContainer>
+      </Header>
+
       <DragDropContext
         onDragEnd={handleOnDragEnd}
       >
@@ -134,6 +199,7 @@ const Sequencer = (props) => {
             >
               {sequenceData.columnOrder.map((columnId, index) => {
                 const column = sequenceData.columns[columnId];
+                console.log(columnId, index)
                 const tasks = column.taskIds.map(taskId => sequenceData.tasks[taskId])
 
                 return <Column
@@ -147,6 +213,14 @@ const Sequencer = (props) => {
             </Container>
           )}
         </Droppable>
+
+        <Accordion className={classes.accordion}>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />} />
+          <AccordionDetails>
+            {/* <Library /> */}
+          </AccordionDetails>
+        </Accordion>
+
       </DragDropContext>
     </Root>
   );

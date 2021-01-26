@@ -1,26 +1,16 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 
 //Components
 import BeatButton from './BeatButton';
 import Sequencer from './Sequencer'
 
 //MUI
-import { Dialog } from '@material-ui/core';
+import { Dialog, DialogContent } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    maxWidth: '10rem',
-    maxHeight: '10rem',
-    color: theme.palette.text.secondary,
-  },
   grid: {
     width: '43rem',
     height: '43rem',
@@ -30,10 +20,6 @@ const useStyles = makeStyles((theme) => ({
     height: '10rem',
     backgroundColor: 'white',
   },
-  dialog: {
-    minWidth: '5rem',
-    minHeight: '5rem',
-  }
 }));
 const setInitialState = () => {
   const initialState = []
@@ -82,7 +68,6 @@ const MusicLab = (props) => {
     return loop
   }
 
-  console.log('Dialog open? : ', openDialog)
   return (
     <>
       <Grid
@@ -96,14 +81,19 @@ const MusicLab = (props) => {
       </Grid>
       <Dialog
         open={openDialog ? true : false}
-        className={classes.dialog}
+        onBackdropClick={() => setOpenDialog(false)}
+        fullWidth={true}
+        maxWidth={'md'}
       >
+        {/* <DialogContent> */}
         <Sequencer
           index={openDialog}
           setSequenceState={setSequenceState}
           sequenceState={sequenceState}
           handleClose={handleClose}
+
         />
+        {/* </DialogContent> */}
       </Dialog>
     </>
   );

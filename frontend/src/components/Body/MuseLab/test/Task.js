@@ -11,7 +11,9 @@ const Container = styled.div`
 
   text-align: center;
   background: linear-gradient(145deg, #232323, #1e1e1e);
-  box-shadow:  9px 9px 18px #131313, -9px -9px 18px #2f2f2f;
+
+  box-shadow:  8px 8px 16px #080808,
+             -8px -8px 16px #1e1e1e;
 
   color: white;
 `

@@ -89,15 +89,16 @@ const BeatButton = (props) => {
     initializeBuffer()
   }, [])
 
-  return isLoaded && (
+  return (
     <>
       <Button className={classes.button} onClick={() => track ? setPlay(!play) : props.setOpenDialog(props.index)}>
         {
-          (track)
-            ? <Typography>{sequenceTitle}</Typography>
-            : <AddIcon />
+          (!isLoaded)
+            ? <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            : (track)
+              ? <Typography>{sequenceTitle}</Typography>
+              : <AddIcon />
         }
-
       </Button>
 
     </>

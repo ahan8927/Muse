@@ -113,6 +113,12 @@ const Header = () => {
       redirect: false,
       path: 'help',
       icon: <HelpOutlineIcon color='primary' />
+    },
+    {
+      title: 'Library',
+      redirect: true,
+      path: 'library',
+      icon: <Typography>Library</Typography>
     }
   ]
 

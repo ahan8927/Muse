@@ -14,7 +14,9 @@ const Container = styled.div`
   min-height: 8rem;
   width: 15rem;
 
-  backgroundColor: '#212121',
+  background: #131313;
+box-shadow: inset 8px 8px 16px #080808,
+            inset -8px -8px 16px #1e1e1e;
 `;
 
 const Title = styled.h3`
