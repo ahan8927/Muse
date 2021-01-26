@@ -17,7 +17,13 @@ import TextField from '@material-ui/core/TextField';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
+import IconButton from '@material-ui/core/IconButton';
+
+//Icons
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import PlayArrowRoundedIcon from '@material-ui/icons/PlayArrowRounded';
+import PauseRoundedIcon from '@material-ui/icons/PauseRounded';
+import AddIcon from '@material-ui/icons/Add';
 
 const Root = styled.div`
   background: #212121;
@@ -34,16 +40,19 @@ const Container = styled.div`
 const Header = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-`
-
-const InputContainer = styled.div`
-  padding: 0 1rem;
+  justify-content: space-between;
 `
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: 'space-betwee',
+  justify-content: space-between;
+  align-items: center;
+`
+
+const SequenceControls = styled.div`
+display: flex;
+align-items: center;
+justify-content: space-between;
 `
 
 const useStyles = makeStyles(() => ({
@@ -59,8 +68,10 @@ const Sequencer = (props) => {
   const classes = useStyles()
 
   const [sequenceName, setSequenceName] = useState('');
-  const [sequenceData, setSequenceData] = useState(initialData)
-  const [multipler, setMultiplier] = useState(1)
+  const [sequenceData, setSequenceData] = useState(initialData);
+  const [play, setPlay] = useState(false)
+  const [bpm, setBpm] = useState(1000);
+  const [multipler, setMultiplier] = useState(1);
 
   const [isLoaded, setIsLoaded] = useState(false)
 
@@ -157,7 +168,7 @@ const Sequencer = (props) => {
   }
 
   useEffect(() => {
-    setIsLoaded(true, console.log(sequenceData))
+    setIsLoaded(true)
   }, [])
 
   return isLoaded && (
@@ -166,7 +177,7 @@ const Sequencer = (props) => {
         <TextField
           InputProps={{
             style: {
-              width: '10rem',
+              width: '15rem',
               textAlign: 'center',
               color: 'white',
             }
@@ -183,6 +194,19 @@ const Sequencer = (props) => {
           <Button onClick={() => handleChange(1 / 8, 'multiplier')} >1/8</Button>
         </ButtonContainer>
       </Header>
+
+      {/* <SequenceControls> */}
+      <ButtonContainer style={{ justifyContent: 'center' }}>
+        <IconButton>
+          {(play)
+            ? <PauseRoundedIcon />
+            : <PlayArrowRoundedIcon />}
+        </IconButton>
+        <IconButton>
+          <AddIcon />
+        </IconButton>
+      </ButtonContainer>
+      {/* </SequenceControls> */}
 
       <DragDropContext
         onDragEnd={handleOnDragEnd}
@@ -222,6 +246,9 @@ const Sequencer = (props) => {
         </Accordion>
 
       </DragDropContext>
+      <ButtonContainer style={{ justifyContent: 'center' }}>
+        <Button>Save</Button>
+      </ButtonContainer>
     </Root>
   );
 }
