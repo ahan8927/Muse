@@ -12,7 +12,7 @@ const BeatButton = (props) => {
   const [isLoaded, setIsLoaded] = useState(false)
   const [play, setPlay] = useState(false);
   const [buffer, setBuffer] = useState({})
-  const [delay, setDelay] = useState()
+  const [delay, setDelay] = useState();
 
   const { track, bpm, multiplier, color, sequenceTitle } = props.currentTrack
 

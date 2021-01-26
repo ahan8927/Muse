@@ -5,9 +5,9 @@ import styled from 'styled-components';
 
 //Components
 import soundLibrary from './SoundLibrary';
-import * as soundTools from './SoundTools';
 import { initialData } from './test/test';
 import Column from './test/Column';
+import * as soundTools from './SoundTools';
 import Library from './test/Library';
 
 //MUI
@@ -24,6 +24,16 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PlayArrowRoundedIcon from '@material-ui/icons/PlayArrowRounded';
 import PauseRoundedIcon from '@material-ui/icons/PauseRounded';
 import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
+
+
+
+
+
+
+
+
+
 
 const Root = styled.div`
   background: #212121;
@@ -64,16 +74,43 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
+
+
+
+
+
+
+
+
+
+
 const Sequencer = (props) => {
   const classes = useStyles()
 
   const [sequenceName, setSequenceName] = useState('');
   const [sequenceData, setSequenceData] = useState(initialData);
-  const [play, setPlay] = useState(false)
-  const [bpm, setBpm] = useState(1000);
-  const [multipler, setMultiplier] = useState(1);
+  const [trackData, setTrackData] = useState(converter(sequenceData))
 
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [play, setPlay] = useState(false)
+  const [bpm] = useState(1000);
+  const [multiplier, setMultiplier] = useState(1);
+  const [buffer, setBuffer] = useState({})
+  const [delay, setDelay] = useState();
+
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const initializeBuffer = (track) => {
+    const placeHolder = {}
+    if (track) {
+      track.forEach((currentBlock) => {
+        currentBlock.forEach((note) => {
+          Object.assign(placeHolder, { [note.name]: soundLibrary[note.library][note.name] })
+        })
+      })
+    }
+    const bufferDict = new Tone.Buffers(placeHolder, () => setBuffer(bufferDict))
+    setIsLoaded(true)
+  }
 
   const handleChange = (e, location) => {
     switch (location) {
@@ -86,7 +123,48 @@ const Sequencer = (props) => {
     }
   }
 
-  const handleSubmit = (e) => {
+  const maxColumnId = () => {
+    let max = 0;
+    sequenceData.columnOrder.forEach((column, i) => {
+      const currentId = parseInt(column.split('-')[1])
+      if (currentId > max) max = currentId
+    });
+
+    return max
+  }
+
+  const handleNewBlock = () => {
+    const newId = `block-${maxColumnId() + 1}`
+    const newColumn = {
+      id: newId,
+      title: newId,
+      taskIds: [],
+    }
+
+    const newState = {
+      ...sequenceData,
+      columns: {
+        ...sequenceData.columns,
+        [newId]: newColumn,
+      },
+      columnOrder: [
+        ...sequenceData.columnOrder,
+        newId
+      ]
+    }
+    setSequenceData(newState, setTrackData(converter(sequenceData)));
+  }
+
+  const handleBlockDelete = () => {
+    const idToDelete = sequenceData.columnOrder[sequenceData.columnOrder.length - 1]
+    const newState = sequenceData;
+    newState.columnOrder.pop()
+    delete newState.columns[idToDelete]
+
+    setSequenceData(newState, setTrackData(converter(sequenceData)));
+  }
+
+  const handleSubmit = () => {
     console.log('submitted')
     props.handleClose()
   }
@@ -111,7 +189,7 @@ const Sequencer = (props) => {
         columnOrder: newColumnOrder,
       }
 
-      setSequenceData(newState);
+      setSequenceData(newState, setTrackData(converter(sequenceData)));
       return;
     }
 
@@ -135,9 +213,8 @@ const Sequencer = (props) => {
           [newColumn.id]: newColumn,
         },
       }
-      console.log(newState)
 
-      setSequenceData(newState);
+      setSequenceData(newState, setTrackData(converter(sequenceData)));
       return;
     }
 
@@ -163,13 +240,97 @@ const Sequencer = (props) => {
         [newFinish.id]: newFinish,
       },
     }
-    setSequenceData(newState);
+    setSequenceData(newState, setTrackData(converter(sequenceData)));
     return;
   }
 
+  function converter(sequence) {
+    console.log(sequence)
+    const { tasks, columns, columnOrder } = sequence;
+    const track = []
+
+    columnOrder.map((block, i) => {
+      const currentBlock = columns[block];
+      const tempBlock = [];
+      console.log(currentBlock);
+
+      (currentBlock.taskIds.length > 0) && currentBlock.taskIds.map((note, j) => {
+        const currentNote = tasks[note]
+        const tempObj = {}
+
+        tempObj['library'] = currentNote.library;
+        tempObj['name'] = currentNote.name;
+
+        tempBlock.push(tempObj);
+      });
+
+
+      track.push(tempBlock)
+    });
+    console.log(track)
+    return track
+  }
+
+  function playTrack(track) {
+    let currentBlock = 0;
+
+    (function playBlock() {
+
+      let currentNote = 0
+      const noteSpeed = track[currentBlock].length ? ((bpm * multiplier) / track[currentBlock].length) : (bpm * multiplier)
+      if (currentBlock <= track.length - 1) {
+        playNote()
+      } else {
+        return;
+      }
+
+      function playNote() {
+        const { library, name } = track[currentBlock][currentNote]
+        console.log('currentBlock: ', currentBlock, ' currentNote: ', currentNote, ' currentSpeed: ', noteSpeed)
+
+        const currentSound = new Tone.Player(buffer.get(name).get()).toDestination()
+        currentSound.start()
+
+        currentNote++;
+        if (currentNote < track[currentBlock].length) {
+          setDelay(setTimeout(playNote, noteSpeed));
+        } else {
+          currentBlock++
+          if (currentBlock < track.length) {
+            setDelay(setTimeout(playBlock, noteSpeed))
+          } else {
+            setDelay(setTimeout(() => playTrack(track), noteSpeed))
+          }
+        }
+      }
+    })()
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
   useEffect(() => {
-    setIsLoaded(true)
+    initializeBuffer(trackData)
   }, [])
+
+  useEffect(() => {
+    if (trackData) {
+      if (play) {
+        playTrack(trackData)
+      } else {
+        clearTimeout(delay);
+      }
+    }
+  }, [play])
 
   return isLoaded && (
     <Root>
@@ -195,18 +356,19 @@ const Sequencer = (props) => {
         </ButtonContainer>
       </Header>
 
-      {/* <SequenceControls> */}
       <ButtonContainer style={{ justifyContent: 'center' }}>
-        <IconButton>
+        <IconButton onClick={() => trackData && setPlay(!play)}>
           {(play)
             ? <PauseRoundedIcon />
             : <PlayArrowRoundedIcon />}
         </IconButton>
-        <IconButton>
+        <IconButton onClick={() => handleNewBlock()}>
           <AddIcon />
         </IconButton>
+        <IconButton onClick={() => handleBlockDelete()}>
+          <RemoveIcon />
+        </IconButton>
       </ButtonContainer>
-      {/* </SequenceControls> */}
 
       <DragDropContext
         onDragEnd={handleOnDragEnd}
@@ -223,7 +385,6 @@ const Sequencer = (props) => {
             >
               {sequenceData.columnOrder.map((columnId, index) => {
                 const column = sequenceData.columns[columnId];
-                console.log(columnId, index)
                 const tasks = column.taskIds.map(taskId => sequenceData.tasks[taskId])
 
                 return <Column
@@ -247,7 +408,7 @@ const Sequencer = (props) => {
 
       </DragDropContext>
       <ButtonContainer style={{ justifyContent: 'center' }}>
-        <Button>Save</Button>
+        <Button onClick={() => handleSubmit()}>Save</Button>
       </ButtonContainer>
     </Root>
   );
