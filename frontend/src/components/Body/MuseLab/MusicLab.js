@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 //Components
@@ -22,16 +22,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const setInitialState = () => {
-  const initialState = []
+  const initialState = {}
+  initialState['sequences'] = {}
   for (let i = 0; i < 16; i++) {
-    initialState.push({
+    const state = {
       sequenceTitle: '',
-      track: null,
-      bpm: 60,
+      sequenceData: null,
       multiplier: 1,
       color: '#293847',
-    })
+    }
+
+    initialState['sequences'][i] = state
   }
+  initialState['projectName'] = ''
+  initialState['bpm'] = 1000
   return initialState
 }
 
@@ -39,36 +43,20 @@ const MusicLab = (props) => {
   const classes = useStyles();
 
   const [beatPads] = useState(16);
-  const [sequenceState, setSequenceState] = useState(props.beats ? props.beats : setInitialState());
-  // const [sequenceState, setSequenceState] = useState(createTempSequence());
+  const [sequenceState, setSequenceState] = useState(props.beatPadData ? props.beatPadData : setInitialState());
   const [openDialog, setOpenDialog] = useState(null)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   //DIALOG Functions
   const handleClose = () => {
     setOpenDialog(null);
   }
 
-  //Grid Creation
-  const createBeatPad = () => {
-    const loop = []
-    const buttonSettings = {
-      openDialog,
-      setOpenDialog,
-      setSequenceState
-    }
-    for (let i = 0; i < beatPads; i++) {
-      buttonSettings['index'] = i
-      buttonSettings['currentTrack'] = sequenceState[i]
-      loop.push(
-        <Grid item key={i}>
-          <BeatButton {...buttonSettings} />
-        </Grid>
-      )
-    }
-    return loop
-  }
+  useEffect(() => {
+    setIsLoaded(true)
+  }, [])
 
-  return (
+  return isLoaded && (
     <>
       <Grid
         container
@@ -77,17 +65,28 @@ const MusicLab = (props) => {
         spacing={1}
         className={classes.grid}
       >
-        {createBeatPad()}
+        {Object.values(sequenceState.sequences).map((sequenceKeys, i) => (
+          <Grid item key={i}>
+            <BeatButton
+              index={i}
+              openDialog={openDialog}
+              setOpenDialog={setOpenDialog}
+              // setSequenceState={setSequenceState}
+              sequenceState={sequenceState}
+            />
+          </Grid>
+        ))}
       </Grid>
       <Dialog
-        open={openDialog ? true : false}
-        onBackdropClick={() => setOpenDialog(false)}
+        open={(openDialog !== null) ? true : false}
+        onBackdropClick={() => setOpenDialog(null)}
         fullWidth={true}
         maxWidth={'md'}
       >
         {/* <DialogContent> */}
         <Sequencer
           index={openDialog}
+          bpm={sequenceState.bpm}
           setSequenceState={setSequenceState}
           sequenceState={sequenceState}
           handleClose={handleClose}

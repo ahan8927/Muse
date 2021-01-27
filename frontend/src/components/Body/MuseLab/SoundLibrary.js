@@ -1,4 +1,4 @@
-export const soundLibrary = {
+const soundLibrary = {
   'Keys': {
     'Keys_1': 'sounds/keys-guitars/keys/keys1.wav',
     'Keys_2': 'sounds/keys-guitars/keys/keys2.wav',
@@ -135,6 +135,20 @@ export const createTempSequence = () => {
       color: '#293847',
     },
   ]
+}
+
+export const initializeSequencerLibrary = () => {
+  const noteLibrary = {}
+  const columns = {}
+  const tasks = {}
+
+  Object.keys(soundLibrary).map((library, i) => {
+    Object.keys(soundLibrary[library]).map((note, j) => {
+
+    })
+  });
+
+  return noteLibrary
 }
 
 export default soundLibrary

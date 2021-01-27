@@ -99,6 +99,3 @@ export const logoutUser = () => async dispatch => {
     console.error(e)
   }
 }
-
-
-console.log(12 % 16)

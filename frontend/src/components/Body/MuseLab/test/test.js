@@ -1,26 +1,5 @@
 import soundLibrary from '../SoundLibrary';
 
-export const initializeLibrary = () => {
-  const noteLibrary = {}
-
-  Object.keys(soundLibrary).map((library, i) => {
-    const notes = {}
-    Object.keys(soundLibrary[library]).map((note, j) => {
-      notes[note] = {
-        id: `${library}_${note}`,
-        name: note,
-        path: soundLibrary[library][note],
-      }
-    })
-    noteLibrary[library] = {
-      notes: notes
-    }
-  });
-
-  return noteLibrary
-}
-
-
 export const initialData = {
   tasks: {
     'note-1': { id: 'note-1', name: 'Keys_1', library: 'Keys' },

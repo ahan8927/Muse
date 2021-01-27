@@ -8,7 +8,7 @@ import soundLibrary from './SoundLibrary';
 import { initialData } from './test/test';
 import Column from './test/Column';
 import * as soundTools from './SoundTools';
-import Library from './test/Library';
+import SequencerLibrary from './test/SequencerLibrary';
 
 //MUI
 import { makeStyles } from '@material-ui/core'
@@ -87,15 +87,16 @@ const useStyles = makeStyles(() => ({
 const Sequencer = (props) => {
   const classes = useStyles()
 
-  const [sequenceName, setSequenceName] = useState('');
+  const currentSequence = props.sequenceState.sequences[props.index];
+  const [sequenceName, setSequenceName] = useState(props.index ? currentSequence.sequenceTitle : '');
+  // const [sequenceData, setSequenceData] = useState(props.index ? currentSequence.sequenceData : initialData);
   const [sequenceData, setSequenceData] = useState(initialData);
+  const [multiplier, setMultiplier] = useState(props.index ? currentSequence.multiplier : 1);
+  const [bpm] = useState(props.sequenceState.bpm ? props.sequenceState.bpm : 1000);
 
   const [play, setPlay] = useState(false)
-  const [bpm] = useState(1000);
-  const [multiplier, setMultiplier] = useState(1);
   const [buffer, setBuffer] = useState({})
   const [delay, setDelay] = useState();
-
   const [isLoaded, setIsLoaded] = useState(false);
 
   const initializeBuffer = () => {
@@ -108,7 +109,6 @@ const Sequencer = (props) => {
         })
       })
     }
-
     const bufferDict = new Tone.Buffers(placeHolder, () => setBuffer(bufferDict))
   }
 
@@ -165,7 +165,12 @@ const Sequencer = (props) => {
   }
 
   const handleSubmit = () => {
-    console.log('submitted')
+    const newBeatPadState = props.sequenceState;
+    newBeatPadState.sequences[props.index].sequenceData = sequenceData
+    newBeatPadState.sequences[props.index].multiplier = multiplier
+    newBeatPadState.sequences[props.index].sequenceTitle = sequenceName
+
+    props.setSequenceState(newBeatPadState)
     props.handleClose()
   }
 
@@ -313,10 +318,6 @@ const Sequencer = (props) => {
     }
   }, [play])
 
-  useEffect(() => {
-    console.log('SequenceData: ', sequenceData)
-  }, [sequenceData])
-
   return isLoaded && (
     <Root>
       <Header>
@@ -387,7 +388,7 @@ const Sequencer = (props) => {
         <Accordion className={classes.accordion}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />} />
           <AccordionDetails>
-            {/* <Library /> */}
+            <SequencerLibrary />
           </AccordionDetails>
         </Accordion>
 
