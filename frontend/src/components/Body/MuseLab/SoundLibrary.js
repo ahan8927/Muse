@@ -138,15 +138,39 @@ export const createTempSequence = () => {
 }
 
 export const initializeSequencerLibrary = () => {
-  const noteLibrary = {}
   const columns = {}
-  const tasks = {}
+  const allTasks = {}
 
   Object.keys(soundLibrary).map((library, i) => {
-    Object.keys(soundLibrary[library]).map((note, j) => {
+    const tasks = {}
 
+    Object.keys(soundLibrary[library]).map((note, j) => {
+      const newId = `${library}_${note}`
+      tasks[newId] = {
+        id: newId,
+        name: note,
+        library: library
+      }
+      allTasks[newId] = {
+        id: newId,
+        name: note,
+        library: library,
+      }
     })
+
+    columns[library] = {
+      id: library,
+      title: library,
+      taskIds: Object.keys(tasks)
+    }
   });
+
+  const columnOrder = Object.keys(columns);
+  const noteLibrary = {
+    allTasks: allTasks,
+    columns: columns,
+    columnOrder: columnOrder,
+  }
 
   return noteLibrary
 }
