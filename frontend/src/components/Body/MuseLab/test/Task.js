@@ -5,7 +5,7 @@ import { Draggable } from 'react-beautiful-dnd';
 
 const Container = styled.div`
   width: 3rem;
-  margin: 1rem 0;
+  margin: .5rem;
   padding: 1rem;
   border-radius: .25rem;
 
@@ -15,7 +15,7 @@ const Container = styled.div`
   box-shadow:  8px 8px 16px #080808,
              -8px -8px 16px #1e1e1e;
 
-  color: white;
+  color: #AFB1D4;
 `
 
 const Task = (props) => {

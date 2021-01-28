@@ -29,7 +29,8 @@ const setInitialState = () => {
       sequenceTitle: '',
       sequenceData: null,
       multiplier: 1,
-      color: '#293847',
+      // color: '#293847',
+      color: '#AFB1D4',
     }
 
     initialState['sequences'][i] = state
@@ -83,16 +84,17 @@ const MusicLab = (props) => {
         fullWidth={true}
         maxWidth={'md'}
       >
-        {/* <DialogContent> */}
-        <Sequencer
-          index={openDialog}
-          bpm={sequenceState.bpm}
-          setSequenceState={setSequenceState}
-          sequenceState={sequenceState}
-          handleClose={handleClose}
-
-        />
-        {/* </DialogContent> */}
+        {
+          (openDialog !== null) && (
+            <Sequencer
+              index={openDialog}
+              bpm={sequenceState.bpm}
+              setSequenceState={setSequenceState}
+              sequenceState={sequenceState}
+              handleClose={handleClose}
+            />
+          )
+        }
       </Dialog>
     </>
   );

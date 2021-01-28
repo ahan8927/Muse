@@ -3,7 +3,7 @@ import soundLibrary from '../SoundLibrary';
 export const initialData = {
   tasks: {
     'note-100': { id: 'note-100', name: 'Keys_1', library: 'Keys' },
-    'note-102': { id: 'note-102', name: 'Keys_2', library: 'Keys' },
+    'note-101': { id: 'note-101', name: 'Keys_2', library: 'Keys' },
     'note-102': { id: 'note-102', name: 'Keys_3', library: 'Keys' },
     'note-103': { id: 'note-103', name: 'Keys_4', library: 'Keys' },
   },
@@ -11,12 +11,12 @@ export const initialData = {
     'block-1': {
       id: 'block-1',
       title: 'block-1',
-      taskIds: ['note-102'],
+      taskIds: ['note-100'],
     },
     'block-2': {
       id: 'block-2',
       title: 'block-2',
-      taskIds: ['note-102'],
+      taskIds: ['note-101'],
     },
     'block-3': {
       id: 'block-3',

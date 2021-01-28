@@ -21,6 +21,9 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 const useStyles = makeStyles((theme) => ({
+  myColor: {
+    color: '#AFB1D4',
+  },
   navBar_root: {
     // maxWidth: '1000px',
     display: 'grid',
@@ -106,19 +109,19 @@ const Header = () => {
       title: 'Create',
       redirect: true,
       path: 'muse-lab',
-      icon: <Typography>Create</Typography>
+      icon: <Typography className={classes.myColor}>Create</Typography>
     },
     {
       title: 'Help',
       redirect: false,
       path: 'help',
-      icon: <HelpOutlineIcon color='primary' />
+      icon: <HelpOutlineIcon className={classes.myColor} />
     },
     {
       title: 'Library',
       redirect: true,
       path: 'library',
-      icon: <Typography>Library</Typography>
+      icon: <Typography className={classes.myColor}>Library</Typography>
     }
   ]
 
@@ -160,7 +163,7 @@ const Header = () => {
         <div className={classes.navBar_left}>
           {/* TODO: history.push('/home') */}
           <Button >
-            <Typography color='inherit' >Muse</Typography>
+            <Typography className={classes.myColor} >Muse</Typography>
           </Button>
         </div>
 
@@ -188,7 +191,7 @@ const Header = () => {
             endIcon={<SettingsIcon color='inherit' />}
             onClick={() => (user ? handleNavClick('/profile') : handleMenuClick('login'))}
           >
-            <Typography color='primary'>
+            <Typography className={classes.myColor}>
               {(user) ? `${user.username}` : 'Login'}
             </Typography>
           </Button>

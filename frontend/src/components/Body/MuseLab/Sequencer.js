@@ -51,18 +51,21 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  color: #edf2f4;
 `
 
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: #edf2f4;
 `
 
 const SequenceControls = styled.div`
 display: flex;
 align-items: center;
 justify-content: space-between;
+color: #edf2f4;
 `
 
 const useStyles = makeStyles(() => ({
@@ -71,6 +74,11 @@ const useStyles = makeStyles(() => ({
   },
   accordion: {
     backgroundColor: '#212121'
+  },
+  white: {
+    // color: '#EAE3D7',
+    // color: '#293847',
+    color: '#AFB1D4',
   }
 }))
 
@@ -161,7 +169,10 @@ const Sequencer = (props) => {
     newState.columnOrder.pop()
     delete newState.columns[idToDelete]
 
-    setSequenceData(newState);
+    if (Object.keys(newState.columns) > 0) {
+      setSequenceData(newState);
+      console.log(newState)
+    }
   }
 
   const handleSubmit = () => {
@@ -170,6 +181,7 @@ const Sequencer = (props) => {
     newBeatPadState.sequences[props.index].multiplier = multiplier
     newBeatPadState.sequences[props.index].sequenceTitle = sequenceName
 
+    setPlay(!play)
     props.setSequenceState(newBeatPadState)
     props.handleClose()
   }
@@ -329,30 +341,31 @@ const Sequencer = (props) => {
               color: 'white',
             }
           }}
+          className={classes.white}
           label="Sequence Name"
           value={sequenceName}
           onChange={(e) => handleChange(e, 'name')}
         />
         <ButtonContainer>
-          <Button onClick={() => handleChange(2, 'multiplier')} >2</Button>
-          <Button onClick={() => handleChange(1, 'multiplier')} >1</Button>
-          <Button onClick={() => handleChange(1 / 2, 'multiplier')} >1/2</Button>
-          <Button onClick={() => handleChange(1 / 4, 'multiplier')} >1/4</Button>
-          <Button onClick={() => handleChange(1 / 8, 'multiplier')} >1/8</Button>
+          <Button className={classes.white} onClick={() => handleChange(2, 'multiplier')} >2</Button>
+          <Button className={classes.white} onClick={() => handleChange(1, 'multiplier')} >1</Button>
+          <Button className={classes.white} onClick={() => handleChange(1 / 2, 'multiplier')} >1/2</Button>
+          <Button className={classes.white} onClick={() => handleChange(1 / 4, 'multiplier')} >1/4</Button>
+          <Button className={classes.white} onClick={() => handleChange(1 / 8, 'multiplier')} >1/8</Button>
         </ButtonContainer>
       </Header>
 
       <ButtonContainer style={{ justifyContent: 'center' }}>
         <IconButton onClick={() => sequenceData && setPlay(!play)}>
           {(play)
-            ? <PauseRoundedIcon />
-            : <PlayArrowRoundedIcon />}
+            ? <PauseRoundedIcon className={classes.white} />
+            : <PlayArrowRoundedIcon className={classes.white} />}
         </IconButton>
         <IconButton onClick={() => handleNewBlock()}>
-          <AddIcon />
+          <AddIcon className={classes.white} />
         </IconButton>
         <IconButton onClick={() => handleBlockDelete()}>
-          <RemoveIcon />
+          <RemoveIcon className={classes.white} />
         </IconButton>
       </ButtonContainer>
 
@@ -386,7 +399,7 @@ const Sequencer = (props) => {
         </Droppable>
 
         <Accordion className={classes.accordion}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />} />
+          <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.white} />} />
           <AccordionDetails>
             <SequencerLibrary />
           </AccordionDetails>
@@ -394,7 +407,7 @@ const Sequencer = (props) => {
 
       </DragDropContext>
       <ButtonContainer style={{ justifyContent: 'center' }}>
-        <Button onClick={() => handleSubmit()}>Save</Button>
+        <Button className={classes.white} onClick={() => handleSubmit()}>Save</Button>
       </ButtonContainer>
     </Root>
   );

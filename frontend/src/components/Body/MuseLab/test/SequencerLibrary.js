@@ -15,16 +15,18 @@ const TaskContainer = styled.div`
   align-items: center;
 
   margin: 1rem;
-  border-radius: .5rem;
-  min-height: 8rem;
+  border-radius: .5rem;  
+  width: 45rem;
 
-  background: #131313;
+  background: #212121;
   box-shadow: inset 8px 8px 16px #080808, inset -8px -8px 16px #1e1e1e;
 `;
 
 const ColumnContainer = styled.div`
  display: flex;
- width: fit-content;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
 `;
 
 const TaskList = styled.div`
@@ -32,8 +34,7 @@ const TaskList = styled.div`
   flex-direction: row;
   align-items: center;
 
-  min-height: 10rem;
-  min-width: 5rem;
+  height: 10rem;
 `;
 
 const Column = (props) => {
@@ -59,46 +60,25 @@ const Column = (props) => {
 
 
 const SequencerLibrary = () => {
-  // const [noteLibrary, setNoteLibrary] = useState(initializeSequencerLibrary());
-  const [noteLibrary, setNoteLibrary] = useState(initialData);
+  const [noteLibrary, setNoteLibrary] = useState(initializeSequencerLibrary());
+  // const [noteLibrary, setNoteLibrary] = useState(initialData);
 
   const slides = [
     { title: 'First Library', description: 'Lorem ipsum' },
     { title: 'Second Library', description: 'Lorem ipsum' },
   ];
 
-  console.log(noteLibrary)
+  console.log('Notelibrary: ', noteLibrary)
   return (
-    // <>
-    //   <Slider
-    //     infinte={true}
-    //   >
-    //     {slides.map((slide, index) => <div key={index}>
-    //       <ColumnContainer>
-    //         {noteLibrary.columnOrder.map((columnId, index) => {
-    //           const column = noteLibrary.columns[columnId];
-    //           const tasks = column.taskIds.map(taskId => noteLibrary.tasks[taskId])
-
-    //           return <Column
-    //             key={column.id}
-    //             column={column}
-    //             tasks={tasks}
-    //             index={index}
-    //           />;
-    //         })}
-    //       </ColumnContainer>
-    //     </div>)}
-    //   </Slider>
-    // </>
     <Slider>
       {noteLibrary.columnOrder.map((columnId, index) => {
         const column = noteLibrary.columns[columnId];
         const tasks = column.taskIds.map(taskId => noteLibrary.tasks[taskId])
 
         return (
-          <ColumnContainer>
+          <ColumnContainer key={column.id}>
+            <div>{columnId}</div>
             <Column
-              key={column.id}
               column={column}
               tasks={tasks}
               index={index}

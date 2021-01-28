@@ -16,25 +16,25 @@ const soundLibrary = {
     'Guitar_5': 'sounds/keys-guitars/guitar/guitar_palm-5',
   },
   'Percussions': {
-    'Hat': 'sounds/percussions/hat.mp3',
-    'Claves': 'sounds/percussions/claves.mp3',
-    'Triangle': 'sounds/percussions/triangle.mp3',
-    'Shaker': 'sounds/percussions/shaker.mp3',
-    'Crash': 'sounds/percussions/crash.mp3',
-    'Conga': 'sounds/percussions/conga.mp3',
+    'Hat_1': 'sounds/percussions/hat.mp3',
+    'Claves_1': 'sounds/percussions/claves.mp3',
+    'Triangle_1': 'sounds/percussions/triangle.mp3',
+    'Shaker_1': 'sounds/percussions/shaker.mp3',
+    'Crash_1': 'sounds/percussions/crash.mp3',
+    'Conga_1': 'sounds/percussions/conga.mp3',
     'Conga_2': 'sounds/percussions/conga2.mp3',
-    'Tom': 'sounds/percussions/tom.mp3',
+    'Tom_1': 'sounds/percussions/tom.mp3',
     'Tom_2': 'sounds/percussions/tom2.mp3',
   },
   'Snares': {
-    'Snare': 'sounds/808-snares/snare.wav',
+    'Snare_1': 'sounds/808-snares/snare.wav',
     'Snare_2': 'sounds/808-snares/snare2.wav',
-    'Rim': 'sounds/808-snares/rim.wav',
-    'Clap': 'sounds/808-snares/clap.wav',
-    'Snap': 'sounds/808-snares/snap.wav',
+    'Rim_1': 'sounds/808-snares/rim.wav',
+    'Clap_1': 'sounds/808-snares/clap.wav',
+    'Snap_1': 'sounds/808-snares/snap.wav',
   },
   '808': {
-    'Kick': 'sounds/808-snares/kick.wav',
+    'Kick_1': 'sounds/808-snares/kick.wav',
     'Kick_2': 'sounds/808-snares/kick2.wav',
     '808_1': 'sounds/808-snares/808s/8081wkick.wav',
     '808_2': 'sounds/808-snares/808s/8082wkick.wav',
@@ -167,12 +167,14 @@ export const initializeSequencerLibrary = () => {
 
   const columnOrder = Object.keys(columns);
   const noteLibrary = {
-    allTasks: allTasks,
+    tasks: allTasks,
     columns: columns,
     columnOrder: columnOrder,
   }
 
   return noteLibrary
 }
+
+console.log('sequenceLibrary ', initializeSequencerLibrary())
 
 export default soundLibrary
