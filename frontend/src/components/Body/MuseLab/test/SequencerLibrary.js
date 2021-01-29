@@ -61,14 +61,12 @@ const Column = (props) => {
 
 const SequencerLibrary = () => {
   const [noteLibrary, setNoteLibrary] = useState(initializeSequencerLibrary());
-  // const [noteLibrary, setNoteLibrary] = useState(initialData);
 
   const slides = [
     { title: 'First Library', description: 'Lorem ipsum' },
     { title: 'Second Library', description: 'Lorem ipsum' },
   ];
 
-  console.log('Notelibrary: ', noteLibrary)
   return (
     <Slider>
       {noteLibrary.columnOrder.map((columnId, index) => {

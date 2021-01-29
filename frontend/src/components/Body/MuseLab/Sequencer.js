@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 //Components
 import soundLibrary from './SoundLibrary';
-import { initialData } from './test/test';
 import Column from './test/Column';
 import * as soundTools from './SoundTools';
 import SequencerLibrary from './test/SequencerLibrary';
@@ -89,8 +88,34 @@ const useStyles = makeStyles(() => ({
 
 
 
-
-
+const initialData = () => ({
+  tasks: {
+  },
+  columns: {
+    'block-1': {
+      id: 'block-1',
+      title: 'block-1',
+      taskIds: [],
+    },
+    'block-2': {
+      id: 'block-2',
+      title: 'block-2',
+      taskIds: [],
+    },
+    'block-3': {
+      id: 'block-3',
+      title: 'block-3',
+      taskIds: [],
+    },
+    'block-4': {
+      id: 'block-4',
+      title: 'block-4',
+      taskIds: [],
+    },
+  },
+  //facilitate reordering
+  columnOrder: ['block-1', 'block-2', 'block-3', 'block-4'],
+})
 
 const Sequencer = (props) => {
   const classes = useStyles()
@@ -98,7 +123,7 @@ const Sequencer = (props) => {
   const currentSequence = props.sequenceState.sequences[props.index];
   const [sequenceName, setSequenceName] = useState(props.index ? currentSequence.sequenceTitle : '');
   // const [sequenceData, setSequenceData] = useState(props.index ? currentSequence.sequenceData : initialData);
-  const [sequenceData, setSequenceData] = useState(initialData);
+  const [sequenceData, setSequenceData] = useState(initialData());
   const [multiplier, setMultiplier] = useState(props.index ? currentSequence.multiplier : 1);
   const [bpm] = useState(props.bpm ? props.bpm : 1000);
 
@@ -146,7 +171,6 @@ const Sequencer = (props) => {
     sequenceData.columnOrder.forEach((column, i) => {
       sequenceData.columns[column].taskIds.forEach((task, j) => {
         let currentId = task
-        console.log('max: ', currentId)
         if (task.includes('-')) {
           currentId = parseInt(task.split('-')[1])
           if (currentId > max) {
@@ -155,7 +179,6 @@ const Sequencer = (props) => {
         }
       })
     });
-    console.log('Max: ', max)
     return max
   }
 
@@ -265,7 +288,7 @@ const Sequencer = (props) => {
     }
 
     //if deleteing note
-    if (!sequenceData.columnOrder.includes(destination.droppableId) && draggableId) {
+    if (!sequenceData.columnOrder.includes(destination.droppableId)) {
       const newState = sequenceData;
 
       const index = newState.columns[source.droppableId].taskIds.indexOf(draggableId);
@@ -399,8 +422,6 @@ const Sequencer = (props) => {
       }
     }
   }, [play])
-
-  console.log(delay)
 
   return isLoaded && (
     <Root>

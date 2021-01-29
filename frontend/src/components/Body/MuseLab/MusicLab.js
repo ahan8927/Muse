@@ -58,6 +58,8 @@ const MusicLab = (props) => {
     setIsLoaded(true)
   }, [])
 
+  console.log(sequenceState)
+
   return isLoaded && (
     <>
       <Grid

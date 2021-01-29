@@ -178,6 +178,4 @@ export const initializeSequencerLibrary = () => {
   return noteLibrary
 }
 
-console.log('sequenceLibrary ', initializeSequencerLibrary())
-
 export default soundLibrary

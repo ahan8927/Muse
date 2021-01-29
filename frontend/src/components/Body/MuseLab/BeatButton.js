@@ -136,7 +136,6 @@ const BeatButton = (props) => {
     })())
   }, [props])
 
-  console.log(currentSequence.multiplier)
   return isLoaded && (
     <>
       {/* <Button className={classes.button} onClick={() => sequenceData ? setPlay(!play) : props.setOpenDialog(props.index)}>

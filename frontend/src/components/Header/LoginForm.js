@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/actions/session';
+import { useHistory } from 'react-router-dom'
 
 import { AuthContext } from '../../context/context';
 
@@ -14,6 +15,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 const LoginForm = (props) => {
   const { setAuthDialog } = useContext(AuthContext)
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const [credential, setCredential] = useState('demo@demo.demo');
   const [password, setPassword] = useState('password');
   const [errors, setErrors] = useState([]);
@@ -27,6 +30,7 @@ const LoginForm = (props) => {
       }
     );
     setAuthDialog(false);
+    history.push('muse-lab')
   };
 
   const handleSignup = () => {
