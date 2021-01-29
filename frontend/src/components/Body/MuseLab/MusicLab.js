@@ -36,7 +36,7 @@ const setInitialState = () => {
     initialState['sequences'][i] = state
   }
   initialState['projectName'] = ''
-  initialState['bpm'] = 1000
+  initialState['bpm'] = 857
   return initialState
 }
 
@@ -47,7 +47,8 @@ const MusicLab = (props) => {
   const [sequenceState, setSequenceState] = useState(props.beatPadData ? props.beatPadData : setInitialState());
   const [openDialog, setOpenDialog] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
-  const [bpm, setBpm] = useState(857)
+  const [bpm, setBpm] = useState(sequenceState.bpm ? sequenceState.bpm : 1000)
+  // const [bpm, setBpm] = useState(857)
 
   //DIALOG Functions
   const handleClose = () => {
@@ -75,6 +76,7 @@ const MusicLab = (props) => {
               setOpenDialog={setOpenDialog}
               // setSequenceState={setSequenceState}
               sequenceState={sequenceState}
+              bpm={bpm}
             />
           </Grid>
         ))}

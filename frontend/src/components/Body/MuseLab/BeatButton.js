@@ -10,7 +10,7 @@ import { Button, makeStyles, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
 const NeonButton = styled.div`
-display: display;
+display: flex;
 justify-content: center;
 align-items: center;
 
@@ -37,7 +37,7 @@ const BeatButton = (props) => {
   const [sequenceData, setSequenceData] = useState((currentSequence.sequenceData !== null) ? currentSequence.sequenceData : null);
 
   const [multiplier, setMultiplier] = useState(currentSequence.multiplier ? currentSequence.multiplier : 1);
-  const [bpm, setBpm] = useState(props.sequenceState.bpm ? props.sequenceState.bpm : 1000);
+  const [bpm, setBpm] = useState(props.bpm ? props.bpm : 6000);
 
   const [play, setPlay] = useState(false)
   const [buffer, setBuffer] = useState({})
@@ -118,11 +118,7 @@ const BeatButton = (props) => {
   }, [play])
 
   useEffect(() => {
-    // setIsLoaded(false)
-
     setMultiplier(currentSequence.multiplier)
-    // setBpm(props.bpm)
-
     setSequenceName(currentSequence.sequenceTitle)
     setSequenceData(currentSequence.sequenceData, (() => {
       initializeBuffer()
@@ -142,7 +138,12 @@ const BeatButton = (props) => {
             : <AddIcon />
         }
       </Button> */}
-      <NeonButton play={play} onClick={() => sequenceData ? setPlay(!play) : props.setOpenDialog(props.index)} />
+      <NeonButton play={play} onClick={() => sequenceData ? setPlay(!play) : props.setOpenDialog(props.index)}>
+        {(sequenceData)
+          ? <Typography>{sequenceName}</Typography>
+          : <AddIcon />
+        }
+      </NeonButton>
     </>
   );
 }

@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 //Components
 import Splash from './Body/Splash';
 import MusicLab from './Body/MuseLab/MusicLab';
-import Button from './Body/MuseLab/test/button';
 import LibraryPage from './Body/Library/Library';
 import { DialogContext } from '../context/context'
 
@@ -58,7 +57,6 @@ const Body = (props) => {
         <Paper className={classes.paper} elevation={0}>
           <Switch>
             <Route exact path='/' render={props => <Splash {...props} />} />
-            <Route exact path='/sequencer' render={props => <Button />} />
             <Route exact path='/muse-board' render={props => <MusicLab {...props} beats={beats} />} />
             <Route exact path='/library' render={props => <LibraryPage {...props} />} />
             <Route path='*' render={props => <MusicLab {...props} />} />
