@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import * as Tone from 'tone';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
@@ -11,7 +11,7 @@ import * as soundTools from './SoundTools';
 import SequencerLibrary from './test/SequencerLibrary';
 
 //MUI
-import { makeStyles } from '@material-ui/core'
+import { makeStyles, Typography } from '@material-ui/core'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Accordion from '@material-ui/core/Accordion';
@@ -100,11 +100,11 @@ const Sequencer = (props) => {
   // const [sequenceData, setSequenceData] = useState(props.index ? currentSequence.sequenceData : initialData);
   const [sequenceData, setSequenceData] = useState(initialData);
   const [multiplier, setMultiplier] = useState(props.index ? currentSequence.multiplier : 1);
-  const [bpm] = useState(props.sequenceState.bpm ? props.sequenceState.bpm : 1000);
+  const [bpm] = useState(props.bpm ? props.bpm : 1000);
 
   const [play, setPlay] = useState(false)
   const [buffer, setBuffer] = useState({})
-  const [delay, setDelay] = useState();
+  const delay = useRef()
   const [isLoaded, setIsLoaded] = useState(false);
 
   const initializeBuffer = () => {
@@ -141,6 +141,17 @@ const Sequencer = (props) => {
     return max
   }
 
+  const maxTaskId = () => {
+    let max = 0;
+    sequenceData.columnOrder.forEach((column, i) => {
+      sequenceData.columns[column].taskIds.forEach((task, j) => {
+        const currentId = parseInt(task.split('-')[2])
+        if (currentId > max) max = currentId;
+      })
+    });
+    return max
+  }
+
   const handleNewBlock = () => {
     const newId = `block-${maxColumnId() + 1}`
     const newColumn = {
@@ -171,7 +182,6 @@ const Sequencer = (props) => {
 
     if (Object.keys(newState.columns) > 0) {
       setSequenceData(newState);
-      console.log(newState)
     }
   }
 
@@ -181,21 +191,22 @@ const Sequencer = (props) => {
     newBeatPadState.sequences[props.index].multiplier = multiplier
     newBeatPadState.sequences[props.index].sequenceTitle = sequenceName
 
-    setPlay(!play)
     props.setSequenceState(newBeatPadState)
-    props.handleClose()
+    setPlay(!play, props.handleClose())
+
   }
 
   const handleOnDragEnd = (result) => {
     const { destination, source, draggableId, type } = result;
     if (!destination) return;
 
-    //will do nothing if you try to move into same columm
+    //will do nothing if you try to move into same columm at same place.
     if (
       destination.draggableId === source.droppableId &&
       destination.index === source.index
     ) return;
 
+    //if trying to move columns
     if (type === 'column') {
       const newColumnOrder = Array.from(sequenceData.columnOrder);
       newColumnOrder.splice(source.index, 1)
@@ -205,6 +216,55 @@ const Sequencer = (props) => {
         ...sequenceData,
         columnOrder: newColumnOrder,
       }
+
+      setSequenceData(newState);
+      return;
+    }
+
+    //if moving from library
+    if (!sequenceData.columnOrder.includes(source.droppableId)) {
+      if (source.droppableId === destination.droppableId) return;
+
+      //get basic info
+      const finish = sequenceData.columns[destination.droppableId];
+      let currentId = draggableId.split('_')
+      const noteName = `${currentId[1]}_${currentId[2]}`;
+      const newId = `${draggableId}-${maxTaskId() + 1}`;
+
+
+      //get library
+      let currentLibrary
+      Object.keys(soundLibrary).forEach(libraryName => {
+        if (soundLibrary[libraryName][noteName]) {
+          currentLibrary = libraryName;
+        }
+      })
+
+      if (noteName && finish) {
+        const newTask = {
+          id: newId,
+          name: noteName,
+          library: currentLibrary,
+        }
+
+        const newState = sequenceData;
+        newState.columns[destination.droppableId].taskIds.push(newId)
+        newState.tasks[newId] = newTask;
+
+        setSequenceData(newState, initializeBuffer());
+        return;
+      }
+      return;
+    }
+
+    //if deleteing note
+    if (!sequenceData.columnOrder.includes(destination.droppableId) && draggableId) {
+      const newState = sequenceData;
+
+      const index = newState.columns[source.droppableId].taskIds.indexOf(draggableId);
+
+      newState.columns[source.droppableId].taskIds.splice(index, 1)
+      delete newState.tasks[draggableId]
 
       setSequenceData(newState);
       return;
@@ -235,6 +295,7 @@ const Sequencer = (props) => {
       return;
     }
 
+    //removing from old column
     const startTaskIds = Array.from(start.taskIds);
     startTaskIds.splice(source.index, 1);
     const newStart = {
@@ -242,6 +303,7 @@ const Sequencer = (props) => {
       taskIds: startTaskIds,
     };
 
+    //adding to new column
     const finishTaskIds = Array.from(finish.taskIds);
     finishTaskIds.splice(destination.index, 0, draggableId);
     const newFinish = {
@@ -249,6 +311,7 @@ const Sequencer = (props) => {
       taskIds: finishTaskIds,
     };
 
+    //creating new state with changes
     const newState = {
       ...sequenceData,
       columns: {
@@ -271,14 +334,14 @@ const Sequencer = (props) => {
       let noteSpeed = 0
       if (currentBlockData.taskIds.length > 0) {
         noteSpeed = (bpm * multiplier) / currentBlockData.taskIds.length
-        playNote()
+        play && playNote()
       } else {
         noteSpeed = bpm * multiplier
         currentBlock++
         if (currentBlock < sequenceData.columnOrder.length) {
-          setDelay(setTimeout(playBlock, noteSpeed))
+          delay.current = setTimeout(() => play && playBlock(), noteSpeed)
         } else {
-          setDelay(setTimeout(() => playTrack(), noteSpeed))
+          delay.current = setTimeout(() => play && playTrack(), noteSpeed)
         }
       }
 
@@ -290,13 +353,13 @@ const Sequencer = (props) => {
 
         currentNote++;
         if (currentNote < currentBlockData.taskIds.length) {
-          setDelay(setTimeout(playNote, noteSpeed));
+          delay.current = setTimeout(() => play && playNote(), noteSpeed)
         } else {
           currentBlock++
           if (currentBlock < sequenceData.columnOrder.length) {
-            setDelay(setTimeout(playBlock, noteSpeed))
+            delay.current = setTimeout(() => play && playBlock(), noteSpeed)
           } else {
-            setDelay(setTimeout(() => playTrack(), noteSpeed))
+            delay.current = setTimeout(() => play && playTrack(), noteSpeed)
           }
         }
       }
@@ -325,10 +388,12 @@ const Sequencer = (props) => {
       if (play) {
         playTrack()
       } else {
-        clearTimeout(delay);
+        clearTimeout(delay.current);
       }
     }
   }, [play])
+
+  console.log(delay)
 
   return isLoaded && (
     <Root>
@@ -338,7 +403,7 @@ const Sequencer = (props) => {
             style: {
               width: '15rem',
               textAlign: 'center',
-              color: 'white',
+              color: '#AFB1D4',
             }
           }}
           className={classes.white}
@@ -399,9 +464,11 @@ const Sequencer = (props) => {
         </Droppable>
 
         <Accordion className={classes.accordion}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.white} />} />
+          <AccordionSummary expandIcon={<ExpandMoreIcon className={classes.white} />} >
+            <Typography className={classes.white}>Library</Typography>
+          </AccordionSummary>
           <AccordionDetails>
-            <SequencerLibrary />
+            <SequencerLibrary props={sequenceData} />
           </AccordionDetails>
         </Accordion>
 

@@ -40,7 +40,7 @@ const TaskList = styled.div`
 const Column = (props) => {
   return (
     <TaskContainer>
-      <Droppable droppableId={props.column.id} type='library' direction='horizontal'>
+      <Droppable droppableId={props.column.id} type='notes' direction='horizontal'>
         {(provided, snapshot) => (
           <TaskList
             ref={provided.innerRef}
@@ -77,12 +77,12 @@ const SequencerLibrary = () => {
 
         return (
           <ColumnContainer key={column.id}>
-            <div>{columnId}</div>
+            <div style={{ color: '#AFB1D4' }}>{columnId}</div>
             <Column
               column={column}
               tasks={tasks}
               index={index}
-            />;
+            />
           </ColumnContainer>
         )
       })}

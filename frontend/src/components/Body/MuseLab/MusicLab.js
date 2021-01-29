@@ -47,6 +47,7 @@ const MusicLab = (props) => {
   const [sequenceState, setSequenceState] = useState(props.beatPadData ? props.beatPadData : setInitialState());
   const [openDialog, setOpenDialog] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
+  const [bpm, setBpm] = useState(857)
 
   //DIALOG Functions
   const handleClose = () => {
@@ -88,7 +89,7 @@ const MusicLab = (props) => {
           (openDialog !== null) && (
             <Sequencer
               index={openDialog}
-              bpm={sequenceState.bpm}
+              bpm={bpm}
               setSequenceState={setSequenceState}
               sequenceState={sequenceState}
               handleClose={handleClose}

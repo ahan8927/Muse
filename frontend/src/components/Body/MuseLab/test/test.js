@@ -2,10 +2,10 @@ import soundLibrary from '../SoundLibrary';
 
 export const initialData = {
   tasks: {
-    'note-100': { id: 'note-100', name: 'Keys_1', library: 'Keys' },
-    'note-101': { id: 'note-101', name: 'Keys_2', library: 'Keys' },
-    'note-102': { id: 'note-102', name: 'Keys_3', library: 'Keys' },
-    'note-103': { id: 'note-103', name: 'Keys_4', library: 'Keys' },
+    'note-100': { id: 'note-100', name: 'Chords_1', library: 'Chords' },
+    'note-101': { id: 'note-101', name: 'Chords_2', library: 'Chords' },
+    'note-102': { id: 'note-102', name: 'Chords_3', library: 'Chords' },
+    'note-103': { id: 'note-103', name: 'Chords_4', library: 'Chords' },
   },
   columns: {
     'block-1': {

@@ -1,12 +1,12 @@
 const soundLibrary = {
-  'Keys': {
-    'Keys_1': 'sounds/keys-guitars/keys/keys1.wav',
-    'Keys_2': 'sounds/keys-guitars/keys/keys2.wav',
-    'Keys_3': 'sounds/keys-guitars/keys/keys3.wav',
-    'Keys_4': 'sounds/keys-guitars/keys/keys4.wav',
-    'Keys_5': 'sounds/keys-guitars/keys/keys5.wav',
-    'Keys_6': 'sounds/keys-guitars/keys/keys6.wav',
-    'Keys_7': 'sounds/keys-guitars/keys/keys7.wav',
+  'Chords': {
+    'Chords_1': 'sounds/keys-guitars/keys/keys1.wav',
+    'Chords_2': 'sounds/keys-guitars/keys/keys2.wav',
+    'Chords_3': 'sounds/keys-guitars/keys/keys3.wav',
+    'Chords_4': 'sounds/keys-guitars/keys/keys4.wav',
+    'Chords_5': 'sounds/keys-guitars/keys/keys5.wav',
+    'Chords_6': 'sounds/keys-guitars/keys/keys6.wav',
+    'Chords_7': 'sounds/keys-guitars/keys/keys7.wav',
   },
   'Guitars': {
     'Guitar_1': 'sounds/keys-guitars/guitar/guitar_palm-1',
@@ -41,7 +41,10 @@ const soundLibrary = {
     '808_3': 'sounds/808-snares/808s/8083wkick.wav',
     '808_4': 'sounds/808-snares/808s/8084wkick.wav',
     '808_5': 'sounds/808-snares/808s/8085wkick.wav',
-  }
+  },
+  'misc': {
+    'Rest_1': 'sounds/rest.wav',
+  },
 }
 
 export const createTempSequence = () => {
