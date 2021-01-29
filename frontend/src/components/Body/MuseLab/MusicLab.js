@@ -48,7 +48,6 @@ const MusicLab = (props) => {
   const [openDialog, setOpenDialog] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [bpm, setBpm] = useState(sequenceState.bpm ? sequenceState.bpm : 1000)
-  // const [bpm, setBpm] = useState(857)
 
   //DIALOG Functions
   const handleClose = () => {

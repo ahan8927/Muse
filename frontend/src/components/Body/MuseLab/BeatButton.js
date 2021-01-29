@@ -13,6 +13,7 @@ const NeonButton = styled.div`
 display: flex;
 justify-content: center;
 align-items: center;
+flex-direction: column;
 
 color: #255784;
 background-color: ${props => props.play ? '#0ff0fc' : '#AFB1D4'};
@@ -28,6 +29,15 @@ height: 10rem;
 
 box-shadow: ${props => props.play ? '0 0 10px #2196f3, 0 0 40px #2196f3, 0 0 80px #2196f3' : 0};
 transition: 0.2s;
+`
+
+const Span1 = styled.span`
+  background: white;
+  height: 1rem;
+  width: 100%;
+
+  position: relative;
+  top: 1;
 `
 
 const BeatButton = (props) => {
@@ -139,6 +149,7 @@ const BeatButton = (props) => {
         }
       </Button> */}
       <NeonButton play={play} onClick={() => sequenceData ? setPlay(!play) : props.setOpenDialog(props.index)}>
+        {/* <Span1 /> */}
         {(sequenceData)
           ? <Typography>{sequenceName}</Typography>
           : <AddIcon />

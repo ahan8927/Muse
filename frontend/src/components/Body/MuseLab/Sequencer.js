@@ -145,10 +145,17 @@ const Sequencer = (props) => {
     let max = 0;
     sequenceData.columnOrder.forEach((column, i) => {
       sequenceData.columns[column].taskIds.forEach((task, j) => {
-        const currentId = parseInt(task.split('-')[2])
-        if (currentId > max) max = currentId;
+        let currentId = task
+        console.log('max: ', currentId)
+        if (task.includes('-')) {
+          currentId = parseInt(task.split('-')[1])
+          if (currentId > max) {
+            max = currentId;
+          }
+        }
       })
     });
+    console.log('Max: ', max)
     return max
   }
 
