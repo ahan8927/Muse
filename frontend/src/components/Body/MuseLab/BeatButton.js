@@ -1,79 +1,159 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as Tone from 'tone';
 
 //Components
-import * as soundTools from './SoundTools';
+import soundLibrary from './SoundLibrary';
+import styled from 'styled-components';
+
 //MUI
 import { Button, makeStyles, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
+const NeonButton = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+
+color: #255784;
+background-color: ${props => props.play ? '#0ff0fc' : '#AFB1D4'};
+// background: #2196f3;
+text-transform: uppercase;
+letter-spacing: none;
+font-size: 24px;
+overflow: hidden;
+border-radius: 0.5rem;
+
+width: 10rem;
+height: 10rem;
+
+box-shadow: ${props => props.play ? '0 0 10px #2196f3, 0 0 40px #2196f3, 0 0 80px #2196f3' : 0};
+transition: 0.2s;
+`
+
+const Span1 = styled.span`
+  background: white;
+  height: 1rem;
+  width: 100%;
+
+  position: relative;
+  top: 1;
+`
+
 const BeatButton = (props) => {
-  const [library] = useState(props.sequenceState.library ? props.sequenceState.library : 'drum_set')
-  const [sounds] = useState(library ? soundTools.createSoundArr(library) : null);
-  const [color] = useState(props.sequenceState.color ? props.sequenceState.color : '#293847');
-  const [play, setPlay] = useState(true);
-  let step = 0;
+  const currentSequence = props.sequenceState.sequences[props.index]
+
+  const [sequenceName, setSequenceName] = useState(currentSequence.sequenceTitle ? currentSequence.sequenceTitle : '');
+  const [sequenceData, setSequenceData] = useState((currentSequence.sequenceData !== null) ? currentSequence.sequenceData : null);
+
+  const [multiplier, setMultiplier] = useState(currentSequence.multiplier ? currentSequence.multiplier : 1);
+  const [bpm, setBpm] = useState(props.bpm ? props.bpm : 6000);
+
+  const [play, setPlay] = useState(false)
+  const [buffer, setBuffer] = useState({})
+  const delay = useRef();
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  function initializeBuffer() {
+    const placeHolder = {}
+    if (sequenceData) {
+      Object.values(sequenceData.columns).forEach(blockData => {
+        blockData.taskIds.forEach(noteId => {
+          const { name, library } = sequenceData.tasks[noteId]
+          placeHolder[name] = soundLibrary[library][name] //file path
+        })
+      })
+    }
+    const bufferDict = new Tone.Buffers(placeHolder, () => setBuffer(bufferDict))
+  }
 
   const useStyles = makeStyles(() => ({
-    button: {
+    button: (props, play) => ({
       width: '10rem',
       height: '10rem',
-      backgroundColor: `${color}`
-    }
+      backgroundColor: `${props.sequenceState.sequences[props.index].color}`,
+      boxShadow: `${play ? ('0 0 10px #2196f3, 0 0 40px #2196f3, 0 0 80px #2196f3') : 0}`
+    })
   }));
-  const classes = useStyles();
+  const classes = useStyles(props, play);
 
-  const handleClick = () => {
-    if (props.sequenceState.beats) {
-      const sequence = Tone.Transport.scheduleRepeat(repeater, `${props.sequenceState.stepSpeed}n`);
-      // sequence()
-      if (play) {
-        // Tone.start()
-        Tone.Transport.start()
-        setPlay(!play)
+  function playTrack() {
+    let currentBlock = 0;
+
+    (function playBlock() {
+      let currentNote = 0
+      const currentBlockData = sequenceData.columns[sequenceData.columnOrder[currentBlock]]
+
+      let noteSpeed = 0
+      if (currentBlockData.taskIds.length > 0) {
+        noteSpeed = (bpm * multiplier) / currentBlockData.taskIds.length
+        playNote()
       } else {
-        Tone.Transport.stop()
-        // Tone.Transport.clear(sequence)
-        // step = 0
-        setPlay(!play)
+        noteSpeed = bpm * multiplier
+        currentBlock++
+        if (currentBlock < sequenceData.columnOrder.length) {
+          delay.current = setTimeout(playBlock, noteSpeed)
+        } else {
+          delay.current = setTimeout(() => playTrack(), noteSpeed)
+        }
       }
+
+      function playNote() {
+        const { name } = sequenceData.tasks[currentBlockData.taskIds[currentNote]]
+
+        const currentSound = new Tone.Player(buffer.get(name).get()).toDestination()
+        currentSound.start()
+
+        currentNote++;
+        if (currentNote < currentBlockData.taskIds.length) {
+          delay.current = setTimeout(playNote, noteSpeed)
+        } else {
+          currentBlock++
+          if (currentBlock < sequenceData.columnOrder.length) {
+            delay.current = setTimeout(playBlock, noteSpeed)
+          } else {
+            delay.current = setTimeout(() => playTrack(), noteSpeed)
+          }
+        }
+      }
+    })()
+  }
+
+  useEffect(() => {
+    if (play) {
+      playTrack()
     } else {
-      props.setOpenDialog(props.index)
+      clearTimeout(delay.current);
     }
-  }
+  }, [play])
 
-  //Music Sequence Player
-  const repeater = (time) => {
-    // const sounds = soundTools.createSoundArr(props.sequenceState[i].library)
-    const rows = props.sequenceState.beats.length
-    const cols = props.sequenceState.beats[0].beat.length
-    let index = step % cols
+  useEffect(() => {
+    setMultiplier(currentSequence.multiplier)
+    setSequenceName(currentSequence.sequenceTitle)
+    setSequenceData(currentSequence.sequenceData, (() => {
+      initializeBuffer()
+      setIsLoaded(true)
+    })())
+  }, [props])
 
-    for (let j = 0; j < rows; j++) {
-      const currentRowCheck = props.sequenceState.beats[j].beat[index]
-      const currentSound = sounds[j]
-      currentSound.connect(soundTools.gain)
-
-      if (currentRowCheck) {
-        currentSound.start(0);
-      }
-    }
-    console.log('step: ', step)
-    step++;
-  }
-
-
-  return (
+  return isLoaded && (
     <>
-      <Button className={classes.button} onClick={() => handleClick()}>
+      {/* <Button className={classes.button} onClick={() => sequenceData ? setPlay(!play) : props.setOpenDialog(props.index)}>
         {
-          props.sequenceState.beats
-            ? <Typography>{props.sequenceState.sequenceTitle}</Typography>
+          // (!isLoaded)
+          //   ? <div className="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+          (sequenceData)
+            ? <Typography>{sequenceName}</Typography>
             : <AddIcon />
         }
-
-      </Button>
-
+      </Button> */}
+      <NeonButton play={play} onClick={() => sequenceData ? setPlay(!play) : props.setOpenDialog(props.index)}>
+        {/* <Span1 /> */}
+        {(sequenceData)
+          ? <Typography>{sequenceName}</Typography>
+          : <AddIcon />
+        }
+      </NeonButton>
     </>
   );
 }

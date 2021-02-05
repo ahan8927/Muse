@@ -5,12 +5,12 @@ import { useSelector } from 'react-redux';
 //Components
 import Splash from './Body/Splash';
 import MusicLab from './Body/MuseLab/MusicLab';
+import LibraryPage from './Body/Library/Library';
 import { DialogContext } from '../context/context'
 
 //MUI
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core';
-import Sequencer from './Body/MuseLab/Sequencer';
 
 const ProtectedRoute = ({ component: Component, user, ...rest }) => {
   return (
@@ -27,8 +27,11 @@ const ProtectedRoute = ({ component: Component, user, ...rest }) => {
 
 const useStyles = makeStyles(() => ({
   paper: {
-    backgroundColor: '#fffffc',
+    backgroundColor: '#212121',
     padding: '1rem',
+    margin: '1rem',
+    borderRadius: '1rem',
+    boxShadow: '9px 9px 18px #131313, -9px -9px 18px #2f2f2f',
   },
   section: {
 
@@ -54,8 +57,8 @@ const Body = (props) => {
         <Paper className={classes.paper} elevation={0}>
           <Switch>
             <Route exact path='/' render={props => <Splash {...props} />} />
-            <Route exact path='/sequencer' render={props => <Sequencer {...props} />} />
             <Route exact path='/muse-board' render={props => <MusicLab {...props} beats={beats} />} />
+            <Route exact path='/library' render={props => <LibraryPage {...props} />} />
             <Route path='*' render={props => <MusicLab {...props} />} />
             {/* <ProtectedRoute exact user={user} path="/search" component={SavedMaps} /> */}
           </Switch>

@@ -4,7 +4,7 @@ Documentation of components
 
 * NavBar
   * Buttons
-    * Dashboard
+    * Library
       * Create a Beat
       * My Beats
     * Help

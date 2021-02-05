@@ -26,10 +26,8 @@ export const colorPicker = (num) => {
   }
 }
 
-export function createSoundArr(library) {
-  const soundArr = []
-  for (let i = 0; i < soundLibrary[`${library}`].length; i++) {
-    soundArr.push(new Tone.Player(soundLibrary[`${library}`][i].file))
-  }
-  return soundArr
+export function createSoundNode(library, name) {
+  const sound = new Tone.Player(soundLibrary[library][name])
+  sound.connect(gain)
+  return sound
 }

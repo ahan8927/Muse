@@ -13,7 +13,7 @@ const removeBeat = (beats) => ({ type: REMOVE_BEATS });
 
 //Login Thunk
 export const loginUser = (user) => async (dispatch) => {
-  const { email, password } = user;
+  const { credential, password } = user;
   try {
     const res = await fetch('/api/auth/login', {
       method: 'POST',
@@ -21,7 +21,7 @@ export const loginUser = (user) => async (dispatch) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        email,
+        email: credential,
         password
       })
     });
@@ -39,7 +39,7 @@ export const loginUser = (user) => async (dispatch) => {
 }
 
 export const signupUser = (user) => async (dispatch) => {
-  const { firstname, lastname, gender, email, height, weight, password } = user;
+  const { username, email, password } = user;
   try {
     const res = await fetch("/api/auth/signup", {
       method: "POST",
@@ -47,12 +47,8 @@ export const signupUser = (user) => async (dispatch) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        firstname,
-        lastname,
-        gender,
+        username,
         email,
-        height,
-        weight,
         password,
       }),
     });

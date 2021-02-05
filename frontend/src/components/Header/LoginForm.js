@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/actions/session';
+import { useHistory } from 'react-router-dom'
 
 import { AuthContext } from '../../context/context';
 
@@ -14,6 +15,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 const LoginForm = (props) => {
   const { setAuthDialog } = useContext(AuthContext)
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const [credential, setCredential] = useState('demo@demo.demo');
   const [password, setPassword] = useState('password');
   const [errors, setErrors] = useState([]);
@@ -27,10 +30,24 @@ const LoginForm = (props) => {
       }
     );
     setAuthDialog(false);
+    history.push('muse-lab')
   };
 
   const handleSignup = () => {
     props.setWhichDialog('signup')
+  }
+
+  const handleChange = (e) => {
+    switch (e.target.id) {
+      case 'email':
+        setCredential(e.target.value)
+        return;
+      case 'password':
+        setPassword(e.target.value)
+        return;
+      default:
+        return;
+    }
   }
 
   return (
@@ -47,11 +64,11 @@ const LoginForm = (props) => {
           <TextField
             autoFocus
             margin="dense"
-            id="name"
+            id="email"
             label="Email Address"
             type='text'
             value={credential}
-            onChange={setCredential}
+            onChange={e => handleChange(e)}
             required
             fullWidth
           // color={'red'}
@@ -62,7 +79,7 @@ const LoginForm = (props) => {
             label="Password"
             type="password"
             value={password}
-            onChange={setPassword}
+            onChange={e => handleChange(e)}
             required
             fullWidth
           />

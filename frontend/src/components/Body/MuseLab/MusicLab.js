@@ -1,26 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 //Components
 import BeatButton from './BeatButton';
-import Sequencer from './Sequencer';
+import Sequencer from './Sequencer'
 
 //MUI
-import { Dialog } from '@material-ui/core';
+import { Dialog, DialogContent } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    maxWidth: '10rem',
-    maxHeight: '10rem',
-    color: theme.palette.text.secondary,
-  },
   grid: {
     width: '43rem',
     height: '43rem',
@@ -32,19 +22,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const setInitialState = () => {
-  const initialState = []
+  const initialState = {}
+  initialState['sequences'] = {}
   for (let i = 0; i < 16; i++) {
-    initialState.push(
-      {
-        sequenceTitle: '',
-        beatPad: i,
-        library: null,
-        beats: null,
-        stepSpeed: 8,
-        color: '#293847',
-      }
-    )
+    const state = {
+      sequenceTitle: '',
+      sequenceData: null,
+      multiplier: 1,
+      // color: '#293847',
+      color: '#AFB1D4',
+    }
+
+    initialState['sequences'][i] = state
   }
+  initialState['projectName'] = ''
+  initialState['bpm'] = 857
   return initialState
 }
 
@@ -52,35 +44,23 @@ const MusicLab = (props) => {
   const classes = useStyles();
 
   const [beatPads] = useState(16);
-  const [sequenceState, setSequenceState] = useState(props.beats ? props.beats : setInitialState());
+  const [sequenceState, setSequenceState] = useState(props.beatPadData ? props.beatPadData : setInitialState());
   const [openDialog, setOpenDialog] = useState(null)
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [bpm, setBpm] = useState(sequenceState.bpm ? sequenceState.bpm : 1000)
 
   //DIALOG Functions
   const handleClose = () => {
     setOpenDialog(null);
   }
 
-  //Grid Creation
-  const createBeatPad = () => {
-    const loop = []
-    const buttonSettings = {
-      openDialog,
-      setOpenDialog,
-      setSequenceState
-    }
-    for (let i = 0; i < beatPads; i++) {
-      buttonSettings['index'] = i
-      buttonSettings['sequenceState'] = sequenceState[i]
-      loop.push(
-        <Grid item key={i}>
-          <BeatButton {...buttonSettings} />
-        </Grid>
-      )
-    }
-    return loop
-  }
+  useEffect(() => {
+    setIsLoaded(true)
+  }, [])
 
-  return (
+  console.log(sequenceState)
+
+  return isLoaded && (
     <>
       <Grid
         container
@@ -89,15 +69,36 @@ const MusicLab = (props) => {
         spacing={1}
         className={classes.grid}
       >
-        {createBeatPad()}
+        {Object.values(sequenceState.sequences).map((sequenceKeys, i) => (
+          <Grid item key={i}>
+            <BeatButton
+              index={i}
+              openDialog={openDialog}
+              setOpenDialog={setOpenDialog}
+              // setSequenceState={setSequenceState}
+              sequenceState={sequenceState}
+              bpm={bpm}
+            />
+          </Grid>
+        ))}
       </Grid>
-      <Dialog open={openDialog ? true : false} className={classes.dialog} aria-labelledby="form-dialog-title">
-        {openDialog && <Sequencer
-          index={openDialog}
-          setSequenceState={setSequenceState}
-          sequenceState={sequenceState}
-          handleClose={handleClose}
-        />}
+      <Dialog
+        open={(openDialog !== null) ? true : false}
+        onBackdropClick={() => setOpenDialog(null)}
+        fullWidth={true}
+        maxWidth={'md'}
+      >
+        {
+          (openDialog !== null) && (
+            <Sequencer
+              index={openDialog}
+              bpm={bpm}
+              setSequenceState={setSequenceState}
+              sequenceState={sequenceState}
+              handleClose={handleClose}
+            />
+          )
+        }
       </Dialog>
     </>
   );

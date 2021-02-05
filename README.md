@@ -31,7 +31,15 @@
 * Docker
 * JS
 * Python
+* react-dnd
 
 * Prime-react
+  * mainly for the carousel
 * Animate.css
 * Loading.io
+* Neumorphism-ui
+
+## Inspiration
+
+This project was inspired by beatBucket.io
+Please check out their project as well.
