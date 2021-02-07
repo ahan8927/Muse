@@ -9,9 +9,8 @@ auth_routes = Blueprint('auth', __name__)
 
 
 def validation_errors_to_error_messages(validation_errors):
-    """
-    Simple function that turns the WTForms validation errors into a simple list
-    """
+
+    # Simple function that turns the WTForms validation errors into a simple list
     errorMessages = []
     for field in validation_errors:
         for error in validation_errors[field]:
@@ -24,9 +23,10 @@ def validation_errors_to_error_messages(validation_errors):
 def authenticate():
     if current_user.is_authenticated:
         user = current_user.to_dict()
-        beats = Beat.query.filter_by(
-            user_id=user.id).order_by(desc(Beat.date_created))
-        beats = [beat.to_dict() for beat in beats]
+        # beats = Beat.query.filter_by(
+        #     user_id=current_user.id).order_by(desc(Beat.date_created))
+        # beats = [beat.to_dict() for beat in beats]
+        beats = 'lol'
         return {'user': user, 'beats': beats}
     return {'errors': ['Unauthorized']}, 401
 

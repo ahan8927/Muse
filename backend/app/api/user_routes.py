@@ -16,7 +16,8 @@ def users():
 @user_routes.route('/<int:id>')  # Get specific user
 def user(id):
     user = User.query.get(id)
-    beats = Beat.query.filter_by(Beat.user_id == id).all()
     user = user.to_dict()
-    user['beats'] = [beat.to_dict() for beat in beats]
+
+    # beats = Beat.query.filter_by(Beat.user_id == id).all()
+    # user['beats'] = [beat.to_dict() for beat in beats]
     return user
