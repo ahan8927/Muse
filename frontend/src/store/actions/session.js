@@ -75,7 +75,8 @@ export const restoreUser = () => async dispatch => {
     if (res.ok) {
       const data = await res.json()
       dispatch(setUser(data.user))
-      dispatch(setUser(data.beats))
+      console.log(data)
+      dispatch(setBeats(data.beats))
       return data
     }
   }

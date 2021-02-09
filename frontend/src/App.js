@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from "react-router-dom";
 
 import * as sessionActions from './store/actions/session';
@@ -87,15 +87,15 @@ const AppContainer = (props) => {
   const dispatch = useDispatch();
   // const classes = useStyles();
 
+  const user = useSelector(state => state.session.user)
+
   const [isLoaded, setIsLoaded] = useState(false);
   const [authDialog, setAuthDialog] = useState(false);
-  const [user, setUser] = useState({})
-
 
   useEffect(() => {
-    dispatch(sessionActions.restoreUser()).then(data => setUser(data))
+    dispatch(sessionActions.restoreUser())
     setIsLoaded(true)
-  }, [dispatch]);
+  }, []);
 
   return isLoaded && (
     <div style={{ display: 'flex', justifyContent: 'center' }}>

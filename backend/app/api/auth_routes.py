@@ -23,11 +23,15 @@ def validation_errors_to_error_messages(validation_errors):
 @auth_routes.route('/restore')
 def authenticate():
     if current_user.is_authenticated:
-        user = current_user.to_dict()
+        userr = current_user.to_dict()
+
+        # return {'user': userr}
         beats = Beat.query.filter_by(
-            user_id=user.id).order_by(desc(Beat.date_created))
+            user_id=userr['id']).order_by(desc(Beat.date_created))
         beats = [beat.to_dict() for beat in beats]
-        return {'user': user, 'beats': beats}
+
+        print(f'\n AAAAAAAAAAAAAAAAAAAAA {beats} \n')
+        return {'user': userr, 'beats': beats if len(beats) > 0 else None}
     return {'errors': ['Unauthorized']}, 401
 
 
@@ -37,7 +41,6 @@ def login():
     Logs a user in
     """
     form = LoginForm()
-    print('AAAAAAAAAAAAAAAAA: ', request.get_json())
     # Get the csrf_token from the request cookie and put it into the
     # form manually to validate_on_submit can be used
     form['csrf_token'].data = request.cookies['csrf_token']
