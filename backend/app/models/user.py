@@ -11,7 +11,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
 
-    beats = db.relationship('Beat', back_populates='user')
+    boards = db.relationship('Board', back_populates='user')
     # likes = db.relationship('Likes', back_populates='user')
 
     @property

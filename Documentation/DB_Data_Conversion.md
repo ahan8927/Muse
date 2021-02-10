@@ -31,7 +31,7 @@
   * 1
     * id: 1
     * title: 'block-1'
-    * note_list: ['808-808_5-1', 'Misc-Rest_1-5', Misc-Rest_1-4', '808-808_1-2']
+    * note_list: ['808-808_5-1', 'Misc-Rest_1-5', 'Misc-Rest_1-4', '808-808_1-2']
     * user_id: 1
     * board_id: 1
     * pad_id: 0
@@ -47,7 +47,7 @@
   * 3
     * id: 3
     * title: 'block-1'
-    * note_list: ['Snare-Snare_2-1']
+    * note_list: ['Snare-Snare_2-1', null]
   
 * Pad
   * 0
@@ -55,7 +55,7 @@
     * title: '808'
     * color: '#AFB1D4'
     * multiplier: 1,
-    * block_list: [1, 2, rest, rest]
+    * block_list: [1, 2, null, null]
     * user_id: 1
     * board_id: 1
   
@@ -64,7 +64,7 @@
     * title: 'Snare'
     * color: '#AFB1D4',
     * multiplier: 1,
-    * block_list: [3, rest],
+    * block_list: [3, null],
     * user_id: 1,
     * board_id: 1
 
@@ -75,6 +75,40 @@
   * bpm: 857
   * pad_list: [0, 1]
 
-## Save Algo
+## Save Data Before Session Commit
 
-## Load Algo
+```python
+Pads = [
+  {
+    title: '808',
+    color: '#AFB1D4',
+    multiplier: 1,
+    block_list: [1, 2, None, None],
+    note_seq: ['808-808_5-1', 'Misc-Rest_1-5', 'Misc-Rest_1-4', '808-808_1-2', None, '808-808_1-3', None],
+    user_id: 1,
+    board_id: 1,
+  },
+  {
+    title: 'Snare',
+    color: '#AFB1D4',
+    multiplier: 1,
+    block_list: [1, None],
+    note_seq: ['Snare-Snare_2-1', None],
+    user_id: 1,
+    board_id: 1,
+  },
+]
+
+Board = {
+  title: 'Smooth Cabana',
+  bpm: 857,
+  pad_order: [Pads[0].id, Pads[1].id],
+  user_id: 1
+}
+```
+
+## Load Algo before sequence conversion
+
+```python
+
+```
