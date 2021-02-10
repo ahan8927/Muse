@@ -83,7 +83,7 @@ Pads = [
     title: '808',
     color: '#AFB1D4',
     multiplier: 1,
-    block_list: [1, 2, None, None],
+    block_list: [0, 1, None, None],
     note_seq: ['808-808_5-1', 'Misc-Rest_1-5', 'Misc-Rest_1-4', '808-808_1-2', None, '808-808_1-3', None],
     user_id: 1,
     board_id: 1,
@@ -92,7 +92,7 @@ Pads = [
     title: 'Snare',
     color: '#AFB1D4',
     multiplier: 1,
-    block_list: [1, None],
+    block_list: [0, None],
     note_seq: ['Snare-Snare_2-1', None],
     user_id: 1,
     board_id: 1,
@@ -102,13 +102,6 @@ Pads = [
 Board = {
   title: 'Smooth Cabana',
   bpm: 857,
-  pad_order: [Pads[0].id, Pads[1].id],
   user_id: 1
 }
-```
-
-## Load Algo before sequence conversion
-
-```python
-
 ```

@@ -8,14 +8,15 @@ class Pad(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     color = db.Column(db.String(64), default='#AFB1D4')
-    multiplier = db.Column(db.Integer, default=1000)
+    multiplier = db.Column(db.Integer, default=1)
 
-    block_seq = db.Column(db.ARRAY(db.String), nullable=False)
+    block_seq = db.Column(db.ARRAY(db.Integer), nullable=False)
     note_seq = db.Column(db.ARRAY(db.String), nullable=False)
     date_created = db.Column(db.Date, default=datetime.datetime.today())
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    board_id = db.Column(db.Integer, db.ForeignKey('board.id'), nullable=False)
+    board_id = db.Column(db.Integer, db.ForeignKey(
+        'boards.id'), nullable=False)
 
     user = db.relationship('User', back_populates='pads')
     board = db.relationship('Board', back_populates='pads')
@@ -23,8 +24,12 @@ class Pad(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'name': self.name,
-            'beat_data': self.beat_data,
+            'title': self.title,
+            'color': self.color,
+            'multiplier': self.multiplier,
+            'block_seq': self.block_seq,
+            'note_seq': self.note_seq,
             'user_id': self.user_id,
+            'board_id': self.board_id,
             'date_created': self.date_created
         }

@@ -49,17 +49,17 @@ const boardState = {
           'block-1': {
             id: 'block-1',
             title: 'block-1',
-            taskIds: ['808_808_5-1', 'misc_Rest_1-5', 'misc_Rest_1-4', '808_808_1-2'],
+            taskIds: ['808-808_5-1', 'Misc-Rest_1-5', 'Misc-Rest_1-4', '808-808_1-2'],
           },
           'block-2': {
             id: 'block-2',
             title: 'block-2',
-            taskIds: ['808_808_1-3'],
+            taskIds: ['808-808_1-3'],
           },
           'block-3': {
             id: 'block-3',
             title: 'block-3',
-            taskIds: [],
+            taskIds: [], 
           },
           'block-4': {
             id: 'block-4',
@@ -68,12 +68,13 @@ const boardState = {
           },
         },
         tasks: {
-          '808_808_5-1': {
-            id: '808_808_5-1',
-            name: '808_5', 
-            library: '808',
-          }
-        },        
+          '808-808_5-1': {id: '808-808_5-1', name: '808_5', library: '808',},
+          '808-808_1-2': {id: '808-808_1-2', name: '808_1', library: '808',},
+          '808-808_1-3': {id: '808-808_1-3', name: '808_1', library: '808',},
+          'Misc-Rest_1-5': {id: 'Misc-Rest_1-5', name: 'Rest_1', library: 'Misc',},
+          'Misc-Rest_1-4': {id: 'Misc-Rest_1-4', name: 'Rest_1',library: 'Misc',},
+        },       
+
       },
     },
     1: {
@@ -86,7 +87,7 @@ const boardState = {
           'block-1' :{
             id: 'block-1',
             title: 'block-1',
-            taskIds: ['Snares_Snare_2-1'],
+            taskIds: ['Snares-Snare_2-1'],
           },
           'block-2': {
             id: 'block-2',
@@ -95,11 +96,7 @@ const boardState = {
           }
         }
         tasks: {
-          'Snares_Snare_2-1': {
-            id: 'Snares_Snare_2-1',
-            name: 'Snare_2',
-            library: 'Snares',
-          }
+          'Snares-Snare_2-1': {id: 'Snares-Snare_2-1', name: 'Snare_2', library: 'Snares',},
         }
       }, 
     },

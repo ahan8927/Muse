@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, Beat, db
+from app.models import User, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
@@ -26,12 +26,11 @@ def authenticate():
         userr = current_user.to_dict()
 
         # return {'user': userr}
-        beats = Beat.query.filter_by(
-            user_id=userr['id']).order_by(desc(Beat.date_created))
-        beats = [beat.to_dict() for beat in beats]
+        # beats = Beat.query.filter_by(
+        #     user_id=userr['id']).order_by(desc(Beat.date_created))
+        # beats = [beat.to_dict() for beat in beats]
 
-        print(f'\n AAAAAAAAAAAAAAAAAAAAA {beats} \n')
-        return {'user': userr, 'beats': beats if len(beats) > 0 else None}
+        return {'user': userr}
     return {'errors': ['Unauthorized']}, 401
 
 

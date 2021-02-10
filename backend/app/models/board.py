@@ -7,10 +7,9 @@ class Board(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
-    # beat_data = db.Column(db.ARRAY(db.Integer))
-    beat_col = db.Column(db.ARRAY(db.Integer))
-    beat_row = db.Column(db.ARRAY(db.Integer))
+    bpm = db.Column(db.Integer, default=1000)
     date_created = db.Column(db.Date, default=datetime.datetime.today())
+
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     user = db.relationship('User', back_populates='boards')
@@ -20,8 +19,9 @@ class Board(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'name': self.name,
-            'beat_data': self.beat_data,
+            'title': self.title,
+            'pad_list': self.pad_list,
+            'bpm': self.bpm,
+            'date_created': self.date_created,
             'user_id': self.user_id,
-            'date_created': self.date_created
         }

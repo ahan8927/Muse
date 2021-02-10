@@ -48,5 +48,13 @@ def handleBoardSave(data):
 ## Load Algo
 
 ```python
+  board_routes = Blueprint('board', __name__)
 
+  @board_routes.route('/<int:userId>/<int:boardId>')  # GET specific board
+  def specific_board(userId, boardId):
+      board = Board.query.get(boardId)
+      board = board.to_dict()
+
+      board_pads = Pad.query.filter_by(board_id=board.id).all()
+      return 
 ```
