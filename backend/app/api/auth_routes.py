@@ -48,10 +48,8 @@ def login():
         user = User.query.filter(User.email == form.data['email']).first()
         login_user(user)
         user = user.to_dict()
-        beats = Beat.query.filter_by(
-            user_id=user.id).order_by(desc(Beat.date_created))
-        beats = [beat.to_dict() for beat in beats]
-        return {'user': user, 'beats': beats}
+
+        return {'user': user}
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 

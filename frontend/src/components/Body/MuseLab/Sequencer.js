@@ -75,9 +75,12 @@ const useStyles = makeStyles(() => ({
     backgroundColor: '#212121'
   },
   white: {
-    // color: '#EAE3D7',
-    // color: '#293847',
     color: '#AFB1D4',
+    textAlign: 'center',
+    "&::placeholder": {
+      color: "#AFB1D4",
+      textAlign: "center"
+    }
   }
 }))
 
@@ -427,17 +430,12 @@ const Sequencer = (props) => {
     <Root>
       <Header>
         <TextField
-          InputProps={{
-            style: {
-              width: '15rem',
-              textAlign: 'center',
-              color: '#AFB1D4',
-            }
-          }}
-          className={classes.white}
-          label="Sequence Name"
+          placeholder={"Sequence Name"}
           value={sequenceName}
           onChange={(e) => handleChange(e, 'name')}
+          inputProps={{
+            className: classes.white
+          }}
         />
         <ButtonContainer>
           <Button className={classes.white} onClick={() => handleChange(2, 'multiplier')} >2</Button>

@@ -1,4 +1,4 @@
-import { SET_USER, REMOVE_USER, REMOVE_BEATS, SET_BEATS } from '../actions/session';
+import { SET_USER, REMOVE_USER, REMOVE_BOARD, SET_BOARD } from '../actions/session';
 
 const initialState = { user: null, beats: null };
 const sessionReducer = (state = initialState, action) => {
@@ -15,12 +15,12 @@ const sessionReducer = (state = initialState, action) => {
       newState.user = null;
       return newState;
 
-    case SET_BEATS:
+    case SET_BOARD:
       newState = Object.assign({}, state);
       newState.beats = [...action.payload];
       return newState;
 
-    case REMOVE_BEATS:
+    case REMOVE_BOARD:
       newState = Object.assign({}, state);
       newState.beats = null;
       return newState;

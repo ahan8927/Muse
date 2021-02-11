@@ -13,8 +13,7 @@ class Board(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     user = db.relationship('User', back_populates='boards')
-    pads = db.relationship('Board', back_populates='pads')
-    # likes = db.relationship('Likes', back_populates='beat')
+    pads = db.relationship('Pad', back_populates='board')
 
     def to_dict(self):
         return {

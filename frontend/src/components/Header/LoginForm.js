@@ -18,7 +18,7 @@ const LoginForm = (props) => {
   const history = useHistory();
 
   const [credential, setCredential] = useState('demo@demo.demo');
-  const [password, setPassword] = useState('password');
+  const [password, setPassword] = useState('Darks@8927');
   const [errors, setErrors] = useState([]);
 
   const handleSubmit = (e) => {

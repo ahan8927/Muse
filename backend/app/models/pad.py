@@ -14,9 +14,9 @@ class Pad(db.Model):
     note_seq = db.Column(db.ARRAY(db.String), nullable=False)
     date_created = db.Column(db.Date, default=datetime.datetime.today())
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     board_id = db.Column(db.Integer, db.ForeignKey(
-        'boards.id'), nullable=False)
+        'boards.id'))
 
     user = db.relationship('User', back_populates='pads')
     board = db.relationship('Board', back_populates='pads')

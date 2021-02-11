@@ -77,7 +77,7 @@ def user_boards(userId):
     return {user_boards}
 
 
-@board_routes.route('/<int:userId>', methods=['POST'])  # POST a board
+@board_routes.route('/<int:userId>', methods=['POST'])  # POST a board project
 @login_required
 def handle_board_save(userId):
     sequence_data = request.get_json().get('sequences')
@@ -132,5 +132,5 @@ def handle_board_save(userId):
             board_id=board.id,
         )
         db.session.add(pad)
-
     db.session.commit()
+    return board.to_dict()

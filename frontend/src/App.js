@@ -50,22 +50,6 @@ const App = (props) => {
   const classes = useStyles();
   const [isLoaded, setIsLoaded] = useState(false)
 
-  // const spotlightSize = 'transparent 1000px, rgba*0, 0, 0, 0.85) 160px)'
-  // window.addEventListener('mousemove', e => {
-  //   isLoaded && requestAnimationFrame(() => updateSpotlight(e))
-  // })
-
-  // const updateSpotlight = e => {
-
-  //   const spotlight = document.getElementById('spotlight')
-  //   const xPos = e.pageX / window.innerWidth * 100;
-  //   const yPos = e.pageY / window.innerHeight * 100;
-  //   console.log(xPos, yPos)
-  //   spotlight.style.backgroundImage = `radial-gradient(circle at ${xPos}% ${yPos}, ${spotlightSize})`
-  // }
-
-  // console.log(spotlight)
-
   useEffect(() => {
     setIsLoaded(true)
   }, [])
@@ -85,7 +69,6 @@ const App = (props) => {
 
 const AppContainer = (props) => {
   const dispatch = useDispatch();
-  // const classes = useStyles();
 
   const user = useSelector(state => state.session.user)
 
@@ -93,8 +76,10 @@ const AppContainer = (props) => {
   const [authDialog, setAuthDialog] = useState(false);
 
   useEffect(() => {
-    dispatch(sessionActions.restoreUser())
-    setIsLoaded(true)
+    (async function () {
+      await dispatch(sessionActions.restoreUser())
+      setIsLoaded(true)
+    })()
   }, []);
 
   return isLoaded && (

@@ -1,15 +1,15 @@
 //Store Action Types
 export const SET_USER = 'Muse/session/SET_USER';
 export const REMOVE_USER = 'Muse/session/REMOVE_USER';
-export const SET_BEATS = 'Muse/session/SET_BEATS';
-export const REMOVE_BEATS = 'Muse/session/REMOVE_BEAT';
+export const SET_BOARD = 'Muse/session/SET_BOARDS';
+export const REMOVE_BOARD = 'Muse/session/REMOVE_BOARDS';
 
 //Store Actions
 const setUser = (user) => ({ type: SET_USER, payload: user })
 const removeUser = (user) => ({ type: REMOVE_USER });
 
-const setBeats = (beats) => ({ type: SET_BEATS, payload: beats.beats })
-const removeBeat = (beats) => ({ type: REMOVE_BEATS });
+const setBoard = (board) => ({ type: SET_BOARD, payload: board })
+const removeBoard = (board) => ({ type: REMOVE_BOARD });
 
 //Login Thunk
 export const loginUser = (user) => async (dispatch) => {
@@ -29,7 +29,7 @@ export const loginUser = (user) => async (dispatch) => {
     if (res.ok) {
       const data = await res.json()
       dispatch(setUser(data.user));
-      dispatch(setBeats(data.beats))
+
       window.location.replace("/dashboard")
       return data;
     }
@@ -75,8 +75,8 @@ export const restoreUser = () => async dispatch => {
     if (res.ok) {
       const data = await res.json()
       dispatch(setUser(data.user))
-      console.log(data)
-      dispatch(setBeats(data.beats))
+
+
       return data
     }
   }
@@ -93,9 +93,30 @@ export const logoutUser = () => async dispatch => {
       }
     })
     dispatch(removeUser())
-    await dispatch(removeBeat())
-
     return res
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export const saveBoard = (userId, sequenceData) => async dispatch => {
+  try {
+    const res = await fetch(`/api/board/${userId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sequenceData
+      }),
+    });
+
+    if (res.ok) {
+      const data = await res.json()
+      dispatch(setBoard(data))
+      console.log('Saved successfully')
+      return data;
+    }
   } catch (e) {
     console.error(e)
   }
