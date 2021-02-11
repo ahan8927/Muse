@@ -35,12 +35,12 @@ const buttonState = {
   columnOrder: ['block-1', 'block-2', 'block-3', 'block-4'],
 }
 
-const boardState = {
+const exampleBoardState = {
   bpm: 1000, //ms
   projectName: 'First Project!',
   sequences: {
     0: {
-      sequenceTitle: 'Bass Sound',
+      sequenceTitle: '808',
       color: 'AFB1D4',
       multiplier: 1,
       sequenceData: {
@@ -54,12 +54,12 @@ const boardState = {
           'block-2': {
             id: 'block-2',
             title: 'block-2',
-            taskIds: ['808-808_1-3'],
+            taskIds: ['Misc-Rest_1-6', '808-808_1-3'],
           },
           'block-3': {
             id: 'block-3',
             title: 'block-3',
-            taskIds: [], 
+            taskIds: ['Misc-Rest_1-9', '808-808_1-7', '808-808_1-8', 'Misc-Rest_1-10',], 
           },
           'block-4': {
             id: 'block-4',
@@ -71,10 +71,14 @@ const boardState = {
           '808-808_5-1': {id: '808-808_5-1', name: '808_5', library: '808',},
           '808-808_1-2': {id: '808-808_1-2', name: '808_1', library: '808',},
           '808-808_1-3': {id: '808-808_1-3', name: '808_1', library: '808',},
-          'Misc-Rest_1-5': {id: 'Misc-Rest_1-5', name: 'Rest_1', library: 'Misc',},
+          '808-808_1-7': {id: '808-808_1-7', name: '808_1', library: '808',},
+          '808-808_1-8': {id: '808-808_1-3', name: '808_1', library: '808',},
           'Misc-Rest_1-4': {id: 'Misc-Rest_1-4', name: 'Rest_1',library: 'Misc',},
+          'Misc-Rest_1-5': {id: 'Misc-Rest_1-5', name: 'Rest_1', library: 'Misc',},
+          'Misc-Rest_1-6': {id: 'Misc-Rest_1-6', name: 'Rest_1',library: 'Misc',},
+          'Misc-Rest_1-9': {id: 'Misc-Rest_1-9', name: 'Rest_1',library: 'Misc',},
+          'Misc-Rest_1-10': {id: 'Misc-Rest_1-10', name: 'Rest_1',library: 'Misc',},
         },       
-
       },
     },
     1: {

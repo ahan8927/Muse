@@ -48,7 +48,6 @@ const Body = (props) => {
 
   useEffect(() => {
     setIsLoaded(true)
-    console.log(props.user)
   }, [props.user])
 
   return isLoaded && (
@@ -57,7 +56,7 @@ const Body = (props) => {
         <Paper className={classes.paper} elevation={0}>
           <Switch>
             {/* <Route exact path='/' render={props => <Splash {...props} />} /> */}
-            <Route exact path='/muse-board' render={props => <MusicLab {...props} user={props.user} />} />
+            <Route exact path='/board/:boardId' render={props => <MusicLab {...props} user={props.user} />} />
             <Route exact path='/library' render={props => <LibraryPage {...props} />} />
             <Route path='*' render={props => <MusicLab {...props} />} />
             {/* <ProtectedRoute exact user={user} path="/search" component={SavedMaps} /> */}

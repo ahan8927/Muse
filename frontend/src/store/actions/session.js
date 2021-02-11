@@ -75,6 +75,7 @@ export const restoreUser = () => async dispatch => {
     if (res.ok) {
       const data = await res.json()
       dispatch(setUser(data.user))
+      dispatch(setBoard(data.boards))
 
 
       return data
@@ -107,17 +108,38 @@ export const saveBoard = (userId, sequenceData) => async dispatch => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        sequenceData
+        ...sequenceData
       }),
     });
 
     if (res.ok) {
       const data = await res.json()
       dispatch(setBoard(data))
-      console.log('Saved successfully')
       return data;
     }
   } catch (e) {
+    console.error(e)
+  }
+}
+
+export const loadBoard = (boardId) => async dispatch => {
+  try {
+    const res = await fetch(`/api/board/${boardId}`, {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+
+    if (res.ok) {
+      const data = await res.json()
+
+      dispatch(setBoard(data))
+
+      return data
+    }
+
+  }
+  catch (e) {
     console.error(e)
   }
 }

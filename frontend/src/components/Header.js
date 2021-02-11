@@ -7,7 +7,6 @@ import { AuthContext } from '../context/context';
 import LoginForm from './Header/LoginForm';
 import SignupForm from './Header/SignUpForm';
 // import Settings from './Header/Settings';
-// import Dashboard from './Header/Dashboard';
 import Help from './Header/Help';
 
 //Mui
@@ -15,9 +14,7 @@ import { makeStyles, Typography, IconButton, Button } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 
 //Icons
-// import PersonIcon from '@material-ui/icons/Person';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
-// import DashboardIcon from '@material-ui/icons/Dashboard';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 const useStyles = makeStyles((theme) => ({
@@ -84,10 +81,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-// const getParams = () => {
-//   return window.location.pathname.slice(1)
-// }
-
 const Header = () => {
   const classes = useStyles();
   const history = useHistory();
@@ -102,13 +95,11 @@ const Header = () => {
     (JSON.stringify(loadedUser) === '{}') ? setUser(null) : setUser(loadedUser)
   }, [loadedUser])
 
-
-
   const navs = [
     {
       title: 'Create',
       redirect: true,
-      path: 'muse-lab',
+      path: '/board',
       icon: <Typography className={classes.myColor}>Create</Typography>
     },
     {
@@ -120,7 +111,7 @@ const Header = () => {
     {
       title: 'Library',
       redirect: true,
-      path: 'library',
+      path: '/library',
       icon: <Typography className={classes.myColor}>Library</Typography>
     }
   ]
@@ -146,8 +137,6 @@ const Header = () => {
         return <SignupForm />
       // case 'settings':
       //   return <Settings getParams={() => getParams()} user={user} setParams={(path) => setParams(path)} />;
-      // case 'dashboard':
-      //   return <Dashboard getParams={() => getParams()} setParams={(path) => setParams(path)} />
       case 'help':
         return <Help />
       default:
@@ -161,7 +150,6 @@ const Header = () => {
 
         {/* LEFT */}
         <div className={classes.navBar_left}>
-          {/* TODO: history.push('/home') */}
           <Button >
             <Typography className={classes.myColor} >Muse</Typography>
           </Button>

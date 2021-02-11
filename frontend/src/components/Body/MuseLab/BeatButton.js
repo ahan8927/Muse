@@ -47,7 +47,6 @@ const BeatButton = (props) => {
   const [sequenceData, setSequenceData] = useState((currentSequence.sequenceData !== null) ? currentSequence.sequenceData : null);
 
   const [multiplier, setMultiplier] = useState(currentSequence.multiplier ? currentSequence.multiplier : 1);
-  const [bpm, setBpm] = useState(props.bpm ? props.bpm : 6000);
 
   const [play, setPlay] = useState(false)
   const [buffer, setBuffer] = useState({})
@@ -86,10 +85,10 @@ const BeatButton = (props) => {
 
       let noteSpeed = 0
       if (currentBlockData.taskIds.length > 0) {
-        noteSpeed = (bpm * multiplier) / currentBlockData.taskIds.length
+        noteSpeed = ((props.bpm ? Math.floor(60000 / props.bpm) : 1000) * multiplier) / currentBlockData.taskIds.length
         playNote()
       } else {
-        noteSpeed = bpm * multiplier
+        noteSpeed = (props.bpm ? Math.floor(60000 / props.bpm) : 1000) * multiplier
         currentBlock++
         if (currentBlock < sequenceData.columnOrder.length) {
           delay.current = setTimeout(playBlock, noteSpeed)

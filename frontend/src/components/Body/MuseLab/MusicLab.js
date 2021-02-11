@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom'
 import * as sessionActions from '../../../store/actions/session';
 import styled from 'styled-components';
 
 //Components
 import BeatButton from './BeatButton';
-import Sequencer from './Sequencer'
+import Sequencer from './Sequencer';
+import { setInitialDemoState } from './test/test';
 
 //MUI
-import { Button, Dialog, DialogContent, TextField, Typography } from '@material-ui/core';
+import { Button, Dialog, TextField, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
@@ -63,7 +65,7 @@ const setInitialState = () => {
     initialState['sequences'][i] = state
   }
   initialState['projectName'] = ''
-  initialState['bpm'] = 857
+  initialState['bpm'] = Math.floor(60000 / 857)
   return initialState
 }
 
@@ -71,13 +73,15 @@ const MusicLab = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const { boardId } = useParams()
   const [beatPads] = useState(16);
   const user = useSelector(state => state.session.user)
+
   const [sequenceState, setSequenceState] = useState(props.beatPadData ? props.beatPadData : setInitialState());
   const [openDialog, setOpenDialog] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [projectName, setProjectName] = useState('')
-  const [bpm, setBpm] = useState(sequenceState.bpm ? sequenceState.bpm : 1000)
+  const [bpm, setBpm] = useState(sequenceState.bpm ? sequenceState.bpm : 60)
 
   //DIALOG Functions
   const handleClose = () => {
@@ -87,24 +91,50 @@ const MusicLab = (props) => {
   const handleChange = (e, target) => {
     switch (target) {
       case 'bpm':
+        sequenceState.bpm = e.target.value
+        setSequenceState(sequenceState)
         setBpm(e.target.value)
         break;
       case 'projectName':
+        sequenceState.projectName = e.target.value
+        setSequenceState(sequenceState)
         setProjectName(e.target.value)
         break;
     }
   }
 
   const handleSave = () => {
-    console.log(user)
+    // dispatch(sessionActions.saveBoard(user.id, setInitialDemoState()))
     dispatch(sessionActions.saveBoard(user.id, sequenceState))
   }
 
   useEffect(() => {
-    setIsLoaded(true)
-  }, [])
+    (async function loadBoardData() {
+      if (boardId) {
+        try {
+          const res = await fetch(`/api/board/${boardId}`, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
 
-  // console.log(sequenceState)
+          if (res.ok) {
+            const data = await res.json();
+            console.log('Recieved Board Data: ', data)
+            setSequenceState(data)
+            setBpm(Math.floor(60000 / data.bpm))
+            setProjectName(data.projectName)
+          }
+        }
+        catch (e) {
+          console.error(e)
+        }
+      }
+      setIsLoaded(true)
+    })();
+  }, []);
+
+  console.log(sequenceState)
 
   return isLoaded && (
     <Root>

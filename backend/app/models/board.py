@@ -19,7 +19,6 @@ class Board(db.Model):
         return {
             'id': self.id,
             'title': self.title,
-            'pad_list': self.pad_list,
             'bpm': self.bpm,
             'date_created': self.date_created,
             'user_id': self.user_id,

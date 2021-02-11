@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, db
+from app.models import User, db, Board
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
@@ -23,14 +23,12 @@ def validation_errors_to_error_messages(validation_errors):
 @auth_routes.route('/restore')
 def authenticate():
     if current_user.is_authenticated:
-        userr = current_user.to_dict()
+        user = current_user.to_dict()
 
-        # return {'user': userr}
-        # beats = Beat.query.filter_by(
-        #     user_id=userr['id']).order_by(desc(Beat.date_created))
-        # beats = [beat.to_dict() for beat in beats]
+        user_boards = Board.query.filter_by(user_id=user['id']).all()
+        user_boards = [board.to_dict() for board in user_boards]
 
-        return {'user': userr}
+        return {'user': user, 'boards': user_boards}
     return {'errors': ['Unauthorized']}, 401
 
 

@@ -42,7 +42,7 @@ const soundLibrary = {
     '808_4': 'sounds/808-snares/808s/8084wkick.wav',
     '808_5': 'sounds/808-snares/808s/8085wkick.wav',
   },
-  'misc': {
+  'Misc': {
     'Rest_1': 'sounds/rest.wav',
   },
 }
@@ -56,7 +56,7 @@ export const initializeSequencerLibrary = () => {
     const tasks = {}
 
     Object.keys(soundLibrary[library]).map((note, j) => {
-      const newId = `${library}_${note}`
+      const newId = `${library}-${note}`
       tasks[newId] = {
         id: newId,
         name: note,

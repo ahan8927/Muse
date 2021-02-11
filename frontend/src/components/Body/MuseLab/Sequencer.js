@@ -128,7 +128,7 @@ const Sequencer = (props) => {
   // const [sequenceData, setSequenceData] = useState(props.index ? currentSequence.sequenceData : initialData);
   const [sequenceData, setSequenceData] = useState(initialData());
   const [multiplier, setMultiplier] = useState(props.index ? currentSequence.multiplier : 1);
-  const [bpm] = useState(props.bpm ? props.bpm : 1000);
+  const [bpm] = useState(props.bpm ? Math.floor(60000 / props.bpm) : 1000);
 
   const [play, setPlay] = useState(false)
   const [buffer, setBuffer] = useState({})
@@ -175,7 +175,7 @@ const Sequencer = (props) => {
       sequenceData.columns[column].taskIds.forEach((task, j) => {
         let currentId = task
         if (task.includes('-')) {
-          currentId = parseInt(task.split('-')[1])
+          currentId = parseInt(task.split('-')[2])
           if (currentId > max) {
             max = currentId;
           }
@@ -260,9 +260,10 @@ const Sequencer = (props) => {
 
       //get basic info
       const finish = sequenceData.columns[destination.droppableId];
-      let currentId = draggableId.split('_')
-      const noteName = `${currentId[1]}_${currentId[2]}`;
+      let currentId = draggableId.split('-')
+      const noteName = `${currentId[1]}`;
       const newId = `${draggableId}-${maxTaskId() + 1}`;
+      console.log('current dragging Id: ', newId)
 
 
       //get library

@@ -1,6 +1,6 @@
 import { SET_USER, REMOVE_USER, REMOVE_BOARD, SET_BOARD } from '../actions/session';
 
-const initialState = { user: null, beats: null };
+const initialState = { user: null, boards: null };
 const sessionReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
@@ -17,12 +17,12 @@ const sessionReducer = (state = initialState, action) => {
 
     case SET_BOARD:
       newState = Object.assign({}, state);
-      newState.beats = [...action.payload];
+      newState.boards = { ...newState.boards, ...action.payload };
       return newState;
 
     case REMOVE_BOARD:
       newState = Object.assign({}, state);
-      newState.beats = null;
+      newState.boards = null;
       return newState;
     default:
       return state;
