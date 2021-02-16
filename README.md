@@ -42,4 +42,5 @@
 ## Inspiration
 
 This project was inspired by beatBucket.io
-Please check out their project as well.
+and Sampulator.com
+Please check out their projects as well.

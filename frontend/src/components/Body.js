@@ -40,11 +40,9 @@ const useStyles = makeStyles(() => ({
 
 const Body = (props) => {
   const classes = useStyles();
-  // const beats = useSelector(state => state.session.beats)
 
   const [isLoaded, setIsLoaded] = useState(false)
   const [dialogContext, setDialogContext] = useState(false)
-  // const user = useSelector(state => state.session.user)
 
   useEffect(() => {
     setIsLoaded(true)
