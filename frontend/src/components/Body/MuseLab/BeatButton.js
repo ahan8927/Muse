@@ -42,9 +42,10 @@ const Span1 = styled.span`
 
 const BeatButton = (props) => {
   const currentSequence = props.sequenceState.sequences[props.index]
+  const { sequenceData } = currentSequence
 
-  const [sequenceName, setSequenceName] = useState(currentSequence.sequenceTitle ? currentSequence.sequenceTitle : '');
-  const [sequenceData, setSequenceData] = useState((currentSequence.sequenceData !== null) ? currentSequence.sequenceData : null);
+  // const [sequenceName, setSequenceName] = useState(currentSequence.sequenceTitle ? currentSequence.sequenceTitle : '');
+  // const [sequenceData, setSequenceData] = useState((currentSequence.sequenceData !== null) ? currentSequence.sequenceData : null);
 
   const [multiplier, setMultiplier] = useState(currentSequence.multiplier ? currentSequence.multiplier : 1);
 
@@ -100,6 +101,7 @@ const BeatButton = (props) => {
       function playNote() {
         const { name } = sequenceData.tasks[currentBlockData.taskIds[currentNote]]
 
+        console.log(`noteName: ${name}`)
         const currentSound = new Tone.Player(buffer.get(name).get()).toDestination()
         currentSound.start()
 
@@ -128,12 +130,14 @@ const BeatButton = (props) => {
 
   useEffect(() => {
     setMultiplier(currentSequence.multiplier)
-    setSequenceName(currentSequence.sequenceTitle)
-    setSequenceData(currentSequence.sequenceData, (() => {
-      initializeBuffer()
-      setIsLoaded(true)
-    })())
+    initializeBuffer()
+    setIsLoaded(true)
   }, [props])
+
+  useEffect(() => {
+    initializeBuffer()
+    setIsLoaded(true)
+  }, [])
 
   return isLoaded && (
     <>
@@ -149,7 +153,7 @@ const BeatButton = (props) => {
       <NeonButton play={play} onClick={() => sequenceData ? setPlay(!play) : props.setOpenDialog(props.index)}>
         {/* <Span1 /> */}
         {(sequenceData)
-          ? <Typography>{sequenceName}</Typography>
+          ? <Typography>{currentSequence.sequenceTitle}</Typography>
           : <AddIcon />
         }
       </NeonButton>

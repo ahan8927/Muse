@@ -7,7 +7,7 @@ import styled from 'styled-components';
 //Components
 import BeatButton from './BeatButton';
 import Sequencer from './Sequencer';
-import { setInitialDemoState } from './test/test';
+// import { setInitialDemoState } from './/test';
 
 //MUI
 import { Button, Dialog, TextField, Typography } from '@material-ui/core';

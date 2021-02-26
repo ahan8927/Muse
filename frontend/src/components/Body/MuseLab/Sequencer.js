@@ -5,9 +5,9 @@ import styled from 'styled-components';
 
 //Components
 import soundLibrary from './SoundLibrary';
-import Column from './test/Column';
+import Column from './Column';
 import * as soundTools from './SoundTools';
-import SequencerLibrary from './test/SequencerLibrary';
+import SequencerLibrary from './SequencerLibrary';
 
 //MUI
 import { makeStyles, Typography } from '@material-ui/core'
@@ -67,7 +67,7 @@ justify-content: space-between;
 color: #edf2f4;
 `
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((props) => ({
   expandIcon: {
     colorPrimary: 'white',
   },
@@ -125,8 +125,7 @@ const Sequencer = (props) => {
 
   const currentSequence = props.sequenceState.sequences[props.index];
   const [sequenceName, setSequenceName] = useState(props.index ? currentSequence.sequenceTitle : '');
-  // const [sequenceData, setSequenceData] = useState(props.index ? currentSequence.sequenceData : initialData);
-  const [sequenceData, setSequenceData] = useState(initialData());
+  const sequenceData = useRef(initialData());
   const [multiplier, setMultiplier] = useState(props.index ? currentSequence.multiplier : 1);
   const [bpm] = useState(props.bpm ? Math.floor(60000 / props.bpm) : 1000);
 
@@ -135,7 +134,10 @@ const Sequencer = (props) => {
   const delay = useRef()
   const [isLoaded, setIsLoaded] = useState(false);
 
+  console.log('current sequence data in sequencer: ', sequenceData)
+
   const initializeBuffer = () => {
+    console.log('initializing buffer.')
     const placeHolder = {}
     if (sequenceData) {
       Object.values(sequenceData.columns).forEach(blockData => {
@@ -204,7 +206,7 @@ const Sequencer = (props) => {
         newId
       ]
     }
-    setSequenceData(newState);
+    sequenceData.current = newState
   }
 
   const handleBlockDelete = () => {
@@ -214,19 +216,18 @@ const Sequencer = (props) => {
     delete newState.columns[idToDelete]
 
     if (Object.keys(newState.columns) > 0) {
-      setSequenceData(newState);
+      sequenceData.current = newState
     }
   }
 
   const handleSubmit = () => {
+    setPlay(true, props.handleClose())
     const newBeatPadState = props.sequenceState;
     newBeatPadState.sequences[props.index].sequenceData = sequenceData
     newBeatPadState.sequences[props.index].multiplier = multiplier
-    newBeatPadState.sequences[props.index].sequenceTitle = sequenceName
+    newBeatPadState.sequences[props.index].sequenceTitle = (sequenceName !== '') ? sequenceName : 'Sequence Name';
 
     props.setSequenceState(newBeatPadState)
-    setPlay(!play, props.handleClose())
-
   }
 
   const handleOnDragEnd = (result) => {
@@ -250,7 +251,7 @@ const Sequencer = (props) => {
         columnOrder: newColumnOrder,
       }
 
-      setSequenceData(newState);
+      sequenceData.current = newState
       return;
     }
 
@@ -285,7 +286,8 @@ const Sequencer = (props) => {
         newState.columns[destination.droppableId].taskIds.push(newId)
         newState.tasks[newId] = newTask;
 
-        setSequenceData(newState, initializeBuffer());
+        sequenceData.current = newState;
+        initializeBuffer()
         return;
       }
       return;
@@ -300,7 +302,7 @@ const Sequencer = (props) => {
       newState.columns[source.droppableId].taskIds.splice(index, 1)
       delete newState.tasks[draggableId]
 
-      setSequenceData(newState);
+      sequenceData.current = newState
       return;
     }
 
@@ -325,7 +327,7 @@ const Sequencer = (props) => {
         },
       }
 
-      setSequenceData(newState);
+      sequenceData.current = newState
       return;
     }
 
@@ -354,7 +356,7 @@ const Sequencer = (props) => {
         [newFinish.id]: newFinish,
       },
     }
-    setSequenceData(newState);
+    sequenceData.current = newState
     return;
   }
 
@@ -407,7 +409,7 @@ const Sequencer = (props) => {
 
 
 
-
+  console.log('seqeuncer reloaded')
 
 
 

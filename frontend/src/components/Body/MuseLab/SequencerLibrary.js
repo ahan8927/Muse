@@ -5,9 +5,9 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 import Slider from 'react-animated-slider';
 import 'react-animated-slider/build/horizontal.css';
 
-import { initializeSequencerLibrary } from '../SoundLibrary';
+import { initializeSequencerLibrary } from './SoundLibrary';
 import Task from './Task';
-import { initialData } from './test'
+// import { initialData } from './'
 
 const TaskContainer = styled.div`
   display: flex;
