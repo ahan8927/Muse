@@ -4,10 +4,8 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
 //Components
-import soundLibrary from './SoundLibrary';
+import { soundLibrary, SequencerLibrary } from './SoundLibrary';
 import Column from './Column';
-import * as soundTools from './SoundTools';
-import SequencerLibrary from './SequencerLibrary';
 
 //MUI
 import { makeStyles, Typography } from '@material-ui/core'
@@ -353,7 +351,6 @@ const Sequencer = (props) => {
   }
 
   function playTrack() {
-    initializeBuffer();
     let currentBlock = 0;
 
     (function playBlock() {
@@ -376,8 +373,13 @@ const Sequencer = (props) => {
 
       function playNote() {
         const { name } = sequenceData.current.tasks[currentBlockData.taskIds[currentNote]]
-
-        const currentSound = new Tone.Player(buffer.get(name).get()).toDestination()
+        let currentSound
+        try {
+          currentSound = new Tone.Player(buffer.get(name).get()).toDestination()
+        } catch {
+          initializeBuffer();
+        }
+        currentSound = new Tone.Player(buffer.get(name).get()).toDestination()
         currentSound.start()
 
         currentNote++;

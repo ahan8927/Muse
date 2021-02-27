@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import * as Tone from 'tone';
 
 //Components
-import soundLibrary from './SoundLibrary';
+import { soundLibrary } from './SoundLibrary';
 import styled from 'styled-components';
 
 //MUI
