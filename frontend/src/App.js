@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     gridAutoFlow: 'row',
     alignItems: 'center',
     minHeight: '96vh',
-    padding: '2rem',
+    padding: '1rem',
     gap: '2rem',
     width: '100%',
     gridTemplateRows: 'auto 1fr auto',

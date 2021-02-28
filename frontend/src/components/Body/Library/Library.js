@@ -16,6 +16,7 @@ import Paper from '@material-ui/core/Paper';
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
+    backgroundColor: '#feeafa',
   },
 });
 
@@ -57,7 +58,6 @@ const LibraryPage = () => {
 
   return isLoaded && (
     <>
-      <h1>Library Page</h1>
       {
         (list_of_boards && Object.keys(list_of_boards).length > 0)
           ? (<TableContainer component={Paper}>
@@ -65,7 +65,7 @@ const LibraryPage = () => {
               <TableHead>
                 <TableRow>
                   <TableCell>Board</TableCell>
-                  <TableCell align="right">Artist</TableCell>
+                  <TableCell align="right">Artist Id</TableCell>
                   <TableCell align="right">Date</TableCell>
                 </TableRow>
               </TableHead>
