@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import * as sessionActions from '../../../store/actions/session';
 import styled from 'styled-components';
+import Modal from 'react-modal'
 
 //Components
 import BeatButton from './BeatButton';
@@ -134,8 +135,6 @@ const MusicLab = (props) => {
     })();
   }, []);
 
-  console.log(sequenceState)
-
   return isLoaded && (
     <Root>
       <Header>
@@ -181,7 +180,7 @@ const MusicLab = (props) => {
           </Grid>
         ))}
       </Grid>
-      <Dialog
+      {/* <Dialog
         open={(openDialog !== null) ? true : false}
         onBackdropClick={() => setOpenDialog(null)}
         fullWidth={true}
@@ -198,7 +197,38 @@ const MusicLab = (props) => {
             />
           )
         }
-      </Dialog>
+      </Dialog> */}
+      <Modal
+        isOpen={(openDialog !== null) ? true : false}
+        onRequestClose={() => setOpenDialog(null)}
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(62, 62, 62, .8)'
+          },
+          content: {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            inset: '5% 20%',
+            padding: '0',
+            backgroundColor: '#212121',
+            border: '0',
+            borderRadius: '1rem',
+          }
+        }}
+      >
+        {
+          (openDialog !== null) && (
+            <Sequencer
+              index={openDialog}
+              bpm={bpm}
+              setSequenceState={setSequenceState}
+              sequenceState={sequenceState}
+              handleClose={handleClose}
+            />
+          )
+        }
+      </Modal>
     </Root>
   );
 }

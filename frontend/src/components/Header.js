@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     gridTemplateAreas: '\'left middle right\'',
     justifyContent: 'space-between',
     padding: '0.5rem',
-    zIndex: '1000',
+    zIndex: '0',
   },
   navBar_left: {
     display: 'flex',
@@ -173,16 +173,16 @@ const Header = () => {
 
         {/* RIGHT */}
         <div className={classes.navBar_right}>
-          <Button
+          {/* <Button
             className={classes.iconButton}
             title={(user) ? 'Profile' : 'Login'}
             endIcon={<SettingsIcon color='inherit' />}
             onClick={() => (user ? handleNavClick('/profile') : handleMenuClick('login'))}
-          >
-            <Typography className={classes.myColor}>
-              {(user) ? `${user.username}` : 'Login'}
-            </Typography>
-          </Button>
+          > */}
+          <Typography className={classes.myColor}>
+            {(user) ? `${user.username}` : 'Login'}
+          </Typography>
+          {/* </Button> */}
           {/* </div> */}
         </div>
       </div >

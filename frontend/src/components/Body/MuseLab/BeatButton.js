@@ -6,7 +6,7 @@ import { soundLibrary } from './SoundLibrary';
 import styled from 'styled-components';
 
 //MUI
-import { Button, makeStyles, Typography } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
 const NeonButton = styled.div`
@@ -41,17 +41,14 @@ const Span1 = styled.span`
 `
 
 const BeatButton = (props) => {
-  const currentSequence = props.sequenceState.sequences[props.index]
-  const { sequenceData } = currentSequence
-
-  // const [sequenceName, setSequenceName] = useState(currentSequence.sequenceTitle ? currentSequence.sequenceTitle : '');
-  // const [sequenceData, setSequenceData] = useState((currentSequence.sequenceData !== null) ? currentSequence.sequenceData : null);
-
-  const [multiplier, setMultiplier] = useState(currentSequence.multiplier ? currentSequence.multiplier : 1);
-
-  const [play, setPlay] = useState(false)
-  const [buffer, setBuffer] = useState({})
+  const currentSequence = useRef(props.sequenceState.sequences[props.index])
+  const buffer = useRef()
   const delay = useRef();
+
+  const { sequenceData } = currentSequence.current
+
+  const [multiplier, setMultiplier] = useState(currentSequence.current.multiplier ? currentSequence.current.multiplier : 1);
+  const [play, setPlay] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false);
 
   function initializeBuffer() {
@@ -59,12 +56,15 @@ const BeatButton = (props) => {
     if (sequenceData) {
       Object.values(sequenceData.columns).forEach(blockData => {
         blockData.taskIds.forEach(noteId => {
-          const { name, library } = sequenceData.tasks[noteId]
-          placeHolder[name] = soundLibrary[library][name] //file path
+          const { title, library } = sequenceData.tasks[noteId]
+          placeHolder[title] = soundLibrary[library][title] //file path
         })
       })
     }
-    const bufferDict = new Tone.Buffers(placeHolder, () => setBuffer(bufferDict))
+    const bufferDict = new Tone.Buffers(placeHolder, () => {
+      buffer.current = bufferDict
+
+    })
   }
 
   const useStyles = makeStyles(() => ({
@@ -99,10 +99,8 @@ const BeatButton = (props) => {
       }
 
       function playNote() {
-        const { name } = sequenceData.tasks[currentBlockData.taskIds[currentNote]]
-
-        console.log(`noteName: ${name}`)
-        const currentSound = new Tone.Player(buffer.get(name).get()).toDestination()
+        const { title } = sequenceData.tasks[currentBlockData.taskIds[currentNote]]
+        const currentSound = new Tone.Player(buffer.current.get(title)).toDestination()
         currentSound.start()
 
         currentNote++;
@@ -129,13 +127,17 @@ const BeatButton = (props) => {
   }, [play])
 
   useEffect(() => {
-    setMultiplier(currentSequence.multiplier)
-    initializeBuffer()
+    setMultiplier(currentSequence.current.multiplier)
+    if (sequenceData) {
+      initializeBuffer()
+    }
     setIsLoaded(true)
   }, [props])
 
   useEffect(() => {
-    initializeBuffer()
+    if (sequenceData) {
+      initializeBuffer()
+    }
     setIsLoaded(true)
   }, [])
 
@@ -153,7 +155,7 @@ const BeatButton = (props) => {
       <NeonButton play={play} onClick={() => sequenceData ? setPlay(!play) : props.setOpenDialog(props.index)}>
         {/* <Span1 /> */}
         {(sequenceData)
-          ? <Typography>{currentSequence.sequenceTitle}</Typography>
+          ? <Typography>{currentSequence.current.sequenceTitle}</Typography>
           : <AddIcon />
         }
       </NeonButton>

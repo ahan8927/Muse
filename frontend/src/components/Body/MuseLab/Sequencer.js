@@ -29,8 +29,8 @@ import RemoveIcon from '@material-ui/icons/Remove';
 
 const Root = styled.div`
   background: #212121;
-  padding: 4rem;
   width: fit-content;
+
 `
 
 const Container = styled.div`
@@ -114,30 +114,32 @@ const Sequencer = (props) => {
   const classes = useStyles()
 
   const currentSequence = props.sequenceState.sequences[props.index];
-  const [sequenceName, setSequenceName] = useState(props.index ? currentSequence.sequenceTitle : '');
   const sequenceData = useRef(initialData());
+  const buffer = useRef()
+  const delay = useRef()
+
+  const [sequenceName, setSequenceName] = useState(props.index ? currentSequence.sequenceTitle : '');
   const [multiplier, setMultiplier] = useState(props.index ? currentSequence.multiplier : 1);
   const [bpm] = useState(props.bpm ? Math.floor(60000 / props.bpm) : 1000);
-
   const [play, setPlay] = useState(false)
-  const [buffer, setBuffer] = useState({})
-  const delay = useRef()
   const [isLoaded, setIsLoaded] = useState(false);
 
-  console.log('current sequence data in sequencer: ', sequenceData)
 
   const initializeBuffer = () => {
-    console.log('initializing buffer.')
+    console.log('initializing sequencer buffer.')
     const placeHolder = {}
     if (sequenceData.current) {
       Object.values(sequenceData.current.columns).forEach(blockData => {
         blockData.taskIds.forEach(noteId => {
-          const { name, library } = sequenceData.current.tasks[noteId]
-          placeHolder[name] = soundLibrary[library][name] //file path
+          const { title, library } = sequenceData.current.tasks[noteId]
+          placeHolder[title] = soundLibrary[library][title] //file path
         })
       })
     }
-    const bufferDict = new Tone.Buffers(placeHolder, () => setBuffer(bufferDict))
+    const bufferDict = new Tone.Buffers(placeHolder, () => {
+      buffer.current = bufferDict
+      setIsLoaded(isLoaded)
+    })
   }
 
   const handleChange = (e, location) => {
@@ -268,7 +270,7 @@ const Sequencer = (props) => {
       if (noteName && finish) {
         const newTask = {
           id: newId,
-          name: noteName,
+          title: noteName,
           library: currentLibrary,
         }
 
@@ -372,14 +374,9 @@ const Sequencer = (props) => {
       }
 
       function playNote() {
-        const { name } = sequenceData.current.tasks[currentBlockData.taskIds[currentNote]]
-        let currentSound
-        try {
-          currentSound = new Tone.Player(buffer.get(name).get()).toDestination()
-        } catch {
-          initializeBuffer();
-        }
-        currentSound = new Tone.Player(buffer.get(name).get()).toDestination()
+        const { title } = sequenceData.current.tasks[currentBlockData.taskIds[currentNote]]
+        const currentSound = new Tone.Player(buffer.current.get(title).get()).toDestination()
+
         currentSound.start()
 
         currentNote++;
@@ -404,7 +401,8 @@ const Sequencer = (props) => {
   useEffect(() => {
     initializeBuffer()
     setIsLoaded(true)
-  }, [])
+    console.log('sequencer reloaded')
+  }, [sequenceData.current])
 
   useEffect(() => {
     if (sequenceData.current) {
@@ -449,6 +447,8 @@ const Sequencer = (props) => {
           <RemoveIcon className={classes.white} />
         </IconButton>
       </ButtonContainer>
+
+      {console.log('Rerendered! state: ', sequenceData.current)}
 
       <DragDropContext
         onDragEnd={handleOnDragEnd}

@@ -33,7 +33,7 @@ const Task = (props) => {
           ref={provided.innerRef}
           isDragging={snapshot.isDragging}
         >
-          {props.task.name}
+          {props.task.title}
         </Container>
       )}
     </Draggable>
