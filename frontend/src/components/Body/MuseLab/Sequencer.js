@@ -53,13 +53,6 @@ const ButtonContainer = styled.div`
   color: #edf2f4;
 `
 
-const SequenceControls = styled.div`
-display: flex;
-align-items: center;
-justify-content: space-between;
-color: #edf2f4;
-`
-
 const useStyles = makeStyles((props) => ({
   expandIcon: {
     colorPrimary: 'white',
@@ -401,7 +394,6 @@ const Sequencer = (props) => {
   useEffect(() => {
     initializeBuffer()
     setIsLoaded(true)
-    console.log('sequencer reloaded')
   }, [sequenceData.current])
 
   useEffect(() => {

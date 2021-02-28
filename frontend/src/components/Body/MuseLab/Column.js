@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
@@ -32,7 +32,19 @@ const TaskList = styled.div`
 `;
 
 const Column = (props) => {
-  return (
+  const [isLoaded, setIsLoaded] = useState(false)
+  console.log(props)
+
+  useEffect(() => {
+    setIsLoaded(isLoaded)
+    console.log('Re rendered Block.')
+  }, [props.tasks])
+
+  useEffect(() => {
+    setIsLoaded(true)
+  }, [])
+
+  return isLoaded && (
     <Draggable draggableId={props.column.id} index={props.index}>
       {provided => (
         <Container

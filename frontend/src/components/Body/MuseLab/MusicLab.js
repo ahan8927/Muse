@@ -201,6 +201,7 @@ const MusicLab = (props) => {
       <Modal
         isOpen={(openDialog !== null) ? true : false}
         onRequestClose={() => setOpenDialog(null)}
+        ariaHideApp={false}
         style={{
           overlay: {
             backgroundColor: 'rgba(62, 62, 62, .8)'
