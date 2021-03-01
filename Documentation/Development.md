@@ -260,20 +260,20 @@ Drawings from design and planning process TBA.
 </div>
 
 <div align="center">
-<img src="images/dev-1.PNG" height="350px">
+<!-- <img src="images/dev-1.PNG" height="350px">
 <img src="images/dev-2.PNG" height="350px">
-<img src="images/dev-3.PNG" height="350px">
+<img src="images/dev-3.PNG" height="350px"> -->
 
-<img src="images/dev-6.PNG" height="350px">
-<img src="images/dev-10.PNG" height="350px">
+<!-- <img src="images/dev-6.PNG" height="350px">
+<img src="images/dev-10.PNG" height="350px"> -->
 
-<img src="images/dev-5.PNG" height="350px">
+<!-- <img src="images/dev-5.PNG" height="350px">
 <img src="images/dev-7.png" height="350px">
-<img src="images/dev-8.PNG" height="350px">
+<img src="images/dev-8.PNG" height="350px"> -->
 
-<img src="images/dev-11.PNG" height="350px">
-<img src="images/dev-9.PNG" height="350px">
-<img src="images/dev-12.PNG" height="350px">
+<!-- <img src="images/dev-11.PNG" height="350px"> -->
+<!-- <img src="images/dev-9.PNG" height="350px"> -->
+<!-- <img src="images/dev-12.PNG" height="350px"> -->
 </div>
 
   <!-- - red-violet-crayola: #af4d98ff;

@@ -12,8 +12,8 @@
 <img src="readme/images/idc.png" alt="ID Navigation Card">
 
 
-# Persistamp 🐢
-## A Motivational 'Good Activities' Positivity App
+# Muse 🐢
+## A Beat Making Production Application
 
 **TOC**
 [About](#about-persistamp) ● [Features](#features) ● [How It Works](#how-it-works) ● [Installation](#installation) ● [Development](#development) ● [Contact Us](#contact-us)
@@ -27,7 +27,7 @@ Earn points by keeping up good activities. 💎
 Redeem those hard-won points on rewards! 🧾
 <!-- 🎀🌻🌷🌼   -->
 
-![Dashboard webpage for Persistamp](https://i.postimg.cc/28VZZ4pm/linkedin-persistamp-updated.png)
+<!-- ![Dashboard webpage for Persistamp](https://i.postimg.cc/28VZZ4pm/linkedin-persistamp-updated.png) -->
 
 
 ### Try the Demo!
@@ -66,8 +66,9 @@ Each board that an artist creates, they are provided 16 different modifiable bea
 
 <!-- * Drag-n-drop to manually sort programs, activities, and rewards. -->
 
-### Future Stretch Goals
-- **Add friends**
+### Future Stretch Goals 
+(in no particular order)
+- **Follower Social System**
 - **Custom Sound libraries**
 - **Share Beat Boards wth friends**
 - **Record your Jam**
@@ -75,7 +76,7 @@ Each board that an artist creates, they are provided 16 different modifiable bea
 <div align="center">
 
 ## How It Works
-<img width="400px" src="readme/images/idc2.png" alt="ID Navigation Card">
+<!-- <img width="400px" src="readme/images/idc2.png" alt="ID Navigation Card"> -->
 
 ***Tip:** This ID card also works as the site's main navigation.*
 ***Note the red button!** It has many important uses, depending on the webpage.*
@@ -93,7 +94,7 @@ Each board that an artist creates, they are provided 16 different modifiable bea
 >
 
 ### 1. Create a Sequence
-<img src="readme/images/program-card-empty.PNG" alt="Program cards" width="60%" align="right">
+<!-- <img src="readme/images/program-card-empty.PNG" alt="Program cards" width="60%" align="right"> -->
 
 - To **create a program**, click the red stamp icon labeled 'Add' on your ID Card in the top-left corner.
 - Add a title, description (optional), color, and icon.
@@ -101,76 +102,47 @@ Each board that an artist creates, they are provided 16 different modifiable bea
 - ***Tip:** The color and icon of new programs default to your user setting icon and settings! Click the green 'Settings' button on your ID card to change them.*
 <!-- - Tip! Change the order of programs with drag-n-drop. -->
 
-> **Program Ideas?**
-> * Exercise, Mental Health, Healthy Diet
-> * Chores, Errands, Adulting Tasks
-> * Learning, Self-teaching, Self-improvement
-> * Social Obligations, Networking, Time for Loved Ones
-
 <br clear="both">
 
 <div align="center">
-  <img src="readme/images/form-program2.png" alt="Program form" width="100%">
+  <!-- <img src="readme/images/form-program2.png" alt="Program form" width="100%"> -->
 </div>
 
 
 ### 2. Add Notes
-<img src="readme/images/form-activity.PNG" alt="Activity form" width="50%" align="right">
-<!-- <img src="readme/images/.PNG" alt="Filled program card"> -->
-<!-- <img src="readme/images/.PNG" alt="Drag-n-drop gif"> -->
+<!-- <img src="readme/images/form-activity.PNG" alt="Activity form" width="50%" align="right"> -->
 
-- To **create a activity**, click the + icon in the program card's top-left corner (hover/click card to see).
-- Add a title, description (optional), color, and icon.
-- **Select a frequency.** How many days per week is your goal?
-- To **edit or delete a activity**, click the circled icon on the activity's left side.
-- ***Tip:** The color and icon default to the program's color/icon settings!*
-- ***Tip:** Change the order of activities with drag-n-drop.*
-
-> **Activity Ideas?**
-> * Chores: do the dishes, wash laundry, cook a healthy meal, take out trash
-> * Socially: call mom, check e-mail, apply to jobs, send thank-you letters
-> * Hobbies: read a book, draw for 10 minutes, bake bread, try a new recipe
-> * Avoiding bad activities: don't smoke, don't doomscroll more than 30min, don't eat junk food
+- To **add a note**, open the library dropdown and drag a desired note to one of boxes above it. You can add multiple notes to a block to subdivide a beat by its parts.
 
 <br clear="both">
 
-
 ### 3. Add Blocks
-<!-- <img src="readme/images/.PNG" alt="Multiple program boards with stamps - column"> -->
 
-- To **add a stamp**, click empty spots in the activity card to mark the day fulfilled for that activity.
-- To **undo a stamp**, reclick the stamp.
-- With enough stamps for a **activity's frequency goal**, any unstamped spots will now **show a checkmark**.
-- ***Warning!** You can only add stamps for within the last seven days, so check in at least once a week.*
+- To **add a Block**, click the + button near the top to add a new block
+- To **remove a Block**, click the - button next to the + button to remove the last block.
 
-<img src="readme/images/activity-row.png" alt="A activity row with stamps indicating fulfilled days." width="100%">
+<!-- <img src="readme/images/activity-row.png" alt="A activity row with stamps indicating fulfilled days." width="100%"> -->
 
 
 ### 4. Play a Saved Beat Pad
-<img src="readme/images/activity-history-3.PNG" alt="Line graph" width="48%" align="right">
+<!-- <img src="readme/images/activity-history-3.PNG" alt="Line graph" width="48%" align="right"> -->
 
-- **To see a activity's 'details page', click the name of the activity in its program card.**
-- **See the activity's general information** in the top-right corner.
-- To **toggle between 'monthly' and 'weekly' view** for the line graph, select an option from the dropdown.
-- The activity can be **edited** from this page with your ID card's red pencil icon.
-- ***Note about privacy!** Check the top-right area to find a 'Private' toggle. This setting allows or restricts other people from being able to see this page. To **share your a detail page**, check that 'Private' is untoggled, then copy-paste the page's URL.*
-<!-- - Add notes explaining the types of scores, their meanings. -->
+- **After designing a desired sequence, give your new sequence a name. Then click the save button at the bottom.**
+- ****
+
 <br>
 <div align="center">
-<img src="readme/images/activity-details-page.PNG" alt="Line graph" width="100%">
+<!-- <img src="readme/images/activity-details-page.PNG" alt="Line graph" width="100%"> -->
 </div>
-<!-- <img src="readme/images/activity-history-2.PNG" alt="Line graph" width="48%"> -->
-<!-- <img src="readme/images/activity" alt="Calendar"> -->
-<!-- <img src="readme/images/activity" alt="Statistics"> -->
 
 <br clear="both">
 
 ### 5. Save Your Board
 
 <div align="center">
-<img src="readme/images/program-header.png" alt="Reward shop button in the top-left corner of program card" title=""Reward shop button in the top-left corner of program card">
+<!-- <img src="readme/images/program-header.png" alt="Reward shop button in the top-left corner of program card" title=""Reward shop button in the top-left corner of program card"> -->
 </div>
-<img src="readme/images/form-reward.PNG" alt="Reward form" align="right" width="50%">
+<!-- <img src="readme/images/form-reward.PNG" alt="Reward form" align="right" width="50%"> -->
 <br>
 
 - **To *see a program's reward points and shop*, click the _shop icon_ at the top-right corner of a program card.**
@@ -182,20 +154,12 @@ Each board that an artist creates, they are provided 16 different modifiable bea
 - ***Tip:** The color and icon default to the program's color/icon settings!*
 - ***Note:** The 'limit per member' option is included for a future feature that allows more than one person to subscribe to a program. It ensures that no one program's member can redeem more than a set amount of that reward. Leave it blank to default to no limit.*
 
->
-> **Reward Ideas?**
-> * Something yummy, like a snack, favorite drink, or candy.
-> * A guilt-free present to yourself, like a book, a new laptop, or flowers.
-> * 'Fun time': Watch a movie, 2 hours of video games, free internet time.
-> * A dream vacation, time off work, or a night out on the town!
->
-
 <br clear="both">
 
 <div align="center">
-<img src="readme/images/reward-certificate-2.PNG" alt="Reward certificate for ice cream" width="48%">
-<img src="readme/images/reward-certificate-3.PNG" alt="Reward certificate for a new bike" width="48%">
-<img src="readme/images/reward-page.PNG" alt="Reward shop page screenshot" width="100%">
+<!-- <img src="readme/images/reward-certificate-2.PNG" alt="Reward certificate for ice cream" width="48%"> -->
+<!-- <img src="readme/images/reward-certificate-3.PNG" alt="Reward certificate for a new bike" width="48%"> -->
+<!-- <img src="readme/images/reward-page.PNG" alt="Reward shop page screenshot" width="100%"> -->
 </div>
 
 
@@ -209,8 +173,8 @@ Each board that an artist creates, they are provided 16 different modifiable bea
 - ***Note:** There are no refunds! All reward shop sales are final ;D .*
 - ***Warning!** It is possible to **go into debt with negative points** for a program by buying rewards, then removing more stamps from the program card than there are remaining points. Debt must be made up before earning new points.*
 
-<img src="readme/images/form-redeem.PNG" alt="Redemption form" width="62%">
-<img src="readme/images/receipt.PNG" alt="Receipt" width="32%">
+<!-- <img src="readme/images/form-redeem.PNG" alt="Redemption form" width="62%"> -->
+<!-- <img src="readme/images/receipt.PNG" alt="Receipt" width="32%"> -->
 
 
 <div align="center">
@@ -282,9 +246,9 @@ Each board that an artist creates, they are provided 16 different modifiable bea
   It details the technical aspects of this project's development.
   A few sample snapshots are below from the development process.
 
-  <img src="readme/images/dev-2.PNG" height="200px">
+  <!-- <img src="readme/images/dev-2.PNG" height="200px">
   <img src="readme/images/dev-10.PNG" height="200px">
-  <img src="readme/images/dev-9.PNG" height="200px">
+  <img src="readme/images/dev-9.PNG" height="200px"> -->
 
 </div>
 
