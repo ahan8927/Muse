@@ -47,34 +47,30 @@ Redeem those hard-won points on rewards! 🧾
 </div>
 <img src="readme/images/persistamp-1.gif" alt="Animated GIF of a program card for chore-related activities." width="50%" align="left">
 
-Persistamp's design is inspired by reward cards and sticker reward systems. The visually playful 'program card' system, emulating the style of loyalty reward cards, is meant to encourage users to track their activities by 'stamping' successful days on their personalized cards. The user can view each activity's history analytics, such as a line graph, calendar, and statistics like longest streak.
+Muse was inspired by Midi Fighter controllers and online beat sequencers that left a void where a much needed mixup could be.
+Muse's minimalistic design is catered towards an intuitive, non intrusive user experience to allow the seemless transfer of ideas without distraction.
+Muse allows music enthusiasts to explore music creation in the browser to its fullest with dynamic libraries and an intuitive beat creation design.
 
-With each stamp, the user gains points for the program the activity is included in. A program's reward shop can be stocked by the user with their own custom reward ideas ex. 'Take a day off', 'Enjoy a pumpkin spice latte', 'Play games for 1 hour', and set their cost, quantity, and custom color/icon appearance. Receipt rewards are displayed for posterity in a receipt-style log as 'proof of their purchase'.
+Each board that an artist creates, they are provided 16 different modifiable beat pads to create thier perfect beat sequence mix. Each pad can be customized in many ways ranging from the note signature to bpm and how long each bar is.
 
 <br clear="both">
 
 ## Features
 </div>
 
-* Create custom categories for activities with 'program cards'.
-* Add activities to programs, then stamp off every day a activity is fulfilled.
-* Set a activity's 'frequency'. Checkmarks will show when the week's goal is fulfilled.
-* Earn a 'reward point' for every activity stamp.
-* View a activity's history analytics through provided statistics, a line graph, and mini-calendar.
-* Share a activity's details or keep it private with a 'Public-Private' toggle.
-* Each program features a reward shop. Create rewards with a custom cost and (opt) quantity.
-* Use a program's points to redeem rewards. See it logged in a redemption history.
-* Customize the appearance of programs, activities, and rewards with a choice of color and icon.
+* Create boards populated with beats saved to a set of 16 buttons.
+* Each button has a sequencer that you can drag notes from a library onto the playboard.
+* Load and save previously created boards to and from your personal library.
+* Set a global BPM.
+* Select a local speed multiplier.
+
 <!-- * Drag-n-drop to manually sort programs, activities, and rewards. -->
 
 ### Future Stretch Goals
 - **Add friends**
-- **Accountability buddies**
-- **Messaging**
-- User Profile page
-- Public/private user profile, programs
-- Custom frequency options to allow from 'out of any number', rather than only by 'week'. Ex. '3 days out of 30'.
-- (low) Option to archive and hide-archive activities.
+- **Custom Sound libraries**
+- **Share Beat Boards wth friends**
+- **Record your Jam**
 
 <div align="center">
 
@@ -88,15 +84,15 @@ With each stamp, the user gains points for the program the activity is included 
 
 >
 > **Users can:**
-> 1. [Make a program card](#1-make-a-program-card)
-> 2. [Add good activities](#2-add-good-activities)
-> 3. [Stamp successful days](#3-stamp-successful-days)
-> 4. [View activity history & details](#4-view-activity-history-and-details)
-> 5. [Create rewards](#5-create-rewards)
-> 6. [Redeem rewards with points](#6-redeem-rewards-with-points)
+> 1. [Create a sequence](#1-make-a-program-card)
+> 2. [Add Notes](#2-add-good-activities)
+> 3. [Add a Block](#3-stamp-successful-days)
+> 4. [Play a saved Beat Pad](#4-view-activity-history-and-details)
+> 5. [Save Board](#5-create-rewards)
+> 6. [Load Other Boards](#6-redeem-rewards-with-points)
 >
 
-### 1. Make a program card
+### 1. Create a Sequence
 <img src="readme/images/program-card-empty.PNG" alt="Program cards" width="60%" align="right">
 
 - To **create a program**, click the red stamp icon labeled 'Add' on your ID Card in the top-left corner.
@@ -118,7 +114,7 @@ With each stamp, the user gains points for the program the activity is included 
 </div>
 
 
-### 2. Add good activities
+### 2. Add Notes
 <img src="readme/images/form-activity.PNG" alt="Activity form" width="50%" align="right">
 <!-- <img src="readme/images/.PNG" alt="Filled program card"> -->
 <!-- <img src="readme/images/.PNG" alt="Drag-n-drop gif"> -->
@@ -139,7 +135,7 @@ With each stamp, the user gains points for the program the activity is included 
 <br clear="both">
 
 
-### 3. Stamp successful days
+### 3. Add Blocks
 <!-- <img src="readme/images/.PNG" alt="Multiple program boards with stamps - column"> -->
 
 - To **add a stamp**, click empty spots in the activity card to mark the day fulfilled for that activity.
@@ -150,7 +146,7 @@ With each stamp, the user gains points for the program the activity is included 
 <img src="readme/images/activity-row.png" alt="A activity row with stamps indicating fulfilled days." width="100%">
 
 
-### 4. View activity history and details
+### 4. Play a Saved Beat Pad
 <img src="readme/images/activity-history-3.PNG" alt="Line graph" width="48%" align="right">
 
 - **To see a activity's 'details page', click the name of the activity in its program card.**
@@ -169,7 +165,7 @@ With each stamp, the user gains points for the program the activity is included 
 
 <br clear="both">
 
-### 5. Create rewards
+### 5. Save Your Board
 
 <div align="center">
 <img src="readme/images/program-header.png" alt="Reward shop button in the top-left corner of program card" title=""Reward shop button in the top-left corner of program card">
@@ -203,7 +199,7 @@ With each stamp, the user gains points for the program the activity is included 
 </div>
 
 
-### 6. Redeem rewards with points
+### 6. Play With Other Boards
 
 - To **redeem a reward**, click the 'Redeem' button on a reward certificate.
 - Confirm that you really want to redeem this reward, and the cost will be taken out from your points.
@@ -299,7 +295,7 @@ With each stamp, the user gains points for the program the activity is included 
   ## Contact Me
 
   Thank you for taking a look at Persistamp! :D
-  Please feel free to reach out and ask us anything.
+  Please feel free to reach out and ask me anything.
 
 </div>
 
