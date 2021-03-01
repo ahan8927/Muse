@@ -9,29 +9,28 @@
 ![SQLAlchemy](https://img.shields.io/badge/-SQLAlchemy-d01f00?style=flat-square&logo=SQLAlchemy&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-336791?style=flat-square&logo=postgreSQL&logoColor=white)
 
-<img src="readme/images/idc.png" alt="ID Navigation Card">
+<!-- <img src="readme/images/idc.png" alt="ID Navigation Card"> -->
 
 
-# Muse 🐢
+# Muse 
 ## A Beat Making Production Application
 
 **TOC**
-[About](#about-persistamp) ● [Features](#features) ● [How It Works](#how-it-works) ● [Installation](#installation) ● [Development](#development) ● [Contact Us](#contact-us)
+[About](#about-persistamp) ● [Features](#features) ● [How It Works](#how-it-works) ● [Installation](#installation) ● [Development](#development) ● [Contact Me](#contact-me)
 
-**This 'productivity-positivity' app**
-**promotes good activities with positive reinforcement! 🌱**
-Create and keep track of your good activities. 🖍️
-Analyze activity trends over time. 💯
-Stay motivated by creating rewards in a reward shop. 🎁
-Earn points by keeping up good activities. 💎
-Redeem those hard-won points on rewards! 🧾
-<!-- 🎀🌻🌷🌼   -->
+**Create your foundational beat sequences and melodies in a pleasing distractionless application! 🌱**
+Create and save beats to your own free personal library! 🖍️
+Enjoy a clean aesthetic to boost your creativity and production. 💎
+
 
 <!-- ![Dashboard webpage for Persistamp](https://i.postimg.cc/28VZZ4pm/linkedin-persistamp-updated.png) -->
 
 
 ### Try the Demo!
-<a href="https://persistamp.herokuapp.com/"><img width="250px" src="readme/images/logo.PNG" alt="Persistamp" title="Click to try Persistamp!"></a>
+<a href="https://musely.herokuapp.com/">
+<!-- <img width="250px" src="readme/images/logo.PNG" alt="Muse" title="Click to try Muse!"> -->
+click here!
+</a>
 
 </div>
 
@@ -41,11 +40,10 @@ Redeem those hard-won points on rewards! 🧾
 
 ## About Persistamp
 
-[[ WEBSITE: https://persistamp.herokuapp.com ]](https://persistamp.herokuapp.com)
-*(Inspired by mobile app [Loop Activity Tracker](https://play.google.com/store/apps/details?id=org.isoron.uactivities&hl=en_US&gl=US).)*
+[[ WEBSITE: https://musely.herokuapp.com/ ]](https://musely.herokuapp.com/)
 
 </div>
-<img src="readme/images/persistamp-1.gif" alt="Animated GIF of a program card for chore-related activities." width="50%" align="left">
+<!-- <img src="readme/images/persistamp-1.gif" alt="Animated GIF of a program card for chore-related activities." width="50%" align="left"> -->
 
 Muse was inspired by Midi Fighter controllers and online beat sequencers that left a void where a much needed mixup could be.
 Muse's minimalistic design is catered towards an intuitive, non intrusive user experience to allow the seemless transfer of ideas without distraction.
@@ -78,42 +76,35 @@ Each board that an artist creates, they are provided 16 different modifiable bea
 ## How It Works
 <!-- <img width="400px" src="readme/images/idc2.png" alt="ID Navigation Card"> -->
 
-***Tip:** This ID card also works as the site's main navigation.*
-***Note the red button!** It has many important uses, depending on the webpage.*
-
 </div>
 
 >
 > **Users can:**
-> 1. [Create a sequence](#1-make-a-program-card)
-> 2. [Add Notes](#2-add-good-activities)
-> 3. [Add a Block](#3-stamp-successful-days)
-> 4. [Play a saved Beat Pad](#4-view-activity-history-and-details)
-> 5. [Save Board](#5-create-rewards)
-> 6. [Load Other Boards](#6-redeem-rewards-with-points)
+> 1. [Create a Sequence](#1-create-a-sequence)
+> 2. [Add Notes](#2-add-notes)
+> 3. [Add a Block](#3-add-blocks)
+> 4. [Play a Saved Beat Pad](#4-play-a-saved-beatpad)
+> 5. [Save / load Board](#5-save-or-load-your-board)
+> 6. [Installation](#installation)
 >
 
 ### 1. Create a Sequence
 <!-- <img src="readme/images/program-card-empty.PNG" alt="Program cards" width="60%" align="right"> -->
 
-- To **create a program**, click the red stamp icon labeled 'Add' on your ID Card in the top-left corner.
-- Add a title, description (optional), color, and icon.
-- To **edit or delete a program**, click the pencil in the program's top-left corner (it will appear when you hover/click the card).
-- ***Tip:** The color and icon of new programs default to your user setting icon and settings! Click the green 'Settings' button on your ID card to change them.*
-<!-- - Tip! Change the order of programs with drag-n-drop. -->
+- To **create a sequence**, click on a empty beat pad indiciated with the + symbol.
+- Drag notes, and customize the sequence to your interest.
+- To **save**, give your sequence a name and click the save button at the bottom.
 
 <br clear="both">
-
 <div align="center">
   <!-- <img src="readme/images/form-program2.png" alt="Program form" width="100%"> -->
 </div>
-
 
 ### 2. Add Notes
 <!-- <img src="readme/images/form-activity.PNG" alt="Activity form" width="50%" align="right"> -->
 
 - To **add a note**, open the library dropdown and drag a desired note to one of boxes above it. You can add multiple notes to a block to subdivide a beat by its parts.
-
+- To **remove a note**, open the library dropdown and drag the note to delete back into the library to take it off your sequence.
 <br clear="both">
 
 ### 3. Add Blocks
@@ -127,8 +118,8 @@ Each board that an artist creates, they are provided 16 different modifiable bea
 ### 4. Play a Saved Beat Pad
 <!-- <img src="readme/images/activity-history-3.PNG" alt="Line graph" width="48%" align="right"> -->
 
-- **After designing a desired sequence, give your new sequence a name. Then click the save button at the bottom.**
-- ****
+- **After designing a desired sequence, give your new sequence a name.** Then click the save button at the bottom.
+- **The Sequence creator will close and you will now be able to click the pad you saved to play.**
 
 <br>
 <div align="center">
@@ -137,7 +128,7 @@ Each board that an artist creates, they are provided 16 different modifiable bea
 
 <br clear="both">
 
-### 5. Save Your Board
+### 5. Save or Load Your Board
 
 <div align="center">
 <!-- <img src="readme/images/program-header.png" alt="Reward shop button in the top-left corner of program card" title=""Reward shop button in the top-left corner of program card"> -->
@@ -145,14 +136,8 @@ Each board that an artist creates, they are provided 16 different modifiable bea
 <!-- <img src="readme/images/form-reward.PNG" alt="Reward form" align="right" width="50%"> -->
 <br>
 
-- **To *see a program's reward points and shop*, click the _shop icon_ at the top-right corner of a program card.**
-- To **create a reward**, when in the reward shop, click the red trophy icon on your ID card.
-- Add a title, description (optional), color, and icon.
-- **Decide the point cost of the reward.**
-- (Optional) Specify an available quantity for the reward. Leave it blank for no limit.
-- To **edit or delete a reward**, click the pencil in the reward certificate's top-left corner.
-- ***Tip:** The color and icon default to the program's color/icon settings!*
-- ***Note:** The 'limit per member' option is included for a future feature that allows more than one person to subscribe to a program. It ensures that no one program's member can redeem more than a set amount of that reward. Leave it blank to default to no limit.*
+- To **Save**, provide your project / board a name. Click save at the top of the board above the 16 beat pads.
+- To **Load**, navigate to your library and click a desired board to open.
 
 <br clear="both">
 
@@ -161,23 +146,6 @@ Each board that an artist creates, they are provided 16 different modifiable bea
 <!-- <img src="readme/images/reward-certificate-3.PNG" alt="Reward certificate for a new bike" width="48%"> -->
 <!-- <img src="readme/images/reward-page.PNG" alt="Reward shop page screenshot" width="100%"> -->
 </div>
-
-
-### 6. Play With Other Boards
-
-- To **redeem a reward**, click the 'Redeem' button on a reward certificate.
-- Confirm that you really want to redeem this reward, and the cost will be taken out from your points.
-- **See previously redeemed rewards**, including when they were redeemed, in the shop's Reward History.
-- Indulge yourself in your redeemed reward, or show the receipt to whoever will treat you for it. 💞
-- ***Note:** If a reward is **unable to be redeemed** (not enough points, zero quantity), the Redeem button will show red and be unclickable.*
-- ***Note:** There are no refunds! All reward shop sales are final ;D .*
-- ***Warning!** It is possible to **go into debt with negative points** for a program by buying rewards, then removing more stamps from the program card than there are remaining points. Debt must be made up before earning new points.*
-
-<!-- <img src="readme/images/form-redeem.PNG" alt="Redemption form" width="62%"> -->
-<!-- <img src="readme/images/receipt.PNG" alt="Receipt" width="32%"> -->
-
-
-<div align="center">
 
 ## Installation
 
