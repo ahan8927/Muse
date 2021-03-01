@@ -173,16 +173,15 @@ const Header = () => {
 
         {/* RIGHT */}
         <div className={classes.navBar_right}>
-          {/* <Button
+          <Button
             className={classes.iconButton}
             title={(user) ? 'Profile' : 'Login'}
-            endIcon={<SettingsIcon color='inherit' />}
             onClick={() => (user ? handleNavClick('/profile') : handleMenuClick('login'))}
-          > */}
-          <Typography className={classes.myColor}>
-            {(user) ? `${user.username}` : 'Login'}
-          </Typography>
-          {/* </Button> */}
+          >
+            <Typography className={classes.myColor}>
+              {(user) ? `${user.username}` : 'Login'}
+            </Typography>
+          </Button>
           {/* </div> */}
         </div>
       </div >
