@@ -69,6 +69,7 @@ Each board that an artist creates, they are provided 16 different modifiable bea
 ## How It Works
 
 </div>
+
 >
 > **Users can:**
 > 1. [Create a Sequence](#1-create-a-sequence)
@@ -80,7 +81,7 @@ Each board that an artist creates, they are provided 16 different modifiable bea
 >
 
 ### 1. Create a Sequence
-![Dashboard webpage for Musely](Documentation/creating_sequence_instructional.mp4)
+![Dashboard webpage for Musely](Documentation/Musely_Sequencer.PNG)
 
 - To **create a sequence**, click on a empty beat pad indiciated with the + symbol.
 - Drag notes, and customize the sequence to your interest.
@@ -120,7 +121,7 @@ Each board that an artist creates, they are provided 16 different modifiable bea
 1. Clone this repository.
 
    ```bash
-   git clone https://github.com/alimirakim/persistamp.git
+   git clone https://github.com/ahan8927/Muse.git
    ```
 
 2. Install dependencies.
