@@ -23,12 +23,11 @@ Create and save beats to your own free personal library! 🖍️
 Enjoy a clean aesthetic to boost your creativity and production. 💎
 
 
-<!-- ![Dashboard webpage for Persistamp](Documentation/Musely.PNG) -->
+![Dashboard webpage for Musely](Documentation/Musely.PNG)
 
 
 ### Try the Demo!
 <a href="https://musely.herokuapp.com/">
-<!-- <img width="250px" src="readme/images/logo.PNG" alt="Muse" title="Click to try Muse!"> -->
 click here!
 </a>
 
@@ -62,8 +61,6 @@ Each board that an artist creates, they are provided 16 different modifiable bea
 * Set a global BPM.
 * Select a local speed multiplier.
 
-<!-- * Drag-n-drop to manually sort programs, activities, and rewards. -->
-
 ### Future Stretch Goals 
 (in no particular order)
 - **Follower Social System**
@@ -74,7 +71,6 @@ Each board that an artist creates, they are provided 16 different modifiable bea
 <div align="center">
 
 ## How It Works
-<!-- <img width="400px" src="readme/images/idc2.png" alt="ID Navigation Card"> -->
 
 </div>
 
@@ -89,7 +85,7 @@ Each board that an artist creates, they are provided 16 different modifiable bea
 >
 
 ### 1. Create a Sequence
-<!-- <img src="readme/images/program-card-empty.PNG" alt="Program cards" width="60%" align="right"> -->
+![Dashboard webpage for Musely](Documentation/creating_sequence_instructional.mp4)
 
 - To **create a sequence**, click on a empty beat pad indiciated with the + symbol.
 - Drag notes, and customize the sequence to your interest.
@@ -226,14 +222,14 @@ Each board that an artist creates, they are provided 16 different modifiable bea
 
   ## Contact Me
 
-  Thank you for taking a look at Persistamp! :D
+  Thank you for taking a look at Musely.
   Please feel free to reach out and ask me anything.
 
 </div>
 
 ### Aaron Hanson
 *(Full-stack developer, Open to work)*
-<a href="readme/Lee_David_Resume(v2.0).pdf" download>![Resume PDF](https://img.shields.io/badge/-Resume-f00?style=flat-square&logo=adobe-acrobat-reader&logoColor=white)</a>
-[![Aaron Hanson's email](https://img.shields.io/badge/aaron.hanson.brb@gmail.com-f4b400?style=flat-square&logo=gmail&logoColor=black&link=mailto:dyclee@umich.edu)](mailto:aaron.hanson.brb@gmail.com)
+<!-- <a href="readme/Aaron Hanson resume(v2.0).pdf" download>![Resume PDF](https://img.shields.io/badge/-Resume-f00?style=flat-square&logo=adobe-acrobat-reader&logoColor=white)</a> -->
+[![Aaron Hanson's email](https://img.shields.io/badge/aaron.hanson.brb@gmail.com-f4b400?style=flat-square&logo=gmail&logoColor=black&link=mailto:aaron.hanson.brb@gmail.com)](mailto:aaron.hanson.brb@gmail.com)
 [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077b5?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/aaron-hanson-brb/)](https://www.linkedin.com/in/aaron-hanson-brb/)
 [![GitHub ahan8927](https://img.shields.io/github/followers/ahan8927?label=follow&style=social)](https://github.com/ahan8927)
