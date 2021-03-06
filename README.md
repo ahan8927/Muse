@@ -16,14 +16,14 @@
 ## A Beat Making Production Application
 
 **TOC**
-[About](#about-persistamp) ● [Features](#features) ● [How It Works](#how-it-works) ● [Installation](#installation) ● [Development](#development) ● [Contact Me](#contact-me)
+[About](#about-Muse) ● [Features](#features) ● [How It Works](#how-it-works) ● [Installation](#installation) ● [Development](#development) ● [Contact Me](#contact-me)
 
 **Create your foundational beat sequences and melodies in a pleasing distractionless application! 🌱**
 Create and save beats to your own free personal library! 🖍️
 Enjoy a clean aesthetic to boost your creativity and production. 💎
 
 
-<!-- ![Dashboard webpage for Persistamp](https://i.postimg.cc/28VZZ4pm/linkedin-persistamp-updated.png) -->
+<!-- ![Dashboard webpage for Persistamp](Documentation/Musely.PNG) -->
 
 
 ### Try the Demo!
@@ -38,7 +38,7 @@ click here!
 
 <div align="center">
 
-## About Persistamp
+## About Muse
 
 [[ WEBSITE: https://musely.herokuapp.com/ ]](https://musely.herokuapp.com/)
 
