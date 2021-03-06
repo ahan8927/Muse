@@ -44,15 +44,6 @@ To learn what Muse is, its features, and how to use it, see the [README](../READ
 
 The database schema evolved and changed quite a bit continually throughout the process to accommodate new ideas, cleaner pipelines, and future features. A few examples exist of the schemas we drew up during the process, but likely by the time of this reading, the models written here are somehow out of date.
 
-<div align="center">
-
-  **Original Schema and a Mid-development Schema**
-
-  <img src="images/schema-1.png" alt="Schema of database tables" width="48%"> 
-  <img src="images/schema-3.PNG" alt="Schema of database tables" width="48%">
-
-</div>
-
 ### `users`
 | users      | Constraints                                   |
 | ---------- | --------------------------------------------- |
@@ -90,13 +81,13 @@ The database schema evolved and changed quite a bit continually throughout the p
 
 ## Contact Me
 
-Thank you for taking a look at Persistamp! :D  
+Thank you for taking a look at Muse.
 Please feel free to reach out and ask us anything.
 </div>
 
 ### Aaron Hanson
 *(Full-stack developer, Open to work)*
-<a href="readme/Lee_David_Resume(v2.0).pdf" download>![Resume PDF](https://img.shields.io/badge/-Resume-f00?style=flat-square&logo=adobe-acrobat-reader&logoColor=white)</a>
-[![Aaron Hanson's email](https://img.shields.io/badge/aaron.hanson.brb@gmail.com-f4b400?style=flat-square&logo=gmail&logoColor=black&link=mailto:dyclee@umich.edu)](mailto:aaron.hanson.brb@gmail.com)
+<!-- <a href="./Aaron_Hanson(v2.0).pdf" download>![Resume PDF](https://img.shields.io/badge/-Resume-f00?style=flat-square&logo=adobe-acrobat-reader&logoColor=white)</a> -->
+[![Aaron Hanson's email](https://img.shields.io/badge/aaron.hanson.brb@gmail.com-f4b400?style=flat-square&logo=gmail&logoColor=black&link=mailto:aaron.hanson.brb@gmail.com)](mailto:aaron.hanson.brb@gmail.com)
 [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077b5?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/aaron-hanson-brb/)](https://www.linkedin.com/in/aaron-hanson-brb/)
 [![GitHub ahan8927](https://img.shields.io/github/followers/ahan8927?label=follow&style=social)](https://github.com/ahan8927)
