@@ -9,9 +9,6 @@
 ![SQLAlchemy](https://img.shields.io/badge/-SQLAlchemy-d01f00?style=flat-square&logo=SQLAlchemy&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-336791?style=flat-square&logo=postgreSQL&logoColor=white)
 
-<!-- <img src="readme/images/idc.png" alt="ID Navigation Card"> -->
-
-
 # Muse 
 ## A Beat Making Production Application
 
@@ -42,7 +39,6 @@ click here!
 [[ WEBSITE: https://musely.herokuapp.com/ ]](https://musely.herokuapp.com/)
 
 </div>
-<!-- <img src="readme/images/persistamp-1.gif" alt="Animated GIF of a program card for chore-related activities." width="50%" align="left"> -->
 
 Muse was inspired by Midi Fighter controllers and online beat sequencers that left a void where a much needed mixup could be.
 Muse's minimalistic design is catered towards an intuitive, non intrusive user experience to allow the seemless transfer of ideas without distraction.
@@ -73,7 +69,6 @@ Each board that an artist creates, they are provided 16 different modifiable bea
 ## How It Works
 
 </div>
-
 >
 > **Users can:**
 > 1. [Create a Sequence](#1-create-a-sequence)
@@ -92,12 +87,8 @@ Each board that an artist creates, they are provided 16 different modifiable bea
 - To **save**, give your sequence a name and click the save button at the bottom.
 
 <br clear="both">
-<div align="center">
-  <!-- <img src="readme/images/form-program2.png" alt="Program form" width="100%"> -->
-</div>
 
 ### 2. Add Notes
-<!-- <img src="readme/images/form-activity.PNG" alt="Activity form" width="50%" align="right"> -->
 
 - To **add a note**, open the library dropdown and drag a desired note to one of boxes above it. You can add multiple notes to a block to subdivide a beat by its parts.
 - To **remove a note**, open the library dropdown and drag the note to delete back into the library to take it off your sequence.
@@ -108,40 +99,19 @@ Each board that an artist creates, they are provided 16 different modifiable bea
 - To **add a Block**, click the + button near the top to add a new block
 - To **remove a Block**, click the - button next to the + button to remove the last block.
 
-<!-- <img src="readme/images/activity-row.png" alt="A activity row with stamps indicating fulfilled days." width="100%"> -->
-
-
 ### 4. Play a Saved Beat Pad
-<!-- <img src="readme/images/activity-history-3.PNG" alt="Line graph" width="48%" align="right"> -->
 
 - **After designing a desired sequence, give your new sequence a name.** Then click the save button at the bottom.
 - **The Sequence creator will close and you will now be able to click the pad you saved to play.**
-
-<br>
-<div align="center">
-<!-- <img src="readme/images/activity-details-page.PNG" alt="Line graph" width="100%"> -->
-</div>
 
 <br clear="both">
 
 ### 5. Save or Load Your Board
 
-<div align="center">
-<!-- <img src="readme/images/program-header.png" alt="Reward shop button in the top-left corner of program card" title=""Reward shop button in the top-left corner of program card"> -->
-</div>
-<!-- <img src="readme/images/form-reward.PNG" alt="Reward form" align="right" width="50%"> -->
-<br>
-
 - To **Save**, provide your project / board a name. Click save at the top of the board above the 16 beat pads.
 - To **Load**, navigate to your library and click a desired board to open.
 
 <br clear="both">
-
-<div align="center">
-<!-- <img src="readme/images/reward-certificate-2.PNG" alt="Reward certificate for ice cream" width="48%"> -->
-<!-- <img src="readme/images/reward-certificate-3.PNG" alt="Reward certificate for a new bike" width="48%"> -->
-<!-- <img src="readme/images/reward-page.PNG" alt="Reward shop page screenshot" width="100%"> -->
-</div>
 
 ## Installation
 
@@ -209,10 +179,6 @@ Each board that an artist creates, they are provided 16 different modifiable bea
   This section is kept in a separate document [HERE](Documentation/development.md).
   It details the technical aspects of this project's development.
   A few sample snapshots are below from the development process.
-
-  <!-- <img src="readme/images/dev-2.PNG" height="200px">
-  <img src="readme/images/dev-10.PNG" height="200px">
-  <img src="readme/images/dev-9.PNG" height="200px"> -->
 
 </div>
 
