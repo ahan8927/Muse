@@ -121,7 +121,6 @@ const MusicLab = (props) => {
 
           if (res.ok) {
             const data = await res.json();
-            console.log('Recieved Board Data: ', data)
             setSequenceState(data)
             setBpm(Math.floor(60000 / data.bpm))
             setProjectName(data.projectName)

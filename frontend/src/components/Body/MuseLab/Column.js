@@ -33,12 +33,10 @@ const TaskList = styled.div`
 
 const Column = (props) => {
   const [isLoaded, setIsLoaded] = useState(false)
-  console.log(props)
 
   useEffect(() => {
-    setIsLoaded(isLoaded)
-    console.log('Re rendered Block.')
-  }, [props.tasks])
+    console.log('column data changed')
+  }, [props])
 
   useEffect(() => {
     setIsLoaded(true)

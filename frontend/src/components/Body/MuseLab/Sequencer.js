@@ -108,6 +108,7 @@ const Sequencer = (props) => {
 
   const currentSequence = props.sequenceState.sequences[props.index];
   const sequenceData = useRef(initialData());
+  const [tempSeq, setTempSeq] = useState({})
   const buffer = useRef()
   const delay = useRef()
 
@@ -119,7 +120,6 @@ const Sequencer = (props) => {
 
 
   const initializeBuffer = () => {
-    console.log('initializing sequencer buffer.')
     const placeHolder = {}
     if (sequenceData.current) {
       Object.values(sequenceData.current.columns).forEach(blockData => {
@@ -192,6 +192,7 @@ const Sequencer = (props) => {
       ]
     }
     sequenceData.current = newState
+    setTempSeq(sequenceData.current)
   }
 
   const handleBlockDelete = () => {
@@ -202,6 +203,7 @@ const Sequencer = (props) => {
 
     if (Object.keys(newState.columns) > 0) {
       sequenceData.current = newState
+      setTempSeq(sequenceData.current)
     }
   }
 
@@ -237,6 +239,7 @@ const Sequencer = (props) => {
       }
 
       sequenceData.current = newState
+      setTempSeq(sequenceData.current)
       return;
     }
 
@@ -249,8 +252,6 @@ const Sequencer = (props) => {
       let currentId = draggableId.split('-')
       const noteName = `${currentId[1]}`;
       const newId = `${draggableId}-${maxTaskId() + 1}`;
-      console.log('current dragging Id: ', newId)
-
 
       //get library
       let currentLibrary
@@ -272,6 +273,7 @@ const Sequencer = (props) => {
         newState.tasks[newId] = newTask;
 
         sequenceData.current = newState;
+        setTempSeq(sequenceData.current)
         initializeBuffer()
         return;
       }
@@ -288,6 +290,7 @@ const Sequencer = (props) => {
       delete newState.tasks[draggableId]
 
       sequenceData.current = newState
+      setTempSeq(sequenceData.current)
       return;
     }
 
@@ -313,6 +316,7 @@ const Sequencer = (props) => {
       }
 
       sequenceData.current = newState
+      setTempSeq(sequenceData.current)
       return;
     }
 
@@ -342,6 +346,7 @@ const Sequencer = (props) => {
       },
     }
     sequenceData.current = newState
+    setTempSeq(sequenceData.current)
     return;
   }
 
@@ -394,6 +399,7 @@ const Sequencer = (props) => {
   useEffect(() => {
     initializeBuffer()
     setIsLoaded(true)
+    console.log('sequence data changing')
   }, [sequenceData.current])
 
   useEffect(() => {
