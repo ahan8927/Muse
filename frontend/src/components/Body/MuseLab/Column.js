@@ -35,7 +35,7 @@ const Column = (props) => {
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    console.log('column data changed')
+    // console.log('column data changed')
   }, [props])
 
   useEffect(() => {

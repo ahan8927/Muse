@@ -373,7 +373,9 @@ const Sequencer = (props) => {
 
       function playNote() {
         const { title } = sequenceData.current.tasks[currentBlockData.taskIds[currentNote]]
-        const currentSound = new Tone.Player(buffer.current.get(title).get()).toDestination()
+
+        const currentBuffer = buffer.current.get(title)
+        const currentSound = new Tone.Player(currentBuffer.get()).toDestination()
 
         currentSound.start()
 
@@ -399,8 +401,8 @@ const Sequencer = (props) => {
   useEffect(() => {
     initializeBuffer()
     setIsLoaded(true)
-    console.log('sequence data changing')
-  }, [sequenceData.current])
+    // console.log('sequence data changing', buffer.current)
+  }, [tempSeq])
 
   useEffect(() => {
     if (sequenceData.current) {
@@ -445,8 +447,6 @@ const Sequencer = (props) => {
           <RemoveIcon className={classes.white} />
         </IconButton>
       </ButtonContainer>
-
-      {console.log('Rerendered! state: ', sequenceData.current)}
 
       <DragDropContext
         onDragEnd={handleOnDragEnd}
