@@ -14,7 +14,10 @@ from .seeds import seed_commands
 
 from .config import Config
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='')
+
+# Application Security
+CORS(app)
 
 # Setup login manager
 login = LoginManager(app)
@@ -36,8 +39,28 @@ app.register_blueprint(board_routes, url_prefix='/api/board')
 db.init_app(app)
 Migrate(app, db)
 
-# Application Security
-CORS(app)
+api_v1_cors_config = {
+    'origins': ['http://localhost:3000'],
+    'methods': ['OPTIONS', 'GET', 'POST'],
+    'allow_headers': ['Authorization', 'Content-Type'],
+}
+
+
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+    return response
+
+# app.config['CORS_HEADERS'] = 'application/json'
+# app.use(function(req, res, next):
+#         res.header("Access-Control-Allow-Origin", '*')
+#         res.header("Access-Control-Allow-Credentials", true)
+#         res.header('Access-Control-Allow-Methods',
+#                    'GET,PUT,POST,DELETE,OPTIONS')
+#         res.header("Access-Control-Allow-Headers",
+#                    'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json')
+#         next())
 
 
 @app.after_request

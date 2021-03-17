@@ -108,7 +108,7 @@ const Sequencer = (props) => {
 
   const currentSequence = props.sequenceState.sequences[props.index];
   const sequenceData = useRef(initialData());
-  const [tempSeq, setTempSeq] = useState({})
+  const [tempSeq, setTempSeq] = useState()
   const buffer = useRef()
   const delay = useRef()
 
@@ -273,7 +273,7 @@ const Sequencer = (props) => {
         newState.tasks[newId] = newTask;
 
         sequenceData.current = newState;
-        setTempSeq(sequenceData.current)
+        setTempSeq(newState, console.log('tempSeq: ', tempSeq, ' sequenceData: ', sequenceData.current, ' newState: ', newState))
         initializeBuffer()
         return;
       }
@@ -399,10 +399,8 @@ const Sequencer = (props) => {
 
 
   useEffect(() => {
-    initializeBuffer()
-    setIsLoaded(true)
-    // console.log('sequence data changing', buffer.current)
-  }, [tempSeq])
+    console.log('Sense change in useRef')
+  }, [sequenceData.current])
 
   useEffect(() => {
     if (sequenceData.current) {
@@ -413,6 +411,10 @@ const Sequencer = (props) => {
       }
     }
   }, [play])
+
+  useEffect(() => {
+    setIsLoaded(true)
+  }, [])
 
   return isLoaded && (
     <Root>

@@ -72,7 +72,7 @@ export const soundLibrary = {
   },
   '808': {
     'Kick_1': kick1,
-    'Kick_2': kick2,
+    'Kick_2': 'https://drive.google.com/file/d/1IZr9siTmFWzGEETz8FeCz3_PXIi-MTWE/view?usp=sharing',
     '808_1': kick8081,
     '808_2': kick8082,
     '808_3': kick8083,
