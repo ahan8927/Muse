@@ -22,12 +22,6 @@ Enjoy a clean aesthetic to boost your creativity and production. 💎
 
 ![Dashboard webpage for Musely](Documentation/Musely.PNG)
 
-
-### Try the Demo!
-<a href="https://musely.herokuapp.com/">
-click here!
-</a>
-
 </div>
 
 ---
@@ -35,8 +29,6 @@ click here!
 <div align="center">
 
 ## About Muse
-
-[[ WEBSITE: https://musely.herokuapp.com/ ]](https://musely.herokuapp.com/)
 
 </div>
 
